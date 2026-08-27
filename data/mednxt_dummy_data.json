@@ -1,0 +1,1694 @@
+{
+  "metadata": {
+    "project": "MedNxt HMS Replica",
+    "purpose": "Dummy/demo data covering the replicated UI and workflows",
+    "generated_for": "React + Node.js + PostgreSQL/Prisma implementation",
+    "all_records_are_synthetic": true,
+    "dataset_version": "2.0-realistic-names",
+    "name_policy": "Realistic synthetic names throughout; no Patient 1/2/3 placeholders."
+  },
+  "users": [
+    {
+      "id": "USR-DOC-001",
+      "name": "Dr. Rohan Sharma",
+      "role": "DOCTOR",
+      "department": "General Medicine",
+      "specialization": "Internal Medicine",
+      "phone": "9000000001",
+      "email": "dr.sharma@mednxt.demo",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "USR-DOC-002",
+      "name": "Dr. Arvind Mehta",
+      "role": "DOCTOR",
+      "department": "Cardiology",
+      "specialization": "Cardiology",
+      "phone": "9000000002",
+      "email": "dr.mehta@mednxt.demo",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "USR-LAB-001",
+      "name": "Anita Rao",
+      "role": "LAB_TECHNICIAN",
+      "department": "Laboratory",
+      "phone": "9000000011",
+      "email": "anita.lab@mednxt.demo",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "USR-LAB-002",
+      "name": "Kiran Das",
+      "role": "PATHOLOGIST",
+      "department": "Laboratory",
+      "phone": "9000000012",
+      "email": "kiran.path@mednxt.demo",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "USR-PH-001",
+      "name": "Arun Kumar",
+      "role": "PHARMACIST",
+      "department": "Pharmacy",
+      "phone": "9000000021",
+      "email": "arun.pharmacy@mednxt.demo",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "USR-NUR-001",
+      "name": "Priya Nair",
+      "role": "NURSE",
+      "department": "General Ward Male",
+      "phone": "9000000031",
+      "email": "nurse.priya@mednxt.demo",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "USR-NUR-002",
+      "name": "Kavya Menon",
+      "role": "NURSE",
+      "department": "ICU",
+      "phone": "9000000032",
+      "email": "nurse.kavya@mednxt.demo",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "USR-FD-001",
+      "name": "Meera Krishnan",
+      "role": "RECEPTIONIST",
+      "department": "Front Desk",
+      "phone": "9000000041",
+      "email": "frontdesk@mednxt.demo",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "USR-ADM-001",
+      "name": "Rahul Menon",
+      "role": "ADMIN",
+      "department": "Administration",
+      "phone": "9000000051",
+      "email": "admin@mednxt.demo",
+      "status": "ACTIVE"
+    }
+  ],
+  "patients": [
+    {
+      "id": "PAT-001",
+      "name": "Rahul Verma",
+      "uhid": "ABHA-1234",
+      "age": 34,
+      "gender": "Male",
+      "dob": "1992-02-14",
+      "mobile": "9876543210",
+      "email": "rahul.verma@example.demo",
+      "bloodGroup": "B+",
+      "address": "Chennai, Tamil Nadu",
+      "allergies": [
+        "Penicillin"
+      ],
+      "chronicConditions": [
+        "None reported"
+      ],
+      "priority": "HIGH",
+      "queueStatus": "COMPLETED",
+      "registrationType": "IPD",
+      "department": "General Medicine"
+    },
+    {
+      "id": "PAT-002",
+      "name": "Priya Sharma",
+      "uhid": "ABHA-5678",
+      "age": 28,
+      "gender": "Female",
+      "dob": "1998-05-21",
+      "mobile": "9123456780",
+      "email": "priya.sharma@example.demo",
+      "bloodGroup": "O+",
+      "address": "Chennai, Tamil Nadu",
+      "allergies": [
+        "None known"
+      ],
+      "chronicConditions": [
+        "None reported"
+      ],
+      "priority": "URGENT",
+      "queueStatus": "WAITING",
+      "registrationType": "IPD",
+      "department": "General Medicine"
+    },
+    {
+      "id": "PAT-003",
+      "name": "Vikram Singh",
+      "uhid": "ABHA-7890",
+      "age": 50,
+      "gender": "Male",
+      "dob": "1976-01-10",
+      "mobile": "7766554433",
+      "email": "vikram.singh@example.demo",
+      "bloodGroup": "A+",
+      "address": "Chennai, Tamil Nadu",
+      "allergies": [
+        "None known"
+      ],
+      "chronicConditions": [
+        "Hypertension"
+      ],
+      "priority": "EMERGENCY",
+      "queueStatus": "COMPLETED",
+      "registrationType": "IPD",
+      "department": "Cardiology"
+    },
+    {
+      "id": "PAT-004",
+      "name": "Amit Patel",
+      "uhid": "ABHA-2345",
+      "age": 41,
+      "gender": "Male",
+      "dob": "1985-08-03",
+      "mobile": "9988776655",
+      "email": "amit.patel@example.demo",
+      "bloodGroup": "AB+",
+      "address": "Chennai, Tamil Nadu",
+      "allergies": [
+        "Sulfa drugs"
+      ],
+      "chronicConditions": [
+        "Type 2 Diabetes"
+      ],
+      "priority": "NORMAL",
+      "queueStatus": "COMPLETED",
+      "registrationType": "OPD",
+      "department": "General Medicine"
+    },
+    {
+      "id": "PAT-005",
+      "name": "Sujata Rao",
+      "uhid": "ABHA-3456",
+      "age": 62,
+      "gender": "Female",
+      "dob": "1964-04-18",
+      "mobile": "8877665544",
+      "email": "sujata.rao@example.demo",
+      "bloodGroup": "O-",
+      "address": "Chennai, Tamil Nadu",
+      "allergies": [
+        "None known"
+      ],
+      "chronicConditions": [
+        "Osteoarthritis"
+      ],
+      "priority": "NORMAL",
+      "queueStatus": "CHECKED_IN",
+      "registrationType": "OPD",
+      "department": "Orthopedics"
+    },
+    {
+      "id": "PAT-006",
+      "name": "Ananya Iyer",
+      "uhid": "ABHA-4567",
+      "age": 37,
+      "gender": "Female",
+      "dob": "1989-06-12",
+      "mobile": "9001112233",
+      "email": "ananya.iyer@example.demo",
+      "bloodGroup": "A-",
+      "address": "Chennai, Tamil Nadu",
+      "allergies": [
+        "Latex"
+      ],
+      "chronicConditions": [
+        "Asthma"
+      ],
+      "priority": "HIGH",
+      "queueStatus": "WAITING",
+      "registrationType": "OPD",
+      "department": "Pulmonology"
+    },
+    {
+      "id": "PAT-007",
+      "name": "Karthik Raj",
+      "uhid": "ABHA-6789",
+      "age": 46,
+      "gender": "Male",
+      "dob": "1980-11-30",
+      "mobile": "9002223344",
+      "email": "karthik.raj@example.demo",
+      "bloodGroup": "B-",
+      "address": "Chennai, Tamil Nadu",
+      "allergies": [
+        "None known"
+      ],
+      "chronicConditions": [
+        "Hyperlipidemia"
+      ],
+      "priority": "NORMAL",
+      "queueStatus": "DISCHARGED",
+      "registrationType": "IPD",
+      "department": "General Medicine"
+    },
+    {
+      "id": "PAT-008",
+      "name": "Meena Krishnan",
+      "uhid": "ABHA-8901",
+      "age": 55,
+      "gender": "Female",
+      "dob": "1971-03-09",
+      "mobile": "9003334455",
+      "email": "meena.krishnan@example.demo",
+      "bloodGroup": "O+",
+      "address": "Chennai, Tamil Nadu",
+      "allergies": [
+        "Aspirin"
+      ],
+      "chronicConditions": [
+        "Diabetes",
+        "Hypertension"
+      ],
+      "priority": "HIGH",
+      "queueStatus": "DISCHARGED",
+      "registrationType": "IPD",
+      "department": "General Medicine"
+    },
+    {
+      "id": "PAT-009",
+      "name": "Arjun Nair",
+      "uhid": "ABHA-9012",
+      "age": 29,
+      "gender": "Male",
+      "dob": "1997-09-17",
+      "mobile": "9004445566",
+      "email": "arjun.nair@example.demo",
+      "bloodGroup": "A+",
+      "address": "Chennai, Tamil Nadu",
+      "allergies": [
+        "None known"
+      ],
+      "chronicConditions": [
+        "None reported"
+      ],
+      "priority": "NORMAL",
+      "queueStatus": "WAITING",
+      "registrationType": "OPD",
+      "department": "General Medicine"
+    },
+    {
+      "id": "PAT-010",
+      "name": "Divya Menon",
+      "uhid": "ABHA-0123",
+      "age": 31,
+      "gender": "Female",
+      "dob": "1995-12-05",
+      "mobile": "9005556677",
+      "email": "divya.menon@example.demo",
+      "bloodGroup": "B+",
+      "address": "Chennai, Tamil Nadu",
+      "allergies": [
+        "Penicillin"
+      ],
+      "chronicConditions": [
+        "Hypothyroidism"
+      ],
+      "priority": "NORMAL",
+      "queueStatus": "WAITING",
+      "registrationType": "OPD",
+      "department": "General Medicine"
+    }
+  ],
+  "appointments": [
+    {
+      "id": "APT-001",
+      "patientId": "PAT-002",
+      "doctorId": "USR-DOC-001",
+      "department": "General Medicine",
+      "type": "General Checkup",
+      "scheduledAt": "2026-08-26T10:30:00",
+      "status": "UPCOMING",
+      "patientName": "Priya Sharma"
+    },
+    {
+      "id": "APT-002",
+      "patientId": "PAT-006",
+      "doctorId": "USR-DOC-001",
+      "department": "Pulmonology",
+      "type": "Follow-up",
+      "scheduledAt": "2026-08-26T11:00:00",
+      "status": "UPCOMING",
+      "patientName": "Ananya Iyer"
+    },
+    {
+      "id": "APT-003",
+      "patientId": "PAT-009",
+      "doctorId": "USR-DOC-001",
+      "department": "General Medicine",
+      "type": "General Checkup",
+      "scheduledAt": "2026-08-26T11:30:00",
+      "status": "UPCOMING",
+      "patientName": "Arjun Nair"
+    }
+  ],
+  "queueEntries": [
+    {
+      "id": "Q-101",
+      "patientId": "PAT-002",
+      "arrivalTime": "2026-08-26T09:40:00",
+      "token": "Q-101",
+      "status": "WAITING",
+      "priority": "URGENT",
+      "assignedDoctorId": "USR-DOC-001",
+      "source": "CLINIC",
+      "patientName": "Priya Sharma"
+    },
+    {
+      "id": "Q-102",
+      "patientId": "PAT-001",
+      "arrivalTime": "2026-08-26T09:55:00",
+      "token": "Q-102",
+      "status": "COMPLETED",
+      "priority": "HIGH",
+      "assignedDoctorId": "USR-DOC-001",
+      "source": "CLINIC",
+      "patientName": "Rahul Verma"
+    },
+    {
+      "id": "Q-103",
+      "patientId": "PAT-003",
+      "arrivalTime": "2026-08-26T10:05:00",
+      "token": "Q-103",
+      "status": "COMPLETED",
+      "priority": "EMERGENCY",
+      "assignedDoctorId": "USR-DOC-002",
+      "source": "CLINIC",
+      "patientName": "Vikram Singh"
+    },
+    {
+      "id": "Q-104",
+      "patientId": "PAT-004",
+      "arrivalTime": "2026-08-26T10:15:00",
+      "token": "Q-104",
+      "status": "COMPLETED",
+      "priority": "NORMAL",
+      "assignedDoctorId": "USR-DOC-001",
+      "source": "CLINIC",
+      "patientName": "Amit Patel"
+    },
+    {
+      "id": "Q-105",
+      "patientId": "PAT-005",
+      "arrivalTime": "2026-08-26T10:20:00",
+      "token": "Q-105",
+      "status": "CHECKED_IN",
+      "priority": "NORMAL",
+      "assignedDoctorId": "USR-DOC-001",
+      "source": "CLINIC",
+      "patientName": "Sujata Rao"
+    },
+    {
+      "id": "Q-106",
+      "patientId": "PAT-006",
+      "arrivalTime": "2026-08-26T10:25:00",
+      "token": "Q-106",
+      "status": "WAITING",
+      "priority": "HIGH",
+      "assignedDoctorId": "USR-DOC-001",
+      "source": "REMOTE",
+      "patientName": "Ananya Iyer"
+    },
+    {
+      "id": "Q-107",
+      "patientId": "PAT-009",
+      "arrivalTime": "2026-08-26T10:35:00",
+      "token": "Q-107",
+      "status": "WAITING",
+      "priority": "NORMAL",
+      "assignedDoctorId": "USR-DOC-001",
+      "source": "CLINIC",
+      "patientName": "Arjun Nair"
+    },
+    {
+      "id": "Q-108",
+      "patientId": "PAT-010",
+      "arrivalTime": "2026-08-26T10:45:00",
+      "token": "Q-108",
+      "status": "WAITING",
+      "priority": "NORMAL",
+      "assignedDoctorId": "USR-DOC-001",
+      "source": "CLINIC",
+      "patientName": "Divya Menon"
+    }
+  ],
+  "consultations": [
+    {
+      "id": "CON-001",
+      "patientId": "PAT-001",
+      "doctorId": "USR-DOC-001",
+      "status": "COMPLETED",
+      "startedAt": "2026-08-26T18:11:00",
+      "heldAt": null,
+      "finishedAt": "2026-08-26T18:20:00",
+      "subjective": "Patient reports high fever and chills for two days.",
+      "objective": "Temperature 101.8°F. Mild dehydration.",
+      "assessment": "Viral fever with dehydration.",
+      "plan": "Oral fluids, antipyretic, follow-up if symptoms worsen.",
+      "icd10Code": "R50.9"
+    },
+    {
+      "id": "CON-002",
+      "patientId": "PAT-003",
+      "doctorId": "USR-DOC-002",
+      "status": "COMPLETED",
+      "startedAt": "2026-08-26T18:00:00",
+      "heldAt": null,
+      "finishedAt": "2026-08-26T18:12:00",
+      "subjective": "Chest pain on exertion.",
+      "objective": "BP 150/92. ECG reviewed.",
+      "assessment": "Chest pain requiring cardiology evaluation.",
+      "plan": "Continue monitoring and cardiology follow-up.",
+      "icd10Code": "R07.9"
+    },
+    {
+      "id": "CON-003",
+      "patientId": "PAT-005",
+      "doctorId": "USR-DOC-001",
+      "status": "ON_HOLD",
+      "startedAt": "2026-08-26T20:34:00",
+      "heldAt": "2026-08-26T20:35:00",
+      "finishedAt": null,
+      "subjective": "Joint pain and stiffness.",
+      "objective": "Knee tenderness.",
+      "assessment": "Osteoarthritis flare.",
+      "plan": "Analgesia and physiotherapy advice.",
+      "icd10Code": "M17.9"
+    }
+  ],
+  "consultationNotes": [
+    {
+      "id": "NOTE-001",
+      "consultationId": "CON-001",
+      "section": "SUBJECTIVE",
+      "content": "Patient reports high fever and chills for two days."
+    },
+    {
+      "id": "NOTE-002",
+      "consultationId": "CON-001",
+      "section": "OBJECTIVE",
+      "content": "Temperature 101.8°F. Mild dehydration."
+    },
+    {
+      "id": "NOTE-003",
+      "consultationId": "CON-001",
+      "section": "ASSESSMENT",
+      "content": "Viral fever with dehydration."
+    },
+    {
+      "id": "NOTE-004",
+      "consultationId": "CON-001",
+      "section": "PLAN",
+      "content": "Oral fluids, antipyretic, follow-up if symptoms worsen."
+    }
+  ],
+  "vitals": [
+    {
+      "id": "VIT-001",
+      "patientId": "PAT-001",
+      "recordedBy": "USR-NUR-001",
+      "recordedAt": "2026-08-26T17:50:00",
+      "bpSystolic": 120,
+      "bpDiastolic": 80,
+      "spo2": 98,
+      "temperatureF": 98.6,
+      "weightKg": 65
+    },
+    {
+      "id": "VIT-002",
+      "patientId": "PAT-001",
+      "recordedBy": "USR-NUR-001",
+      "recordedAt": "2026-08-26T18:10:00",
+      "bpSystolic": 118,
+      "bpDiastolic": 78,
+      "spo2": 97,
+      "temperatureF": 99.1,
+      "weightKg": 65
+    },
+    {
+      "id": "VIT-003",
+      "patientId": "PAT-003",
+      "recordedBy": "USR-NUR-002",
+      "recordedAt": "2026-08-26T17:55:00",
+      "bpSystolic": 150,
+      "bpDiastolic": 92,
+      "spo2": 96,
+      "temperatureF": 98.8,
+      "weightKg": 78
+    },
+    {
+      "id": "VIT-004",
+      "patientId": "PAT-005",
+      "recordedBy": "USR-NUR-001",
+      "recordedAt": "2026-08-26T20:30:00",
+      "bpSystolic": 132,
+      "bpDiastolic": 84,
+      "spo2": 98,
+      "temperatureF": 98.4,
+      "weightKg": 69
+    }
+  ],
+  "activityTimeline": [
+    {
+      "id": "ACT-001",
+      "patientId": "PAT-002",
+      "actorId": "USR-FD-001",
+      "actorType": "FRONT_DESK",
+      "eventType": "REGISTRATION",
+      "timestamp": "2023-11-01T15:00:00",
+      "description": "Patient registered for IPD. Priority: Urgent."
+    },
+    {
+      "id": "ACT-002",
+      "patientId": "PAT-001",
+      "actorId": "SYSTEM",
+      "actorType": "SYSTEM",
+      "eventType": "CONSULTATION_STARTED",
+      "timestamp": "2026-08-26T18:11:00",
+      "description": "Consultation Started"
+    },
+    {
+      "id": "ACT-003",
+      "patientId": "PAT-001",
+      "actorId": "SYSTEM",
+      "actorType": "SYSTEM",
+      "eventType": "CONSULTATION_COMPLETED",
+      "timestamp": "2026-08-26T18:20:00",
+      "description": "Consultation Marked as Completed"
+    },
+    {
+      "id": "ACT-004",
+      "patientId": "PAT-005",
+      "actorId": "SYSTEM",
+      "actorType": "SYSTEM",
+      "eventType": "CONSULTATION_STARTED",
+      "timestamp": "2026-08-26T20:34:00",
+      "description": "Consultation Started"
+    },
+    {
+      "id": "ACT-005",
+      "patientId": "PAT-005",
+      "actorId": "SYSTEM",
+      "actorType": "SYSTEM",
+      "eventType": "CONSULTATION_HELD",
+      "timestamp": "2026-08-26T20:35:00",
+      "description": "Consultation Paused/Held"
+    },
+    {
+      "id": "ACT-006",
+      "patientId": "PAT-003",
+      "actorId": "SYSTEM",
+      "actorType": "SYSTEM",
+      "eventType": "ADMISSION",
+      "timestamp": "2026-08-20T10:00:00",
+      "description": "Patient admitted to Cardiology ICU."
+    }
+  ],
+  "medicines": [
+    {
+      "id": "MED-001",
+      "name": "Dolo 650",
+      "genericName": "Paracetamol",
+      "category": "Analgesic",
+      "rack": "R1-S2",
+      "unit": "Tablet",
+      "stock": 1230,
+      "minimumStock": 500,
+      "unitPrice": 2.0,
+      "expiryDate": "2025-12-01",
+      "status": "EXPIRED",
+      "manufacturer": "Micro Labs"
+    },
+    {
+      "id": "MED-002",
+      "name": "Augmentin 625",
+      "genericName": "Amoxicillin + Clavulanic Acid",
+      "category": "Antibiotic",
+      "rack": "R2-S1",
+      "unit": "Tablet",
+      "stock": 45,
+      "minimumStock": 100,
+      "unitPrice": 22.0,
+      "expiryDate": "2027-06-15",
+      "status": "LOW_STOCK",
+      "manufacturer": "GlaxoSmithKline"
+    },
+    {
+      "id": "MED-003",
+      "name": "Pan 40",
+      "genericName": "Pantoprazole",
+      "category": "Antacid",
+      "rack": "R1-S4",
+      "unit": "Tablet",
+      "stock": 800,
+      "minimumStock": 300,
+      "unitPrice": 8.0,
+      "expiryDate": "2027-08-10",
+      "status": "ACTIVE",
+      "manufacturer": "Sun Pharma"
+    },
+    {
+      "id": "MED-004",
+      "name": "Azithral 500",
+      "genericName": "Azithromycin",
+      "category": "Antibiotic",
+      "rack": "R2-S3",
+      "unit": "Tablet",
+      "stock": 20,
+      "minimumStock": 50,
+      "unitPrice": 18.0,
+      "expiryDate": "2027-03-20",
+      "status": "LOW_STOCK",
+      "manufacturer": "Alembic Pharmaceuticals"
+    },
+    {
+      "id": "MED-005",
+      "name": "Monocef 1g",
+      "genericName": "Ceftriaxone",
+      "category": "Antibiotic",
+      "rack": "R3-S1",
+      "unit": "Vial",
+      "stock": 60,
+      "minimumStock": 20,
+      "unitPrice": 95.0,
+      "expiryDate": "2027-01-15",
+      "status": "ACTIVE",
+      "manufacturer": "Cipla"
+    },
+    {
+      "id": "MED-006",
+      "name": "Atorva 10",
+      "genericName": "Atorvastatin",
+      "category": "Statin",
+      "rack": "R4-S1",
+      "unit": "Tablet",
+      "stock": 350,
+      "minimumStock": 100,
+      "unitPrice": 6.0,
+      "expiryDate": "2028-02-01",
+      "status": "ACTIVE",
+      "manufacturer": "Zydus Lifesciences"
+    },
+    {
+      "id": "MED-007",
+      "name": "Metformin 500",
+      "genericName": "Metformin",
+      "category": "Antidiabetic",
+      "rack": "R4-S2",
+      "unit": "Tablet",
+      "stock": 420,
+      "minimumStock": 150,
+      "unitPrice": 3.5,
+      "expiryDate": "2028-01-10",
+      "status": "ACTIVE",
+      "manufacturer": "USV"
+    },
+    {
+      "id": "MED-008",
+      "name": "Salbutamol Inhaler",
+      "genericName": "Salbutamol",
+      "category": "Respiratory",
+      "rack": "R5-S1",
+      "unit": "Inhaler",
+      "stock": 35,
+      "minimumStock": 10,
+      "unitPrice": 120.0,
+      "expiryDate": "2027-11-30",
+      "status": "ACTIVE",
+      "manufacturer": "Cipla"
+    }
+  ],
+  "prescriptions": [
+    {
+      "id": "RX-001",
+      "patientId": "PAT-002",
+      "doctorId": "USR-DOC-001",
+      "consultationId": null,
+      "status": "SENT_TO_PHARMACY",
+      "prescribedAt": "2026-08-26T20:20:00"
+    },
+    {
+      "id": "RX-002",
+      "patientId": "PAT-001",
+      "doctorId": "USR-DOC-001",
+      "consultationId": "CON-001",
+      "status": "DISPENSED",
+      "prescribedAt": "2026-08-26T18:15:00"
+    },
+    {
+      "id": "RX-003",
+      "patientId": "PAT-003",
+      "doctorId": "USR-DOC-002",
+      "consultationId": "CON-002",
+      "status": "PENDING",
+      "prescribedAt": "2026-08-26T18:05:00"
+    }
+  ],
+  "prescriptionItems": [
+    {
+      "id": "RXI-001",
+      "prescriptionId": "RX-001",
+      "medicineId": "MED-001",
+      "dosage": "1-0-1",
+      "frequency": "After Food",
+      "durationDays": 5,
+      "quantity": 10,
+      "unitPrice": 2.0,
+      "totalPrice": 20.0
+    },
+    {
+      "id": "RXI-002",
+      "prescriptionId": "RX-002",
+      "medicineId": "MED-001",
+      "dosage": "1-0-1",
+      "frequency": "After Food",
+      "durationDays": 5,
+      "quantity": 10,
+      "unitPrice": 2.0,
+      "totalPrice": 20.0
+    },
+    {
+      "id": "RXI-003",
+      "prescriptionId": "RX-003",
+      "medicineId": "MED-006",
+      "dosage": "0-0-1",
+      "frequency": "After Food",
+      "durationDays": 30,
+      "quantity": 30,
+      "unitPrice": 6.0,
+      "totalPrice": 180.0
+    }
+  ],
+  "labTests": [
+    {
+      "id": "TEST-CBC",
+      "code": "CBC",
+      "name": "Complete Blood Count",
+      "department": "Hematology",
+      "specimen": "Whole Blood (EDTA)",
+      "tatMinutes": 120,
+      "price": 250
+    },
+    {
+      "id": "TEST-LFT",
+      "code": "LFT",
+      "name": "Liver Function Test",
+      "department": "Biochemistry",
+      "specimen": "Serum",
+      "tatMinutes": 180,
+      "price": 450
+    },
+    {
+      "id": "TEST-KFT",
+      "code": "KFT",
+      "name": "Kidney Function Test",
+      "department": "Biochemistry",
+      "specimen": "Serum",
+      "tatMinutes": 180,
+      "price": 400
+    },
+    {
+      "id": "TEST-LIPID",
+      "code": "LIPID",
+      "name": "Lipid Profile",
+      "department": "Biochemistry",
+      "specimen": "Serum",
+      "tatMinutes": 180,
+      "price": 350
+    },
+    {
+      "id": "TEST-TSH",
+      "code": "TSH",
+      "name": "Thyroid Stimulating Hormone",
+      "department": "Biochemistry",
+      "specimen": "Serum",
+      "tatMinutes": 120,
+      "price": 300
+    },
+    {
+      "id": "TEST-CRP",
+      "code": "CRP",
+      "name": "C-Reactive Protein",
+      "department": "Biochemistry",
+      "specimen": "Serum",
+      "tatMinutes": 90,
+      "price": 280
+    },
+    {
+      "id": "TEST-DENGUE",
+      "code": "DENGUE",
+      "name": "Dengue NS1",
+      "department": "Microbiology",
+      "specimen": "Serum",
+      "tatMinutes": 120,
+      "price": 500
+    },
+    {
+      "id": "TEST-HBA1C",
+      "code": "HBA1C",
+      "name": "HbA1c",
+      "department": "Biochemistry",
+      "specimen": "Whole Blood",
+      "tatMinutes": 120,
+      "price": 350
+    }
+  ],
+  "labOrders": [
+    {
+      "id": "LAB-001",
+      "patientId": "PAT-001",
+      "doctorId": "USR-DOC-001",
+      "status": "COMPLETED",
+      "priority": "ROUTINE",
+      "orderedAt": "2026-08-26T18:15:00",
+      "collectedAt": "2026-08-26T18:30:00",
+      "processingAt": "2026-08-26T18:40:00",
+      "releasedAt": "2026-08-26T19:30:00",
+      "sampleId": "SMP-800001",
+      "accessionId": "ACC-20260827"
+    },
+    {
+      "id": "LAB-002",
+      "patientId": "PAT-002",
+      "doctorId": "USR-DOC-001",
+      "status": "ORDERED",
+      "priority": "STAT",
+      "orderedAt": "2026-08-26T20:35:00",
+      "collectedAt": null,
+      "processingAt": null,
+      "releasedAt": null,
+      "sampleId": "SMP-800002",
+      "accessionId": "ACC-20260828"
+    },
+    {
+      "id": "LAB-003",
+      "patientId": "PAT-003",
+      "doctorId": "USR-DOC-002",
+      "status": "COLLECTED",
+      "priority": "ROUTINE",
+      "orderedAt": "2026-08-26T19:10:00",
+      "collectedAt": "2026-08-26T19:25:00",
+      "processingAt": null,
+      "releasedAt": null,
+      "sampleId": "SMP-800003",
+      "accessionId": "ACC-20260829"
+    },
+    {
+      "id": "LAB-004",
+      "patientId": "PAT-006",
+      "doctorId": "USR-DOC-001",
+      "status": "PROCESSING",
+      "priority": "STAT",
+      "orderedAt": "2026-08-26T19:45:00",
+      "collectedAt": "2026-08-26T19:55:00",
+      "processingAt": "2026-08-26T20:05:00",
+      "releasedAt": null,
+      "sampleId": "SMP-800004",
+      "accessionId": "ACC-20260830"
+    },
+    {
+      "id": "LAB-005",
+      "patientId": "PAT-009",
+      "doctorId": "USR-DOC-001",
+      "status": "RESULT_READY",
+      "priority": "ROUTINE",
+      "orderedAt": "2026-08-26T17:20:00",
+      "collectedAt": "2026-08-26T17:40:00",
+      "processingAt": "2026-08-26T18:00:00",
+      "releasedAt": null,
+      "sampleId": "SMP-800005",
+      "accessionId": "ACC-20260831"
+    },
+    {
+      "id": "LAB-006",
+      "patientId": "PAT-004",
+      "doctorId": "USR-DOC-001",
+      "status": "CRITICAL",
+      "priority": "STAT",
+      "orderedAt": "2026-08-26T16:30:00",
+      "collectedAt": "2026-08-26T16:45:00",
+      "processingAt": "2026-08-26T17:00:00",
+      "releasedAt": null,
+      "sampleId": "SMP-800006",
+      "accessionId": "ACC-20260832"
+    },
+    {
+      "id": "LAB-007",
+      "patientId": "PAT-005",
+      "doctorId": "USR-DOC-001",
+      "status": "ORDERED",
+      "priority": "ROUTINE",
+      "orderedAt": "2026-08-26T20:40:00",
+      "collectedAt": null,
+      "processingAt": null,
+      "releasedAt": null,
+      "sampleId": "SMP-800007",
+      "accessionId": "ACC-20260833"
+    }
+  ],
+  "labOrderItems": [
+    {
+      "id": "LOI-001",
+      "labOrderId": "LAB-001",
+      "testId": "TEST-CBC",
+      "status": "COMPLETED"
+    },
+    {
+      "id": "LOI-002",
+      "labOrderId": "LAB-001",
+      "testId": "TEST-CRP",
+      "status": "COMPLETED"
+    },
+    {
+      "id": "LOI-003",
+      "labOrderId": "LAB-002",
+      "testId": "TEST-KFT",
+      "status": "ORDERED"
+    },
+    {
+      "id": "LOI-004",
+      "labOrderId": "LAB-002",
+      "testId": "TEST-CRP",
+      "status": "ORDERED"
+    },
+    {
+      "id": "LOI-005",
+      "labOrderId": "LAB-002",
+      "testId": "TEST-DENGUE",
+      "status": "ORDERED"
+    },
+    {
+      "id": "LOI-006",
+      "labOrderId": "LAB-003",
+      "testId": "TEST-LFT",
+      "status": "COLLECTED"
+    },
+    {
+      "id": "LOI-007",
+      "labOrderId": "LAB-004",
+      "testId": "TEST-DENGUE",
+      "status": "PROCESSING"
+    },
+    {
+      "id": "LOI-008",
+      "labOrderId": "LAB-005",
+      "testId": "TEST-TSH",
+      "status": "RESULT_READY"
+    },
+    {
+      "id": "LOI-009",
+      "labOrderId": "LAB-006",
+      "testId": "TEST-CBC",
+      "status": "CRITICAL"
+    },
+    {
+      "id": "LOI-010",
+      "labOrderId": "LAB-007",
+      "testId": "TEST-LIPID",
+      "status": "ORDERED"
+    }
+  ],
+  "labResults": [
+    {
+      "id": "RES-001",
+      "labOrderId": "LAB-001",
+      "testId": "TEST-CBC",
+      "parameters": {
+        "Hemoglobin": "13.8",
+        "WBC": "7200",
+        "Platelets": "245000"
+      },
+      "units": {
+        "Hemoglobin": "g/dL",
+        "WBC": "cells/uL",
+        "Platelets": "cells/uL"
+      },
+      "flag": "NORMAL",
+      "enteredBy": "USR-LAB-001",
+      "releasedBy": "USR-LAB-002",
+      "releasedAt": "2026-08-26T19:30:00",
+      "patientName": "Rahul Verma"
+    },
+    {
+      "id": "RES-002",
+      "labOrderId": "LAB-001",
+      "testId": "TEST-CRP",
+      "parameters": {
+        "CRP": "12.4"
+      },
+      "units": {
+        "CRP": "mg/L"
+      },
+      "flag": "HIGH",
+      "enteredBy": "USR-LAB-001",
+      "releasedBy": "USR-LAB-002",
+      "releasedAt": "2026-08-26T19:30:00",
+      "patientName": "Rahul Verma"
+    },
+    {
+      "id": "RES-003",
+      "labOrderId": "LAB-005",
+      "testId": "TEST-TSH",
+      "parameters": {
+        "TSH": "3.2"
+      },
+      "units": {
+        "TSH": "mIU/L"
+      },
+      "flag": "NORMAL",
+      "enteredBy": "USR-LAB-001",
+      "releasedBy": null,
+      "releasedAt": null,
+      "patientName": "Arjun Nair"
+    },
+    {
+      "id": "RES-004",
+      "labOrderId": "LAB-006",
+      "testId": "TEST-CBC",
+      "parameters": {
+        "Hemoglobin": "9.2",
+        "WBC": "15400",
+        "Platelets": "98000"
+      },
+      "units": {
+        "Hemoglobin": "g/dL",
+        "WBC": "cells/uL",
+        "Platelets": "cells/uL"
+      },
+      "flag": "CRITICAL",
+      "enteredBy": "USR-LAB-001",
+      "releasedBy": null,
+      "releasedAt": null,
+      "patientName": "Amit Patel"
+    }
+  ],
+  "aiAnalyses": [
+    {
+      "id": "AI-LAB-001",
+      "resultId": "RES-002",
+      "engine": "MedNxt AI Pathologist",
+      "summary": "CRP is elevated above the stated reference range. Findings require clinical correlation.",
+      "anomalies": [
+        "Elevated CRP"
+      ],
+      "confidence": 0.94,
+      "reviewStatus": "PENDING_HUMAN_REVIEW"
+    },
+    {
+      "id": "AI-LAB-002",
+      "resultId": "RES-004",
+      "engine": "MedNxt AI Pathologist",
+      "summary": "Low hemoglobin, elevated WBC and thrombocytopenia flagged for urgent review.",
+      "anomalies": [
+        "Low hemoglobin",
+        "Elevated WBC",
+        "Low platelets"
+      ],
+      "confidence": 0.97,
+      "reviewStatus": "PENDING_HUMAN_REVIEW"
+    }
+  ],
+  "beds": [
+    {
+      "id": "BED-G101",
+      "bedNumber": "G-101",
+      "ward": "General Ward Male",
+      "wardCode": "GWM",
+      "status": "AVAILABLE",
+      "dailyRate": 500,
+      "equipment": [],
+      "patientId": null
+    },
+    {
+      "id": "BED-G102",
+      "bedNumber": "G-102",
+      "ward": "General Ward Male",
+      "wardCode": "GWM",
+      "status": "OCCUPIED",
+      "dailyRate": 500,
+      "equipment": [],
+      "patientId": "PAT-001"
+    },
+    {
+      "id": "BED-G103",
+      "bedNumber": "G-103",
+      "ward": "General Ward Male",
+      "wardCode": "GWM",
+      "status": "CLEANING",
+      "dailyRate": 500,
+      "equipment": [],
+      "patientId": null
+    },
+    {
+      "id": "BED-G104",
+      "bedNumber": "G-104",
+      "ward": "General Ward Male",
+      "wardCode": "GWM",
+      "status": "AVAILABLE",
+      "dailyRate": 500,
+      "equipment": [],
+      "patientId": null
+    },
+    {
+      "id": "BED-G201",
+      "bedNumber": "G-201",
+      "ward": "General Ward Female",
+      "wardCode": "GWF",
+      "status": "AVAILABLE",
+      "dailyRate": 500,
+      "equipment": [],
+      "patientId": null
+    },
+    {
+      "id": "BED-G202",
+      "bedNumber": "G-202",
+      "ward": "General Ward Female",
+      "wardCode": "GWF",
+      "status": "OCCUPIED",
+      "dailyRate": 500,
+      "equipment": [],
+      "patientId": "PAT-006"
+    },
+    {
+      "id": "BED-P301",
+      "bedNumber": "P-301",
+      "ward": "Private Ward",
+      "wardCode": "PW",
+      "status": "OCCUPIED",
+      "dailyRate": 2500,
+      "equipment": [
+        "TV"
+      ],
+      "patientId": "PAT-003"
+    },
+    {
+      "id": "BED-P302",
+      "bedNumber": "P-302",
+      "ward": "Private Ward",
+      "wardCode": "PW",
+      "status": "AVAILABLE",
+      "dailyRate": 2500,
+      "equipment": [
+        "TV"
+      ],
+      "patientId": null
+    },
+    {
+      "id": "BED-ICU1",
+      "bedNumber": "ICU-1",
+      "ward": "ICU",
+      "wardCode": "ICU",
+      "status": "OCCUPIED",
+      "dailyRate": 5000,
+      "equipment": [
+        "VENT",
+        "MONITOR"
+      ],
+      "patientId": "PAT-008"
+    },
+    {
+      "id": "BED-ICU2",
+      "bedNumber": "ICU-2",
+      "ward": "ICU",
+      "wardCode": "ICU",
+      "status": "MAINTENANCE",
+      "dailyRate": 5000,
+      "equipment": [
+        "VENT",
+        "MONITOR"
+      ],
+      "patientId": null
+    }
+  ],
+  "admissions": [
+    {
+      "id": "ADM-001",
+      "patientId": "PAT-001",
+      "bedId": "BED-G102",
+      "doctorId": "USR-DOC-001",
+      "admittedAt": "2026-08-25T10:00:00",
+      "dischargedAt": null,
+      "status": "ACTIVE",
+      "reason": "High fever and dehydration"
+    },
+    {
+      "id": "ADM-002",
+      "patientId": "PAT-003",
+      "bedId": "BED-P301",
+      "doctorId": "USR-DOC-002",
+      "admittedAt": "2026-08-20T10:00:00",
+      "dischargedAt": null,
+      "status": "ACTIVE",
+      "reason": "Chest pain evaluation"
+    },
+    {
+      "id": "ADM-003",
+      "patientId": "PAT-006",
+      "bedId": "BED-G202",
+      "doctorId": "USR-DOC-001",
+      "admittedAt": "2026-08-24T14:00:00",
+      "dischargedAt": null,
+      "status": "ACTIVE",
+      "reason": "Asthma exacerbation"
+    },
+    {
+      "id": "ADM-004",
+      "patientId": "PAT-008",
+      "bedId": "BED-ICU1",
+      "doctorId": "USR-DOC-001",
+      "admittedAt": "2026-08-22T09:00:00",
+      "dischargedAt": null,
+      "status": "ACTIVE",
+      "reason": "Severe infection monitoring"
+    }
+  ],
+  "nurses": [
+    {
+      "id": "NUR-001",
+      "userId": "USR-NUR-001",
+      "name": "Nurse Priya",
+      "shift": "MORNING",
+      "start": "08:00",
+      "end": "16:00",
+      "ward": "General Ward Male",
+      "patientsAssigned": 8,
+      "status": "ON_DUTY"
+    },
+    {
+      "id": "NUR-002",
+      "userId": "USR-NUR-002",
+      "name": "Nurse Kavya",
+      "shift": "NIGHT",
+      "start": "23:00",
+      "end": "08:00",
+      "ward": "ICU",
+      "patientsAssigned": 4,
+      "status": "OFF_DUTY"
+    },
+    {
+      "id": "NUR-003",
+      "userId": "USR-NUR-001",
+      "name": "Nurse Anjali",
+      "shift": "EVENING",
+      "start": "16:00",
+      "end": "23:00",
+      "ward": "General Ward Female",
+      "patientsAssigned": 6,
+      "status": "ON_DUTY"
+    }
+  ],
+  "wardRounds": [
+    {
+      "id": "ROUND-001",
+      "patientId": "PAT-001",
+      "doctorId": "USR-DOC-001",
+      "bedId": "BED-G102",
+      "scheduledAt": "2026-08-27T09:00:00",
+      "status": "PENDING",
+      "notes": null
+    },
+    {
+      "id": "ROUND-002",
+      "patientId": "PAT-003",
+      "doctorId": "USR-DOC-002",
+      "bedId": "BED-P301",
+      "scheduledAt": "2026-08-27T09:30:00",
+      "status": "PENDING",
+      "notes": null
+    },
+    {
+      "id": "ROUND-003",
+      "patientId": "PAT-006",
+      "doctorId": "USR-DOC-001",
+      "bedId": "BED-G202",
+      "scheduledAt": "2026-08-27T10:00:00",
+      "status": "PENDING",
+      "notes": null
+    }
+  ],
+  "ipdIndents": [
+    {
+      "id": "IND-001",
+      "patientId": "PAT-001",
+      "bedId": "BED-G102",
+      "ward": "General Ward Male",
+      "status": "PENDING",
+      "priority": "ROUTINE",
+      "createdAt": "2026-08-26T07:30:00"
+    },
+    {
+      "id": "IND-002",
+      "patientId": "PAT-003",
+      "bedId": "BED-P301",
+      "ward": "Private Ward",
+      "status": "APPROVED",
+      "priority": "STAT",
+      "createdAt": "2026-08-26T08:00:00"
+    },
+    {
+      "id": "IND-003",
+      "patientId": "PAT-008",
+      "bedId": "BED-ICU1",
+      "ward": "ICU",
+      "status": "PENDING",
+      "priority": "STAT",
+      "createdAt": "2026-08-26T08:15:00"
+    }
+  ],
+  "ipdIndentItems": [
+    {
+      "id": "INDI-001",
+      "indentId": "IND-001",
+      "medicineId": "MED-003",
+      "dose": "40mg",
+      "quantity": 5,
+      "packaging": "Tablet Strip"
+    },
+    {
+      "id": "INDI-002",
+      "indentId": "IND-002",
+      "medicineId": "MED-005",
+      "dose": "1g",
+      "quantity": 2,
+      "packaging": "Vial"
+    },
+    {
+      "id": "INDI-003",
+      "indentId": "IND-003",
+      "medicineId": "MED-005",
+      "dose": "1g",
+      "quantity": 4,
+      "packaging": "Vial"
+    }
+  ],
+  "pharmacyOrders": [
+    {
+      "id": "PH-001",
+      "prescriptionId": "RX-001",
+      "patientId": "PAT-002",
+      "status": "PENDING_DISPENSE",
+      "totalAmount": 20.0,
+      "createdAt": "2026-08-26T20:20:00",
+      "dispensedAt": null
+    },
+    {
+      "id": "PH-002",
+      "prescriptionId": "RX-002",
+      "patientId": "PAT-001",
+      "status": "DISPENSED",
+      "totalAmount": 20.0,
+      "createdAt": "2026-08-26T18:15:00",
+      "dispensedAt": "2026-08-26T18:40:00"
+    }
+  ],
+  "pharmacyTransactions": [
+    {
+      "id": "PHTX-001",
+      "medicineId": "MED-001",
+      "type": "DISPENSE",
+      "quantity": 10,
+      "referenceId": "PH-002",
+      "performedBy": "USR-PH-001",
+      "timestamp": "2026-08-26T18:40:00"
+    },
+    {
+      "id": "PHTX-002",
+      "medicineId": "MED-003",
+      "type": "IPD_ISSUE",
+      "quantity": 5,
+      "referenceId": "IND-001",
+      "performedBy": "USR-PH-001",
+      "timestamp": "2026-08-26T12:00:00"
+    },
+    {
+      "id": "PHTX-003",
+      "medicineId": "MED-005",
+      "type": "IPD_ISSUE",
+      "quantity": 2,
+      "referenceId": "IND-002",
+      "performedBy": "USR-PH-001",
+      "timestamp": "2026-08-26T12:30:00"
+    }
+  ],
+  "returnsAndWaste": [
+    {
+      "id": "RET-001",
+      "patientId": "PAT-003",
+      "bedId": "BED-P301",
+      "medicineId": "MED-005",
+      "quantity": 2,
+      "type": "RETURN_TO_PHARMACY",
+      "reason": "Treatment Changed",
+      "status": "PENDING",
+      "createdAt": "2026-08-26T18:00:00"
+    },
+    {
+      "id": "RET-002",
+      "patientId": "PAT-008",
+      "bedId": "BED-ICU1",
+      "medicineId": "MED-005",
+      "quantity": 1,
+      "type": "WASTAGE",
+      "reason": "Damaged Vial",
+      "status": "VERIFIED",
+      "createdAt": "2026-08-26T15:00:00"
+    },
+    {
+      "id": "RET-003",
+      "patientId": "PAT-001",
+      "bedId": "BED-G102",
+      "medicineId": "MED-003",
+      "quantity": 2,
+      "type": "RETURN_TO_PHARMACY",
+      "reason": "Discharge",
+      "status": "PENDING",
+      "createdAt": "2026-08-26T19:00:00"
+    }
+  ],
+  "emergencyOverrides": [
+    {
+      "id": "OVR-001",
+      "userId": "USR-PH-001",
+      "scenario": "Code Blue",
+      "action": "Crash Cart Access",
+      "reason": "Emergency resuscitation",
+      "items": [
+        {
+          "medicineId": "MED-005",
+          "quantity": 1
+        }
+      ],
+      "timestamp": "2026-08-26T14:05:00"
+    },
+    {
+      "id": "OVR-002",
+      "userId": "USR-DOC-002",
+      "scenario": "Severe Trauma Pain",
+      "action": "Narcotic Override",
+      "reason": "Immediate pain control",
+      "items": [
+        {
+          "medicineId": "MED-005",
+          "quantity": 1
+        }
+      ],
+      "timestamp": "2026-08-26T16:20:00"
+    }
+  ],
+  "auditLogs": [
+    {
+      "id": "AUD-001",
+      "actorId": "USR-DOC-001",
+      "action": "CONSULTATION_STARTED",
+      "entityType": "CONSULTATION",
+      "entityId": "CON-001",
+      "timestamp": "2026-08-26T18:11:00",
+      "actorName": "Dr. Rohan Sharma"
+    },
+    {
+      "id": "AUD-002",
+      "actorId": "USR-DOC-001",
+      "action": "LAB_ORDER_CREATED",
+      "entityType": "LAB_ORDER",
+      "entityId": "LAB-001",
+      "timestamp": "2026-08-26T18:15:00",
+      "actorName": "Dr. Rohan Sharma"
+    },
+    {
+      "id": "AUD-003",
+      "actorId": "USR-LAB-001",
+      "action": "SAMPLE_COLLECTED",
+      "entityType": "LAB_ORDER",
+      "entityId": "LAB-001",
+      "timestamp": "2026-08-26T18:30:00",
+      "actorName": "Anita Rao"
+    },
+    {
+      "id": "AUD-004",
+      "actorId": "USR-PH-001",
+      "action": "MEDICINE_DISPENSED",
+      "entityType": "PHARMACY_ORDER",
+      "entityId": "PH-002",
+      "timestamp": "2026-08-26T18:40:00",
+      "actorName": "Arun Kumar"
+    },
+    {
+      "id": "AUD-005",
+      "actorId": "USR-PH-001",
+      "action": "CRASH_CART_ACCESS",
+      "entityType": "EMERGENCY_OVERRIDE",
+      "entityId": "OVR-001",
+      "timestamp": "2026-08-26T14:05:00",
+      "actorName": "Arun Kumar"
+    }
+  ],
+  "dashboard": {
+    "physicianName": "Dr. Sharma",
+    "patientsWaiting": 12,
+    "myQueue": 12,
+    "highPriority": 4,
+    "pendingReports": 5,
+    "ipdRounds": 3,
+    "systemStatus": "OPERATIONAL",
+    "upcomingAppointments": [
+      {
+        "patientId": "PAT-002",
+        "patientName": "Priya Sharma",
+        "type": "General Checkup",
+        "time": "10:30 AM"
+      },
+      {
+        "patientId": "PAT-006",
+        "patientName": "Ananya Iyer",
+        "type": "Follow-up",
+        "time": "11:00 AM"
+      },
+      {
+        "patientId": "PAT-009",
+        "patientName": "Arjun Nair",
+        "type": "General Checkup",
+        "time": "11:30 AM"
+      }
+    ]
+  },
+  "analytics": {
+    "pharmacy": {
+      "inventoryTurnover": 4.8,
+      "stockOutsThisWeek": 7,
+      "expiryLosses": 1250.0,
+      "dispensingTatMinutes": 18,
+      "scriptsProcessed": 86,
+      "inventoryValue": 184500.0,
+      "weeklyStockOutIncidents": [
+        4,
+        2,
+        3,
+        5,
+        1,
+        2,
+        7
+      ],
+      "highRiskDrugUsage": {
+        "antibiotics": 42,
+        "highAlert": 11,
+        "narcotics": 6,
+        "other": 27
+      }
+    },
+    "laboratory": {
+      "samplesReceivedHourly": [
+        8,
+        11,
+        13,
+        15,
+        12,
+        9
+      ],
+      "departmentLoad": {
+        "Hematology": 18,
+        "Biochemistry": 31,
+        "Microbiology": 9,
+        "Serology": 7
+      },
+      "toCollect": 48,
+      "processing": 77,
+      "completedToday": 126,
+      "criticalValues": 4
+    }
+  },
+  "patientHistoryExamples": [
+    {
+      "patientId": "PAT-002",
+      "patientName": "Priya Sharma",
+      "events": [
+        {
+          "type": "REGISTRATION",
+          "actor": "Meera Krishnan",
+          "department": "Front Desk",
+          "timestamp": "2023-11-01T15:00:00",
+          "description": "Patient registered for IPD. Priority: Urgent."
+        },
+        {
+          "type": "CONSULTATION",
+          "actor": "Dr. Rohan Sharma",
+          "department": "General Medicine",
+          "timestamp": "2026-08-26T18:20:00",
+          "description": "Consultation completed. Viral fever and dehydration assessed."
+        },
+        {
+          "type": "LAB_REPORT",
+          "actor": "Anita Rao",
+          "department": "Laboratory",
+          "timestamp": "2026-08-26T19:30:00",
+          "description": "CBC and CRP report released."
+        },
+        {
+          "type": "ADMISSION",
+          "actor": "Dr. Rohan Sharma",
+          "department": "General Medicine",
+          "timestamp": "2026-08-25T10:00:00",
+          "description": "Admitted to General Ward Male, Bed G-102."
+        },
+        {
+          "type": "VITALS",
+          "actor": "Priya Nair",
+          "department": "General Ward Male",
+          "timestamp": "2026-08-26T18:10:00",
+          "description": "BP 118/78, SpO2 97%, Temp 99.1°F, Weight 65 kg."
+        }
+      ]
+    },
+    {
+      "patientId": "PAT-003",
+      "patientName": "Vikram Singh",
+      "events": [
+        {
+          "type": "CONSULTATION",
+          "actor": "Dr. Arvind Mehta",
+          "department": "Cardiology",
+          "timestamp": "2026-08-26T18:12:00",
+          "description": "Consultation completed for exertional chest pain."
+        },
+        {
+          "type": "ADMISSION",
+          "actor": "Dr. Arvind Mehta",
+          "department": "Cardiology",
+          "timestamp": "2026-08-20T10:00:00",
+          "description": "Admitted to Private Ward, Bed P-301."
+        },
+        {
+          "type": "VITALS",
+          "actor": "Kavya Menon",
+          "department": "ICU",
+          "timestamp": "2026-08-26T17:55:00",
+          "description": "BP 150/92, SpO2 96%, Temp 98.8°F, Weight 78 kg."
+        }
+      ]
+    }
+  ]
+}
