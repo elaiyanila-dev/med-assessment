@@ -14,10 +14,11 @@ import patientRoutes from "./patient.routes.js";
 import userRoutes from "./user.routes.js";
 import auditRoutes from "./audit.routes.js";
 import emergencyRoutes from "./emergency.routes.js";
+import prescriptionRoutes from "./prescription.routes.js";
 
 const router = Router();
 
-// Phase 0 through Phase 12 Active Routes
+// Active Application Routes
 router.use("/", healthRoutes);
 router.use("/auth", authRoutes);
 router.use("/dashboard", dashboardRoutes);
@@ -33,19 +34,8 @@ router.use("/patients", patientRoutes);
 router.use("/users", userRoutes);
 router.use("/audit", auditRoutes);
 router.use("/emergency", emergencyRoutes);
-
-// Scaffolded Route Placeholder
-const stubHandler = (moduleName: string) => (req: any, res: any) => {
-  res.status(501).json({
-    success: false,
-    error: {
-      code: "NOT_IMPLEMENTED",
-      message: `${moduleName} API module will be implemented in future phases`
-    }
-  });
-};
-
-router.use("/prescriptions", stubHandler("Prescriptions"));
+router.use("/prescriptions", prescriptionRoutes);
 
 export default router;
+
 
