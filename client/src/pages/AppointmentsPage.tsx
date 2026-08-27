@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
-import axios from "axios";
+import { Calendar, RefreshCw, AlertCircle } from "lucide-react";
+import { api } from "../services/api";
 import { useAuth } from "../context/AuthContext";
 import { AppointmentsSkeleton } from "../components/appointments/AppointmentsSkeleton";
 import { AppointmentsSummaryCards } from "../components/appointments/AppointmentsSummaryCards";
@@ -8,7 +9,6 @@ import { AppointmentsTable } from "../components/appointments/AppointmentsTable"
 import { NewAppointmentModal } from "../components/appointments/NewAppointmentModal";
 import { CheckInQueueModal } from "../components/appointments/CheckInQueueModal";
 import { RescheduleAppointmentModal } from "../components/appointments/RescheduleAppointmentModal";
-import { Calendar, RefreshCw, AlertCircle } from "lucide-react";
 
 export const AppointmentsPage: React.FC = () => {
   const { user } = useAuth();
@@ -39,14 +39,11 @@ export const AppointmentsPage: React.FC = () => {
     setError(null);
 
     try {
-      const token = localStorage.getItem("token");
-      const queryParams = new URLSearchParams();
-      if (searchQuery) queryParams.append("search", searchQuery);
-      if (statusFilter) queryParams.append("status", statusFilter);
+      const params: any = {};
+      if (searchQuery) params.search = searchQuery;
+      if (statusFilter && statusFilter !== "ALL") params.status = statusFilter;
 
-      const res = await axios.get(`/api/appointments?${queryParams.toString()}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const res = await api.get("/appointments", { params });
 
       if (res.data?.success) {
         setMetrics(res.data.data.metrics);
@@ -68,12 +65,7 @@ export const AppointmentsPage: React.FC = () => {
   const handleNoShow = async (id: string) => {
     if (!window.confirm("Are you sure you want to mark this appointment as NO-SHOW?")) return;
     try {
-      const token = localStorage.getItem("token");
-      const res = await axios.post(
-        `/api/appointments/${id}/no-show`,
-        {},
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      const res = await api.post(`/appointments/${id}/no-show`, {});
       if (res.data?.success) {
         fetchDashboardData();
       }
@@ -87,12 +79,7 @@ export const AppointmentsPage: React.FC = () => {
     if (reason === null) return;
 
     try {
-      const token = localStorage.getItem("token");
-      const res = await axios.post(
-        `/api/appointments/${id}/cancel`,
-        { reason },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      const res = await api.post(`/appointments/${id}/cancel`, { reason });
       if (res.data?.success) {
         fetchDashboardData();
       }

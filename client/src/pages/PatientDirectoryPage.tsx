@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import axios from "axios";
+import { api } from "../services/api";
 import { useAuth } from "../context/AuthContext";
 import { PatientDirectorySkeleton } from "../components/patients/PatientDirectorySkeleton";
 import { PatientSummaryCards } from "../components/patients/PatientSummaryCards";
@@ -53,18 +53,16 @@ export const PatientDirectoryPage: React.FC = () => {
     setError(null);
 
     try {
-      const token = localStorage.getItem("token");
-      const queryParams = new URLSearchParams();
-      if (searchQuery) queryParams.append("search", searchQuery);
-      if (registrationTypeFilter !== "ALL") queryParams.append("registrationType", registrationTypeFilter);
-      if (bloodGroupFilter !== "ALL") queryParams.append("bloodGroup", bloodGroupFilter);
-      if (priorityFilter !== "ALL") queryParams.append("priority", priorityFilter);
-      queryParams.append("page", currentPage.toString());
-      queryParams.append("limit", "20");
+      const params: any = {
+        page: currentPage,
+        limit: 20
+      };
+      if (searchQuery) params.search = searchQuery;
+      if (registrationTypeFilter !== "ALL") params.registrationType = registrationTypeFilter;
+      if (bloodGroupFilter !== "ALL") params.bloodGroup = bloodGroupFilter;
+      if (priorityFilter !== "ALL") params.priority = priorityFilter;
 
-      const res = await axios.get(`/api/patients?${queryParams.toString()}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const res = await api.get("/patients", { params });
 
       if (res.data?.success) {
         setMetrics(res.data.data.metrics);
@@ -86,10 +84,7 @@ export const PatientDirectoryPage: React.FC = () => {
   // Fetch Full Profile for Drawer
   const handleViewProfile = async (id: string) => {
     try {
-      const token = localStorage.getItem("token");
-      const res = await axios.get(`/api/patients/${id}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const res = await api.get(`/patients/${id}`);
       if (res.data?.success) {
         setProfileData(res.data.data);
         setSelectedProfileId(id);
@@ -105,10 +100,7 @@ export const PatientDirectoryPage: React.FC = () => {
     if (!window.confirm("Are you sure you want to remove this allergy safety alert?")) return;
 
     try {
-      const token = localStorage.getItem("token");
-      const res = await axios.delete(`/api/patients/${selectedProfileId}/allergies/${allergyId}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const res = await api.delete(`/patients/${selectedProfileId}/allergies/${allergyId}`);
 
       if (res.data?.success) {
         handleViewProfile(selectedProfileId);
@@ -125,11 +117,9 @@ export const PatientDirectoryPage: React.FC = () => {
     const newStatus = currentStatus === "ACTIVE" ? "RESOLVED" : "ACTIVE";
 
     try {
-      const token = localStorage.getItem("token");
-      const res = await axios.patch(
-        `/api/patients/${selectedProfileId}/conditions/${conditionId}`,
-        { status: newStatus },
-        { headers: { Authorization: `Bearer ${token}` } }
+      const res = await api.patch(
+        `/patients/${selectedProfileId}/conditions/${conditionId}`,
+        { status: newStatus }
       );
 
       if (res.data?.success) {
@@ -147,9 +137,7 @@ export const PatientDirectoryPage: React.FC = () => {
     if (reason === null) return;
 
     try {
-      const token = localStorage.getItem("token");
-      const res = await axios.delete(`/api/patients/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
+      const res = await api.delete(`/patients/${id}`, {
         data: { reason }
       });
 

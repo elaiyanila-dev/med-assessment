@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { X, Activity, AlertTriangle } from "lucide-react";
-import axios from "axios";
+import { api } from "../../services/api";
 
 interface ModalProps {
   patientId: string | null;
@@ -17,7 +17,7 @@ export const ManageConditionsModal: React.FC<ModalProps> = ({
 }) => {
   const [condition, setCondition] = useState("");
   const [status, setStatus] = useState("ACTIVE");
-  const [diagnosedDate, setDiagnosedDate] = useState(() => new Date().toISOString().slice(0, 10));
+  const [diagnosedDate, setDiagnosedDate] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -25,20 +25,20 @@ export const ManageConditionsModal: React.FC<ModalProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!condition.trim()) {
+      setError("Condition name is required");
+      return;
+    }
+
     setSubmitting(true);
     setError(null);
 
     try {
-      const token = localStorage.getItem("token");
-      const res = await axios.post(
-        `/api/patients/${patientId}/conditions`,
-        {
-          condition,
-          status,
-          diagnosed: diagnosedDate ? new Date(diagnosedDate).toISOString() : undefined
-        },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      const res = await api.post(`/patients/${patientId}/conditions`, {
+        condition,
+        status,
+        diagnosed: diagnosedDate ? new Date(diagnosedDate).toISOString() : undefined
+      });
 
       if (res.data?.success) {
         onSuccess();

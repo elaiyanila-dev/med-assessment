@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { X, UserPlus, AlertTriangle } from "lucide-react";
-import axios from "axios";
+import { api } from "../../services/api";
 
 interface ModalProps {
   onClose: () => void;
@@ -29,22 +29,17 @@ export const NewPatientModal: React.FC<ModalProps> = ({
     setError(null);
 
     try {
-      const token = localStorage.getItem("token");
-      const res = await axios.post(
-        "/api/patients",
-        {
-          name,
-          gender,
-          mobile,
-          email: email || undefined,
-          age: age ? Number(age) : undefined,
-          bloodGroup: bloodGroup || undefined,
-          address: address || undefined,
-          priority,
-          department
-        },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      const res = await api.post("/patients", {
+        name,
+        gender,
+        mobile,
+        email: email || undefined,
+        age: age ? Number(age) : undefined,
+        bloodGroup: bloodGroup || undefined,
+        address: address || undefined,
+        priority,
+        department
+      });
 
       if (res.data?.success) {
         onSuccess();

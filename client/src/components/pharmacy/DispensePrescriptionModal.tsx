@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { X, Pill, AlertTriangle, CheckCircle2, PackageCheck } from "lucide-react";
-import axios from "axios";
+import { api } from "../../services/api";
 
 interface ItemDetail {
   id: string;
@@ -67,10 +67,7 @@ export const DispensePrescriptionModal: React.FC<ModalProps> = ({
       setLoading(true);
       setError(null);
       try {
-        const token = localStorage.getItem("token");
-        const res = await axios.get(`/api/pharmacy/prescriptions/${prescriptionId}`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        const res = await api.get(`/pharmacy/prescriptions/${prescriptionId}`);
 
         if (res.data?.success) {
           const data: PrescriptionDetails = res.data.data;
@@ -122,12 +119,7 @@ export const DispensePrescriptionModal: React.FC<ModalProps> = ({
     }
 
     try {
-      const token = localStorage.getItem("token");
-      const res = await axios.post(
-        `/api/pharmacy/prescriptions/${details.id}/dispense`,
-        { items: itemsToDispense },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      const res = await api.post(`/pharmacy/prescriptions/${details.id}/dispense`, { items: itemsToDispense });
 
       if (res.data?.success) {
         onSuccess();

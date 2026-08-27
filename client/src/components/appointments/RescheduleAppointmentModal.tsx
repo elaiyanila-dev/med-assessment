@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { X, RotateCcw, AlertTriangle } from "lucide-react";
-import axios from "axios";
+import { api } from "../../services/api";
 
 interface AppointmentDetail {
   id: string;
@@ -22,10 +22,10 @@ export const RescheduleAppointmentModal: React.FC<ModalProps> = ({
   onSuccess
 }) => {
   const [newScheduledAt, setNewScheduledAt] = useState(() => {
-    const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    tomorrow.setHours(10, 0, 0, 0);
-    return tomorrow.toISOString().slice(0, 16);
+    const nextDay = new Date();
+    nextDay.setDate(nextDay.getDate() + 1);
+    nextDay.setHours(10, 0, 0, 0);
+    return nextDay.toISOString().slice(0, 16);
   });
   const [reason, setReason] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -39,15 +39,10 @@ export const RescheduleAppointmentModal: React.FC<ModalProps> = ({
     setError(null);
 
     try {
-      const token = localStorage.getItem("token");
-      const res = await axios.patch(
-        `/api/appointments/${appointment.id}/reschedule`,
-        {
-          scheduledAt: new Date(newScheduledAt).toISOString(),
-          reason: reason || undefined
-        },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      const res = await api.patch(`/appointments/${appointment.id}/reschedule`, {
+        scheduledAt: new Date(newScheduledAt).toISOString(),
+        reason: reason || undefined
+      });
 
       if (res.data?.success) {
         onSuccess();

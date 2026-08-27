@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { X, Calendar, UserPlus, AlertTriangle } from "lucide-react";
-import axios from "axios";
-
-interface ModalProps {
-  mode: "BOOK" | "REGISTER_AND_BOOK";
-  onClose: () => void;
-  onSuccess: () => void;
-}
+import { X, Calendar, UserPlus, Search, UserCheck, AlertTriangle } from "lucide-react";
+import { api } from "../../services/api";
 
 interface PatientOption {
   id: string;
@@ -19,6 +13,13 @@ interface DoctorOption {
   id: string;
   name: string;
   department?: string;
+  specialization?: string;
+}
+
+interface ModalProps {
+  mode: "BOOK" | "REGISTER_AND_BOOK" | null;
+  onClose: () => void;
+  onSuccess: () => void;
 }
 
 export const NewAppointmentModal: React.FC<ModalProps> = ({
@@ -57,10 +58,7 @@ export const NewAppointmentModal: React.FC<ModalProps> = ({
     // Fetch Doctors list
     const fetchDoctors = async () => {
       try {
-        const token = localStorage.getItem("token");
-        const res = await axios.get("/api/queue", {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        const res = await api.get("/queue");
         if (res.data?.success && res.data.data.doctors) {
           setDoctors(res.data.data.doctors);
           if (res.data.data.doctors.length > 0) {
@@ -87,10 +85,7 @@ export const NewAppointmentModal: React.FC<ModalProps> = ({
 
     const searchPatients = async () => {
       try {
-        const token = localStorage.getItem("token");
-        const res = await axios.get(`/api/history?search=${encodeURIComponent(patientSearch)}`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        const res = await api.get(`/history/patients?search=${encodeURIComponent(patientSearch)}`);
         if (res.data?.success) {
           setPatientResults(res.data.data);
         }
@@ -109,8 +104,6 @@ export const NewAppointmentModal: React.FC<ModalProps> = ({
     setSubmitting(true);
 
     try {
-      const token = localStorage.getItem("token");
-
       if (mode === "BOOK") {
         if (!selectedPatient) {
           setError("Please search and select a patient");
@@ -118,17 +111,13 @@ export const NewAppointmentModal: React.FC<ModalProps> = ({
           return;
         }
 
-        const res = await axios.post(
-          "/api/appointments",
-          {
-            patientId: selectedPatient.id,
-            doctorId: selectedDoctorId,
-            department,
-            type,
-            scheduledAt: new Date(scheduledAt).toISOString()
-          },
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
+        const res = await api.post("/appointments", {
+          patientId: selectedPatient.id,
+          doctorId: selectedDoctorId,
+          department,
+          type,
+          scheduledAt: new Date(scheduledAt).toISOString()
+        });
 
         if (res.data?.success) {
           onSuccess();
@@ -142,22 +131,18 @@ export const NewAppointmentModal: React.FC<ModalProps> = ({
           return;
         }
 
-        const res = await axios.post(
-          "/api/appointments/register-and-book",
-          {
-            name: regName,
-            gender: regGender,
-            mobile: regMobile,
-            email: regEmail || undefined,
-            age: regAge ? Number(regAge) : undefined,
-            bloodGroup: regBloodGroup || undefined,
-            doctorId: selectedDoctorId,
-            department,
-            type,
-            scheduledAt: new Date(scheduledAt).toISOString()
-          },
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
+        const res = await api.post("/appointments/register-and-book", {
+          name: regName,
+          gender: regGender,
+          mobile: regMobile,
+          email: regEmail || undefined,
+          age: regAge ? Number(regAge) : undefined,
+          bloodGroup: regBloodGroup || undefined,
+          doctorId: selectedDoctorId,
+          department,
+          type,
+          scheduledAt: new Date(scheduledAt).toISOString()
+        });
 
         if (res.data?.success) {
           onSuccess();

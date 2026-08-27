@@ -1,23 +1,22 @@
 import React, { useState } from "react";
-import { X, Edit, AlertTriangle } from "lucide-react";
-import axios from "axios";
+import { X, Edit, UserCheck, AlertTriangle } from "lucide-react";
+import { api } from "../../services/api";
 
-interface PatientDetail {
+interface PatientData {
   id: string;
   name: string;
   UHID: string;
+  age?: number | null;
   gender: string;
   mobile: string;
-  email?: string;
-  age?: number;
-  bloodGroup?: string;
-  address?: string;
+  email?: string | null;
+  bloodGroup?: string | null;
+  address?: string | null;
   priority: string;
-  department?: string;
 }
 
 interface ModalProps {
-  patient: PatientDetail | null;
+  patient: PatientData | null;
   onClose: () => void;
   onSuccess: () => void;
 }
@@ -46,21 +45,16 @@ export const EditPatientModal: React.FC<ModalProps> = ({
     setError(null);
 
     try {
-      const token = localStorage.getItem("token");
-      const res = await axios.patch(
-        `/api/patients/${patient.id}`,
-        {
-          name,
-          gender,
-          mobile,
-          email: email || undefined,
-          age: age ? Number(age) : undefined,
-          bloodGroup: bloodGroup || undefined,
-          address: address || undefined,
-          priority
-        },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      const res = await api.patch(`/patients/${patient.id}`, {
+        name,
+        gender,
+        mobile,
+        email: email || undefined,
+        age: age ? Number(age) : undefined,
+        bloodGroup: bloodGroup || undefined,
+        address: address || undefined,
+        priority
+      });
 
       if (res.data?.success) {
         onSuccess();

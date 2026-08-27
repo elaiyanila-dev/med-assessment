@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Pill, RefreshCw, AlertTriangle } from "lucide-react";
-import axios from "axios";
+import { api } from "../services/api";
 import { useAuth } from "../context/AuthContext";
 import { PharmacySkeleton } from "../components/pharmacy/PharmacySkeleton";
 import { PharmacySummaryCards } from "../components/pharmacy/PharmacySummaryCards";
@@ -59,9 +59,7 @@ export const PharmacyPage: React.FC = () => {
     setLoading(true);
     setError(null);
     try {
-      const token = localStorage.getItem("token");
-      const res = await axios.get("/api/pharmacy", {
-        headers: { Authorization: `Bearer ${token}` },
+      const res = await api.get("/pharmacy", {
         params: {
           search: searchQuery || undefined,
           status: statusFilter !== "ALL" ? statusFilter : undefined

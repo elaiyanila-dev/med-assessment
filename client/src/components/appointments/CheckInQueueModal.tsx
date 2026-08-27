@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { X, UserCheck, AlertTriangle } from "lucide-react";
-import axios from "axios";
+import { api } from "../../services/api";
 
 interface AppointmentDetail {
   id: string;
@@ -35,12 +35,7 @@ export const CheckInQueueModal: React.FC<ModalProps> = ({
     setError(null);
 
     try {
-      const token = localStorage.getItem("token");
-      const res = await axios.post(
-        `/api/appointments/${appointment.id}/check-in`,
-        { priority, source },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      const res = await api.post(`/appointments/${appointment.id}/check-in`, { priority, source });
 
       if (res.data?.success) {
         onSuccess();

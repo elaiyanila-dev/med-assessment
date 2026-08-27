@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { X, ShieldAlert, AlertTriangle } from "lucide-react";
-import axios from "axios";
+import { api } from "../../services/api";
 
 interface ModalProps {
   patientId: string | null;
@@ -25,20 +25,20 @@ export const ManageAllergiesModal: React.FC<ModalProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!allergen.trim()) {
+      setError("Allergen name is required");
+      return;
+    }
+
     setSubmitting(true);
     setError(null);
 
     try {
-      const token = localStorage.getItem("token");
-      const res = await axios.post(
-        `/api/patients/${patientId}/allergies`,
-        {
-          allergen,
-          severity,
-          reaction: reaction || undefined
-        },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      const res = await api.post(`/patients/${patientId}/allergies`, {
+        allergen,
+        severity,
+        reaction: reaction || undefined
+      });
 
       if (res.data?.success) {
         onSuccess();
