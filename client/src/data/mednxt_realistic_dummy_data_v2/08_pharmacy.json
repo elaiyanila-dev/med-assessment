@@ -1,0 +1,220 @@
+{
+  "medicines": [
+    {
+      "id": "MED-001",
+      "name": "Dolo 650",
+      "genericName": "Paracetamol",
+      "category": "Analgesic",
+      "rack": "R1-S2",
+      "unit": "Tablet",
+      "stock": 1230,
+      "minimumStock": 500,
+      "unitPrice": 2.0,
+      "expiryDate": "2025-12-01",
+      "status": "EXPIRED",
+      "manufacturer": "Micro Labs"
+    },
+    {
+      "id": "MED-002",
+      "name": "Augmentin 625",
+      "genericName": "Amoxicillin + Clavulanic Acid",
+      "category": "Antibiotic",
+      "rack": "R2-S1",
+      "unit": "Tablet",
+      "stock": 45,
+      "minimumStock": 100,
+      "unitPrice": 22.0,
+      "expiryDate": "2027-06-15",
+      "status": "LOW_STOCK",
+      "manufacturer": "GlaxoSmithKline"
+    },
+    {
+      "id": "MED-003",
+      "name": "Pan 40",
+      "genericName": "Pantoprazole",
+      "category": "Antacid",
+      "rack": "R1-S4",
+      "unit": "Tablet",
+      "stock": 800,
+      "minimumStock": 300,
+      "unitPrice": 8.0,
+      "expiryDate": "2027-08-10",
+      "status": "ACTIVE",
+      "manufacturer": "Sun Pharma"
+    },
+    {
+      "id": "MED-004",
+      "name": "Azithral 500",
+      "genericName": "Azithromycin",
+      "category": "Antibiotic",
+      "rack": "R2-S3",
+      "unit": "Tablet",
+      "stock": 20,
+      "minimumStock": 50,
+      "unitPrice": 18.0,
+      "expiryDate": "2027-03-20",
+      "status": "LOW_STOCK",
+      "manufacturer": "Alembic Pharmaceuticals"
+    },
+    {
+      "id": "MED-005",
+      "name": "Monocef 1g",
+      "genericName": "Ceftriaxone",
+      "category": "Antibiotic",
+      "rack": "R3-S1",
+      "unit": "Vial",
+      "stock": 60,
+      "minimumStock": 20,
+      "unitPrice": 95.0,
+      "expiryDate": "2027-01-15",
+      "status": "ACTIVE",
+      "manufacturer": "Cipla"
+    },
+    {
+      "id": "MED-006",
+      "name": "Atorva 10",
+      "genericName": "Atorvastatin",
+      "category": "Statin",
+      "rack": "R4-S1",
+      "unit": "Tablet",
+      "stock": 350,
+      "minimumStock": 100,
+      "unitPrice": 6.0,
+      "expiryDate": "2028-02-01",
+      "status": "ACTIVE",
+      "manufacturer": "Zydus Lifesciences"
+    },
+    {
+      "id": "MED-007",
+      "name": "Metformin 500",
+      "genericName": "Metformin",
+      "category": "Antidiabetic",
+      "rack": "R4-S2",
+      "unit": "Tablet",
+      "stock": 420,
+      "minimumStock": 150,
+      "unitPrice": 3.5,
+      "expiryDate": "2028-01-10",
+      "status": "ACTIVE",
+      "manufacturer": "USV"
+    },
+    {
+      "id": "MED-008",
+      "name": "Salbutamol Inhaler",
+      "genericName": "Salbutamol",
+      "category": "Respiratory",
+      "rack": "R5-S1",
+      "unit": "Inhaler",
+      "stock": 35,
+      "minimumStock": 10,
+      "unitPrice": 120.0,
+      "expiryDate": "2027-11-30",
+      "status": "ACTIVE",
+      "manufacturer": "Cipla"
+    }
+  ],
+  "pharmacyOrders": [
+    {
+      "id": "PH-001",
+      "prescriptionId": "RX-001",
+      "patientId": "PAT-002",
+      "status": "PENDING_DISPENSE",
+      "totalAmount": 20.0,
+      "createdAt": "2026-08-26T20:20:00",
+      "dispensedAt": null
+    },
+    {
+      "id": "PH-002",
+      "prescriptionId": "RX-002",
+      "patientId": "PAT-001",
+      "status": "DISPENSED",
+      "totalAmount": 20.0,
+      "createdAt": "2026-08-26T18:15:00",
+      "dispensedAt": "2026-08-26T18:40:00"
+    }
+  ],
+  "pharmacyTransactions": [
+    {
+      "id": "PHTX-001",
+      "medicineId": "MED-001",
+      "type": "DISPENSE",
+      "quantity": 10,
+      "referenceId": "PH-002",
+      "performedBy": "USR-PH-001",
+      "timestamp": "2026-08-26T18:40:00"
+    },
+    {
+      "id": "PHTX-002",
+      "medicineId": "MED-003",
+      "type": "IPD_ISSUE",
+      "quantity": 5,
+      "referenceId": "IND-001",
+      "performedBy": "USR-PH-001",
+      "timestamp": "2026-08-26T12:00:00"
+    },
+    {
+      "id": "PHTX-003",
+      "medicineId": "MED-005",
+      "type": "IPD_ISSUE",
+      "quantity": 2,
+      "referenceId": "IND-002",
+      "performedBy": "USR-PH-001",
+      "timestamp": "2026-08-26T12:30:00"
+    }
+  ],
+  "ipdIndents": [
+    {
+      "id": "IND-001",
+      "patientId": "PAT-001",
+      "bedId": "BED-G102",
+      "ward": "General Ward Male",
+      "status": "PENDING",
+      "priority": "ROUTINE",
+      "createdAt": "2026-08-26T07:30:00"
+    },
+    {
+      "id": "IND-002",
+      "patientId": "PAT-003",
+      "bedId": "BED-P301",
+      "ward": "Private Ward",
+      "status": "APPROVED",
+      "priority": "STAT",
+      "createdAt": "2026-08-26T08:00:00"
+    },
+    {
+      "id": "IND-003",
+      "patientId": "PAT-008",
+      "bedId": "BED-ICU1",
+      "ward": "ICU",
+      "status": "PENDING",
+      "priority": "STAT",
+      "createdAt": "2026-08-26T08:15:00"
+    }
+  ],
+  "ipdIndentItems": [
+    {
+      "id": "INDI-001",
+      "indentId": "IND-001",
+      "medicineId": "MED-003",
+      "dose": "40mg",
+      "quantity": 5,
+      "packaging": "Tablet Strip"
+    },
+    {
+      "id": "INDI-002",
+      "indentId": "IND-002",
+      "medicineId": "MED-005",
+      "dose": "1g",
+      "quantity": 2,
+      "packaging": "Vial"
+    },
+    {
+      "id": "INDI-003",
+      "indentId": "IND-003",
+      "medicineId": "MED-005",
+      "dose": "1g",
+      "quantity": 4,
+      "packaging": "Vial"
+    }
+  ]
+}

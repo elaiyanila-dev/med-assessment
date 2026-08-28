@@ -1,0 +1,174 @@
+{
+  "consultations": [
+    {
+      "id": "CON-001",
+      "patientId": "PAT-001",
+      "doctorId": "USR-DOC-001",
+      "status": "COMPLETED",
+      "startedAt": "2026-08-26T18:11:00",
+      "heldAt": null,
+      "finishedAt": "2026-08-26T18:20:00",
+      "subjective": "Patient reports high fever and chills for two days.",
+      "objective": "Temperature 101.8°F. Mild dehydration.",
+      "assessment": "Viral fever with dehydration.",
+      "plan": "Oral fluids, antipyretic, follow-up if symptoms worsen.",
+      "icd10Code": "R50.9"
+    },
+    {
+      "id": "CON-002",
+      "patientId": "PAT-003",
+      "doctorId": "USR-DOC-002",
+      "status": "COMPLETED",
+      "startedAt": "2026-08-26T18:00:00",
+      "heldAt": null,
+      "finishedAt": "2026-08-26T18:12:00",
+      "subjective": "Chest pain on exertion.",
+      "objective": "BP 150/92. ECG reviewed.",
+      "assessment": "Chest pain requiring cardiology evaluation.",
+      "plan": "Continue monitoring and cardiology follow-up.",
+      "icd10Code": "R07.9"
+    },
+    {
+      "id": "CON-003",
+      "patientId": "PAT-005",
+      "doctorId": "USR-DOC-001",
+      "status": "ON_HOLD",
+      "startedAt": "2026-08-26T20:34:00",
+      "heldAt": "2026-08-26T20:35:00",
+      "finishedAt": null,
+      "subjective": "Joint pain and stiffness.",
+      "objective": "Knee tenderness.",
+      "assessment": "Osteoarthritis flare.",
+      "plan": "Analgesia and physiotherapy advice.",
+      "icd10Code": "M17.9"
+    }
+  ],
+  "consultationNotes": [
+    {
+      "id": "NOTE-001",
+      "consultationId": "CON-001",
+      "section": "SUBJECTIVE",
+      "content": "Patient reports high fever and chills for two days."
+    },
+    {
+      "id": "NOTE-002",
+      "consultationId": "CON-001",
+      "section": "OBJECTIVE",
+      "content": "Temperature 101.8°F. Mild dehydration."
+    },
+    {
+      "id": "NOTE-003",
+      "consultationId": "CON-001",
+      "section": "ASSESSMENT",
+      "content": "Viral fever with dehydration."
+    },
+    {
+      "id": "NOTE-004",
+      "consultationId": "CON-001",
+      "section": "PLAN",
+      "content": "Oral fluids, antipyretic, follow-up if symptoms worsen."
+    }
+  ],
+  "vitals": [
+    {
+      "id": "VIT-001",
+      "patientId": "PAT-001",
+      "recordedBy": "USR-NUR-001",
+      "recordedAt": "2026-08-26T17:50:00",
+      "bpSystolic": 120,
+      "bpDiastolic": 80,
+      "spo2": 98,
+      "temperatureF": 98.6,
+      "weightKg": 65
+    },
+    {
+      "id": "VIT-002",
+      "patientId": "PAT-001",
+      "recordedBy": "USR-NUR-001",
+      "recordedAt": "2026-08-26T18:10:00",
+      "bpSystolic": 118,
+      "bpDiastolic": 78,
+      "spo2": 97,
+      "temperatureF": 99.1,
+      "weightKg": 65
+    },
+    {
+      "id": "VIT-003",
+      "patientId": "PAT-003",
+      "recordedBy": "USR-NUR-002",
+      "recordedAt": "2026-08-26T17:55:00",
+      "bpSystolic": 150,
+      "bpDiastolic": 92,
+      "spo2": 96,
+      "temperatureF": 98.8,
+      "weightKg": 78
+    },
+    {
+      "id": "VIT-004",
+      "patientId": "PAT-005",
+      "recordedBy": "USR-NUR-001",
+      "recordedAt": "2026-08-26T20:30:00",
+      "bpSystolic": 132,
+      "bpDiastolic": 84,
+      "spo2": 98,
+      "temperatureF": 98.4,
+      "weightKg": 69
+    }
+  ],
+  "activityTimeline": [
+    {
+      "id": "ACT-001",
+      "patientId": "PAT-002",
+      "actorId": "USR-FD-001",
+      "actorType": "FRONT_DESK",
+      "eventType": "REGISTRATION",
+      "timestamp": "2023-11-01T15:00:00",
+      "description": "Patient registered for IPD. Priority: Urgent."
+    },
+    {
+      "id": "ACT-002",
+      "patientId": "PAT-001",
+      "actorId": "SYSTEM",
+      "actorType": "SYSTEM",
+      "eventType": "CONSULTATION_STARTED",
+      "timestamp": "2026-08-26T18:11:00",
+      "description": "Consultation Started"
+    },
+    {
+      "id": "ACT-003",
+      "patientId": "PAT-001",
+      "actorId": "SYSTEM",
+      "actorType": "SYSTEM",
+      "eventType": "CONSULTATION_COMPLETED",
+      "timestamp": "2026-08-26T18:20:00",
+      "description": "Consultation Marked as Completed"
+    },
+    {
+      "id": "ACT-004",
+      "patientId": "PAT-005",
+      "actorId": "SYSTEM",
+      "actorType": "SYSTEM",
+      "eventType": "CONSULTATION_STARTED",
+      "timestamp": "2026-08-26T20:34:00",
+      "description": "Consultation Started"
+    },
+    {
+      "id": "ACT-005",
+      "patientId": "PAT-005",
+      "actorId": "SYSTEM",
+      "actorType": "SYSTEM",
+      "eventType": "CONSULTATION_HELD",
+      "timestamp": "2026-08-26T20:35:00",
+      "description": "Consultation Paused/Held"
+    },
+    {
+      "id": "ACT-006",
+      "patientId": "PAT-003",
+      "actorId": "SYSTEM",
+      "actorType": "SYSTEM",
+      "eventType": "ADMISSION",
+      "timestamp": "2026-08-20T10:00:00",
+      "description": "Patient admitted to Cardiology ICU."
+    }
+  ]
+}

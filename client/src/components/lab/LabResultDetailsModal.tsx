@@ -120,26 +120,46 @@ export const LabResultDetailsModal: React.FC<ModalProps> = ({
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100">
-                      {res.parameters?.map((p: any) => (
-                        <tr key={p.id} className="hover:bg-slate-50/50">
-                          <td className="py-2 px-2 font-medium text-slate-700">{p.parameterName}</td>
-                          <td className="py-2 px-2 font-mono font-bold text-slate-900">
-                            {p.resultValue} {p.unit}
-                          </td>
-                          <td className="py-2 px-2 text-slate-500">{p.referenceRange}</td>
-                          <td className="py-2 px-2 text-right">
-                            {p.abnormalFlag ? (
-                              <span className="px-1.5 py-0.5 rounded text-[9px] font-bold bg-rose-100 text-rose-700">
-                                ABNORMAL
-                              </span>
-                            ) : (
-                              <span className="px-1.5 py-0.5 rounded text-[9px] font-bold bg-emerald-50 text-emerald-600">
-                                NORMAL
-                              </span>
-                            )}
-                          </td>
-                        </tr>
-                      ))}
+                      {(() => {
+                        const rawParams = res.parameters;
+                        let paramList: any[] = [];
+                        if (Array.isArray(rawParams)) {
+                          paramList = rawParams;
+                        } else if (rawParams && typeof rawParams === "object") {
+                          paramList = Object.entries(rawParams).map(([key, val], idx) => {
+                            const valStr = String(val);
+                            const parts = valStr.split(" ");
+                            return {
+                              id: `param-${idx}`,
+                              parameterName: key,
+                              resultValue: parts[0] || valStr,
+                              unit: parts.slice(1).join(" ") || "",
+                              referenceRange: "Normal Range",
+                              abnormalFlag: false
+                            };
+                          });
+                        }
+                        return paramList.map((p: any) => (
+                          <tr key={p.id} className="hover:bg-slate-50/50">
+                            <td className="py-2 px-2 font-medium text-slate-700">{p.parameterName}</td>
+                            <td className="py-2 px-2 font-mono font-bold text-slate-900">
+                              {p.resultValue} {p.unit}
+                            </td>
+                            <td className="py-2 px-2 text-slate-500">{p.referenceRange}</td>
+                            <td className="py-2 px-2 text-right">
+                              {p.abnormalFlag ? (
+                                <span className="px-1.5 py-0.5 rounded text-[9px] font-bold bg-rose-100 text-rose-700">
+                                  ABNORMAL
+                                </span>
+                              ) : (
+                                <span className="px-1.5 py-0.5 rounded text-[9px] font-bold bg-emerald-50 text-emerald-600">
+                                  NORMAL
+                                </span>
+                              )}
+                            </td>
+                          </tr>
+                        ));
+                      })()}
                     </tbody>
                   </table>
 

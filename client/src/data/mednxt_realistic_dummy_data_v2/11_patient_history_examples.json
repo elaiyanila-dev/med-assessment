@@ -1,0 +1,72 @@
+{
+  "patientHistoryExamples": [
+    {
+      "patientId": "PAT-002",
+      "patientName": "Priya Sharma",
+      "events": [
+        {
+          "type": "REGISTRATION",
+          "actor": "Meera Krishnan",
+          "department": "Front Desk",
+          "timestamp": "2023-11-01T15:00:00",
+          "description": "Patient registered for IPD. Priority: Urgent."
+        },
+        {
+          "type": "CONSULTATION",
+          "actor": "Dr. Rohan Sharma",
+          "department": "General Medicine",
+          "timestamp": "2026-08-26T18:20:00",
+          "description": "Consultation completed. Viral fever and dehydration assessed."
+        },
+        {
+          "type": "LAB_REPORT",
+          "actor": "Anita Rao",
+          "department": "Laboratory",
+          "timestamp": "2026-08-26T19:30:00",
+          "description": "CBC and CRP report released."
+        },
+        {
+          "type": "ADMISSION",
+          "actor": "Dr. Rohan Sharma",
+          "department": "General Medicine",
+          "timestamp": "2026-08-25T10:00:00",
+          "description": "Admitted to General Ward Male, Bed G-102."
+        },
+        {
+          "type": "VITALS",
+          "actor": "Priya Nair",
+          "department": "General Ward Male",
+          "timestamp": "2026-08-26T18:10:00",
+          "description": "BP 118/78, SpO2 97%, Temp 99.1°F, Weight 65 kg."
+        }
+      ]
+    },
+    {
+      "patientId": "PAT-003",
+      "patientName": "Vikram Singh",
+      "events": [
+        {
+          "type": "CONSULTATION",
+          "actor": "Dr. Arvind Mehta",
+          "department": "Cardiology",
+          "timestamp": "2026-08-26T18:12:00",
+          "description": "Consultation completed for exertional chest pain."
+        },
+        {
+          "type": "ADMISSION",
+          "actor": "Dr. Arvind Mehta",
+          "department": "Cardiology",
+          "timestamp": "2026-08-20T10:00:00",
+          "description": "Admitted to Private Ward, Bed P-301."
+        },
+        {
+          "type": "VITALS",
+          "actor": "Kavya Menon",
+          "department": "ICU",
+          "timestamp": "2026-08-26T17:55:00",
+          "description": "BP 150/92, SpO2 96%, Temp 98.8°F, Weight 78 kg."
+        }
+      ]
+    }
+  ]
+}

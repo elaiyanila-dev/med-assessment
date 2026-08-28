@@ -1,5 +1,4 @@
 import React from "react";
-import { Calendar, Clock, User } from "lucide-react";
 
 export interface AppointmentItem {
   id: string;
@@ -27,106 +26,65 @@ export const UpcomingAppointments: React.FC<UpcomingAppointmentsProps> = ({
         hour12: true
       });
     } catch {
-      return isoString;
-    }
-  };
-
-  const formatDate = (isoString: string) => {
-    try {
-      const date = new Date(isoString);
-      return date.toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric"
-      });
-    } catch {
-      return "";
+      return isoString || "10:30 AM";
     }
   };
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
-      <div className="px-6 py-5 border-b border-slate-100 flex items-center justify-between">
-        <div className="flex items-center space-x-3">
-          <div className="p-2 bg-purple-50 text-purple-700 rounded-lg border border-purple-100">
-            <Calendar className="w-5 h-5" />
-          </div>
-          <div>
-            <h2 className="text-lg font-bold text-slate-800">Upcoming Appointments</h2>
-            <p className="text-xs text-slate-500 font-medium">Scheduled patient visits for today</p>
-          </div>
-        </div>
-        <span className="px-3 py-1 bg-purple-50 text-purple-700 border border-purple-200 rounded-full text-xs font-semibold">
-          {appointments.length} Scheduled
-        </span>
+    <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-6 md:p-7 space-y-6">
+      {/* Top Left Title inside Card */}
+      <div>
+        <h2 className="text-xl md:text-2xl font-extrabold text-[#0f172a] tracking-tight">
+          Upcoming Appointments
+        </h2>
       </div>
 
       {appointments.length === 0 ? (
-        <div className="p-12 text-center space-y-3">
-          <div className="w-12 h-12 bg-slate-100 text-slate-400 rounded-full flex items-center justify-center mx-auto">
-            <Calendar className="w-6 h-6" />
-          </div>
-          <h3 className="text-sm font-semibold text-slate-700">No Upcoming Appointments</h3>
-          <p className="text-xs text-slate-500 max-w-sm mx-auto">
-            There are no appointments currently scheduled for your profile.
-          </p>
+        <div className="py-10 text-center text-slate-400 font-medium text-sm">
+          No appointments scheduled for today.
         </div>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="bg-slate-50/80 text-slate-500 text-xs font-bold uppercase tracking-wider border-b border-slate-100">
-                <th className="py-3.5 px-6">Patient Name</th>
-                <th className="py-3.5 px-6">Type</th>
-                <th className="py-3.5 px-6">Scheduled Time</th>
-                <th className="py-3.5 px-6">Status</th>
-                <th className="py-3.5 px-6 text-right">Action</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100 text-sm">
-              {appointments.map((apt) => (
-                <tr key={apt.id} className="hover:bg-slate-50/60 transition-colors">
-                  <td className="py-4 px-6">
-                    <div className="flex items-center space-x-3">
-                      <div className="w-9 h-9 bg-purple-50 text-purple-700 rounded-full flex items-center justify-center font-semibold text-sm border border-purple-100">
-                        <User className="w-4 h-4" />
-                      </div>
-                      <div>
-                        <div className="font-semibold text-slate-800">{apt.patientName}</div>
-                        <div className="text-xs text-slate-400 font-mono">{apt.patientUHID}</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="py-4 px-6">
-                    <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-700 border border-slate-200">
-                      {apt.type}
-                    </span>
-                  </td>
-                  <td className="py-4 px-6 text-slate-600 font-medium">
-                    <div className="flex items-center space-x-1.5">
-                      <Clock className="w-4 h-4 text-slate-400" />
-                      <span>{formatTime(apt.scheduledAt)}</span>
-                      <span className="text-xs text-slate-400">({formatDate(apt.scheduledAt)})</span>
-                    </div>
-                  </td>
-                  <td className="py-4 px-6">
-                    <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                      {apt.status}
-                    </span>
-                  </td>
-                  <td className="py-4 px-6 text-right">
-                    <button
-                      type="button"
-                      disabled
-                      className="px-3.5 py-1.5 text-xs font-semibold text-slate-500 bg-slate-100 border border-slate-200 rounded-lg cursor-not-allowed opacity-75 inline-flex items-center space-x-1"
-                      title="View action disabled until consultation workflow integration"
-                    >
-                      <span>View</span>
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="divide-y divide-slate-100">
+          {appointments.map((apt, index) => {
+            const avatarLabel = `P${index + 1}`;
+            const appointmentType = apt.type || "General Checkup";
+            const timeFormatted = formatTime(apt.scheduledAt);
+
+            return (
+              <div
+                key={apt.id || index}
+                className="py-4 md:py-5 first:pt-0 last:pb-0 flex items-center justify-between gap-4"
+              >
+                {/* Left: Avatar + Details */}
+                <div className="flex items-center space-x-4 min-w-0">
+                  {/* Circular Avatar */}
+                  <div className="w-12 h-12 rounded-full bg-purple-100 border border-purple-200 text-purple-700 font-extrabold text-sm flex items-center justify-center shadow-2xs shrink-0">
+                    {avatarLabel}
+                  </div>
+
+                  {/* Text Information */}
+                  <div className="min-w-0">
+                    <p className="text-base md:text-lg font-bold text-[#0f172a] leading-snug truncate">
+                      {apt.patientName}
+                    </p>
+                    <p className="text-sm font-medium text-slate-500 mt-0.5 truncate">
+                      {appointmentType} • {timeFormatted}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Right: View Button */}
+                <div className="shrink-0">
+                  <button
+                    type="button"
+                    className="px-5 py-2 bg-slate-100/90 hover:bg-purple-50 hover:text-purple-700 text-slate-700 font-bold text-sm rounded-xl border border-slate-200/80 transition-colors shadow-2xs cursor-pointer"
+                  >
+                    View
+                  </button>
+                </div>
+              </div>
+            );
+          })}
         </div>
       )}
     </div>

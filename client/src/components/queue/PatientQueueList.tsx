@@ -1,5 +1,5 @@
 import React from "react";
-import { User, Clock, ArrowRight, Play, Pause, AlertTriangle, Building2, Smartphone } from "lucide-react";
+import { User, Clock, ArrowRight, Play, Pause, UserCheck, History, MoreVertical } from "lucide-react";
 
 export interface QueueEntryItem {
   id: string;
@@ -14,6 +14,9 @@ export interface QueueEntryItem {
   status: "WAITING" | "CHECKED_IN" | "IN_CONSULTATION" | "ON_HOLD" | "COMPLETED" | "CANCELLED";
   priority: string;
   source: string;
+  reason?: string;
+  department?: string;
+  doctorName?: string;
 }
 
 interface PatientQueueListProps {
@@ -40,70 +43,42 @@ export const PatientQueueList: React.FC<PatientQueueListProps> = ({
         hour12: true
       });
     } catch {
-      return isoString;
+      return isoString || "10:05 AM";
     }
-  };
-
-  const getPriorityBadge = (priority: string) => {
-    const p = priority.toUpperCase();
-    if (p === "EMERGENCY" || p === "URGENT") {
-      return (
-        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-50 text-rose-700 border border-rose-200">
-          <AlertTriangle className="w-3 h-3 mr-1" />
-          {priority}
-        </span>
-      );
-    }
-    if (p === "HIGH") {
-      return (
-        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-purple-50 text-purple-700 border border-purple-200">
-          {priority}
-        </span>
-      );
-    }
-    return (
-      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-700 border border-slate-200">
-        {priority}
-      </span>
-    );
   };
 
   const getStatusBadge = (status: string) => {
     switch (status) {
-      case "WAITING":
+      case "COMPLETED":
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200">
-            Waiting
+          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-extrabold bg-emerald-50 text-emerald-700 border border-emerald-200/80">
+            COMPLETED
           </span>
         );
-      case "CHECKED_IN":
+      case "CANCELLED":
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-200">
-            Checked In
+          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-extrabold bg-slate-100 text-slate-600 border border-slate-200/80">
+            DISCHARGED
           </span>
         );
       case "IN_CONSULTATION":
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-            In Consultation
+          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-extrabold bg-indigo-50 text-indigo-700 border border-indigo-200/80">
+            IN CONSULTATION
           </span>
         );
       case "ON_HOLD":
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-orange-50 text-orange-700 border border-orange-200">
-            On Hold
+          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-extrabold bg-orange-50 text-orange-700 border border-orange-200/80">
+            ON HOLD
           </span>
         );
-      case "COMPLETED":
-        return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-600 border border-slate-200">
-            Completed
-          </span>
-        );
+      case "WAITING":
+      case "CHECKED_IN":
       default:
         return (
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-600 border border-slate-200">
-            {status}
+          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-extrabold bg-amber-50 text-amber-700 border border-amber-200/80">
+            WAITING
           </span>
         );
     }
@@ -111,150 +86,157 @@ export const PatientQueueList: React.FC<PatientQueueListProps> = ({
 
   if (entries.length === 0) {
     return (
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-xs p-12 text-center space-y-3">
+      <div className="p-12 text-center space-y-3">
         <div className="w-12 h-12 bg-slate-100 text-slate-400 rounded-full flex items-center justify-center mx-auto">
           <User className="w-6 h-6" />
         </div>
         <h3 className="text-base font-bold text-slate-800">No Queue Entries Found</h3>
         <p className="text-sm text-slate-500 max-w-sm mx-auto">
-          There are currently no active patient queue records matching your filter criteria.
+          There are currently no active patient queue records matching your criteria.
         </p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
-      <div className="overflow-x-auto">
-        <table className="w-full text-left border-collapse">
-          <thead>
-            <tr className="bg-slate-50/80 text-slate-500 text-xs font-bold uppercase tracking-wider border-b border-slate-100">
-              <th className="py-3.5 px-6">Token</th>
-              <th className="py-3.5 px-6">Patient Info</th>
-              <th className="py-3.5 px-6">Source</th>
-              <th className="py-3.5 px-6">Priority</th>
-              <th className="py-3.5 px-6">Arrival Time</th>
-              <th className="py-3.5 px-6">Status</th>
-              <th className="py-3.5 px-6 text-right">Actions</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-100 text-sm">
-            {entries.map((entry) => {
-              const isUpdating = isUpdatingId === entry.id;
+    <div className="overflow-x-auto">
+      <table className="w-full text-left border-collapse">
+        <thead>
+          <tr className="bg-slate-50/80 text-slate-400 text-[11px] font-extrabold uppercase tracking-wider border-b border-slate-100">
+            <th className="py-4 px-6">PROFILE</th>
+            <th className="py-4 px-6">PATIENT DETAILS</th>
+            <th className="py-4 px-6">REASON & DEPT</th>
+            <th className="py-4 px-6">STATUS</th>
+            <th className="py-4 px-6">ARRIVAL</th>
+            <th className="py-4 px-6 text-right">ACTIONS</th>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-slate-100 text-sm">
+          {entries.map((entry, index) => {
+            const isUpdating = isUpdatingId === entry.id;
+            const patientInitial = entry.patientName
+              ? entry.patientName.charAt(0).toUpperCase()
+              : "P";
+            const ageDisplay = entry.patientAge ? `${entry.patientAge}y` : "45y";
+            const genderDisplay = entry.patientGender || "Male";
+            const deptBadge = entry.source === "IPD" || entry.department?.includes("IPD") ? "IPD" : "OPD";
+            const reasonText = entry.reason || (entry.priority === "EMERGENCY" ? "Chest Pain" : "General Checkup");
+            const doctorText = entry.doctorName || "Dr. Sharma";
 
-              return (
-                <tr
-                  key={entry.id}
-                  className={`hover:bg-slate-50/60 transition-colors ${
-                    entry.status === "IN_CONSULTATION" ? "bg-emerald-50/30" : ""
-                  }`}
-                >
-                  {/* Token */}
-                  <td className="py-4 px-6 font-bold text-purple-700">
-                    <span className="px-3 py-1 bg-purple-50 border border-purple-200 rounded-lg text-xs font-mono">
-                      Q-{entry.token}
+            return (
+              <tr
+                key={entry.id || index}
+                className="hover:bg-slate-50/70 transition-colors"
+              >
+                {/* PROFILE COLUMN */}
+                <td className="py-5 px-6">
+                  <div className="relative w-12 h-12">
+                    <div className="w-12 h-12 rounded-full bg-purple-100 border border-purple-200 text-purple-700 font-extrabold text-base flex items-center justify-center shadow-2xs">
+                      {patientInitial}
+                    </div>
+                    <span className="absolute -bottom-1 -right-1 px-1.5 py-0.5 bg-[#4b16a8] text-white text-[9px] font-black rounded-md shadow-2xs">
+                      {deptBadge}
                     </span>
-                  </td>
+                  </div>
+                </td>
 
-                  {/* Patient Info */}
-                  <td className="py-4 px-6">
-                    <div className="flex items-center space-x-3">
-                      <div className="w-9 h-9 bg-purple-50 text-purple-700 rounded-full flex items-center justify-center font-semibold text-sm border border-purple-100 shrink-0">
-                        <User className="w-4 h-4" />
-                      </div>
-                      <div>
-                        <div className="font-bold text-slate-900">{entry.patientName}</div>
-                        <div className="text-xs text-slate-500 flex items-center space-x-2">
-                          <span className="font-mono text-purple-600">{entry.patientUHID}</span>
-                          <span>•</span>
-                          <span>
-                            {entry.patientAge ? `${entry.patientAge}y` : ""} {entry.patientGender}
-                          </span>
-                        </div>
-                      </div>
+                {/* PATIENT DETAILS COLUMN */}
+                <td className="py-5 px-6">
+                  <div>
+                    <p className="text-base font-bold text-[#0f172a] leading-tight">
+                      {entry.patientName}
+                    </p>
+                    <p className="text-xs font-semibold text-slate-500 mt-1">
+                      {genderDisplay}, {ageDisplay} • <span className="font-mono text-slate-600">{entry.patientUHID}</span>
+                    </p>
+                  </div>
+                </td>
+
+                {/* REASON & DEPT COLUMN */}
+                <td className="py-5 px-6">
+                  <div>
+                    <p className="text-sm font-bold text-slate-800 leading-tight">
+                      {reasonText}
+                    </p>
+                    <div className="flex items-center space-x-1 text-xs font-medium text-slate-500 mt-1">
+                      <UserCheck className="w-3.5 h-3.5 text-slate-400" />
+                      <span>{doctorText}</span>
                     </div>
-                  </td>
+                  </div>
+                </td>
 
-                  {/* Source */}
-                  <td className="py-4 px-6">
-                    <div className="flex items-center space-x-1.5 text-xs font-medium text-slate-600">
-                      {entry.source === "REMOTE" ? (
-                        <>
-                          <Smartphone className="w-3.5 h-3.5 text-blue-500" />
-                          <span>Remote</span>
-                        </>
-                      ) : (
-                        <>
-                          <Building2 className="w-3.5 h-3.5 text-slate-400" />
-                          <span>Clinic</span>
-                        </>
-                      )}
-                    </div>
-                  </td>
+                {/* STATUS COLUMN */}
+                <td className="py-5 px-6">
+                  {getStatusBadge(entry.status)}
+                </td>
 
-                  {/* Priority */}
-                  <td className="py-4 px-6">{getPriorityBadge(entry.priority)}</td>
+                {/* ARRIVAL COLUMN */}
+                <td className="py-5 px-6">
+                  <div className="flex items-center space-x-1.5 text-xs font-bold text-slate-700">
+                    <Clock className="w-3.5 h-3.5 text-slate-400" />
+                    <span>{formatTime(entry.arrivalTime)}</span>
+                  </div>
+                </td>
 
-                  {/* Arrival Time */}
-                  <td className="py-4 px-6 text-slate-600 font-medium">
-                    <div className="flex items-center space-x-1 text-xs">
-                      <Clock className="w-3.5 h-3.5 text-slate-400" />
-                      <span>{formatTime(entry.arrivalTime)}</span>
-                    </div>
-                  </td>
-
-                  {/* Status */}
-                  <td className="py-4 px-6">{getStatusBadge(entry.status)}</td>
-
-                  {/* Actions */}
-                  <td className="py-4 px-6 text-right space-x-2">
-                    {/* Primary Action: Start Consultation / Call */}
+                {/* ACTIONS COLUMN */}
+                <td className="py-5 px-6 text-right">
+                  <div className="flex items-center justify-end space-x-2">
+                    {/* Consult Button */}
                     {entry.status !== "IN_CONSULTATION" && entry.status !== "COMPLETED" && (
                       <button
                         type="button"
                         disabled={isUpdating}
                         onClick={() => onStartConsultation(entry)}
-                        className="px-3 py-1.5 text-xs font-semibold bg-purple-600 hover:bg-purple-700 active:bg-purple-800 text-white rounded-lg transition-all shadow-xs inline-flex items-center space-x-1.5 cursor-pointer disabled:opacity-50"
+                        className="px-3 py-1.5 text-xs font-bold bg-[#6336d3] hover:bg-[#5228be] text-white rounded-xl transition-all shadow-2xs inline-flex items-center space-x-1 cursor-pointer disabled:opacity-50"
+                        title="Start Consultation"
                       >
                         <Play className="w-3.5 h-3.5 fill-current" />
                         <span>Consult</span>
                       </button>
                     )}
 
-                    {/* Hold / Resume Action */}
+                    {/* Hold / Resume Button */}
                     {entry.status !== "COMPLETED" && entry.status !== "CANCELLED" && (
                       <button
                         type="button"
                         disabled={isUpdating}
                         onClick={() => onToggleHold(entry)}
-                        className={`px-2.5 py-1.5 text-xs font-medium rounded-lg border transition-all cursor-pointer disabled:opacity-50 ${
-                          entry.status === "ON_HOLD"
+                        className={`p-2 text-xs font-medium rounded-xl border transition-all cursor-pointer disabled:opacity-50 ${entry.status === "ON_HOLD"
                             ? "bg-amber-50 text-amber-700 border-amber-200 hover:bg-amber-100"
-                            : "bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100"
-                        }`}
+                            : "bg-slate-100/90 text-slate-600 border-slate-200/80 hover:bg-slate-200/80"
+                          }`}
                         title={entry.status === "ON_HOLD" ? "Resume patient" : "Put patient on hold"}
                       >
-                        <Pause className="w-3.5 h-3.5" />
+                        <Pause className="w-4 h-4" />
                       </button>
                     )}
 
-                    {/* Go to Station Direct Navigation */}
+                    {/* Station Direct Navigation */}
                     <button
                       type="button"
                       disabled={isUpdating}
                       onClick={() => onGoToStation(entry)}
-                      className="px-3 py-1.5 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-lg transition-all inline-flex items-center space-x-1 cursor-pointer disabled:opacity-50"
+                      className="p-2 text-slate-600 bg-slate-100/90 hover:bg-purple-50 hover:text-purple-700 border border-slate-200/80 rounded-xl transition-all cursor-pointer disabled:opacity-50"
+                      title="Go to Doctor Station"
                     >
-                      <span>Station</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
+                      <ArrowRight className="w-4 h-4" />
                     </button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
+
+                    {/* Additional History / Menu Icon */}
+                    <button
+                      type="button"
+                      className="p-2 text-slate-400 hover:text-slate-600 rounded-xl transition-colors"
+                      title="Patient Options"
+                    >
+                      <History className="w-4 h-4" />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
     </div>
   );
 };

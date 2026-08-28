@@ -42,12 +42,11 @@ router.get(
   getPatientById
 );
 
-// Patient Registration (Receptionist, Doctor, Admin)
+// Patient Registration (Receptionist, Admin, Super Admin)
 router.post(
   "/",
   authorizeRoles(
     UserRole.RECEPTIONIST,
-    UserRole.DOCTOR,
     UserRole.ADMIN,
     UserRole.SUPER_ADMIN
   ),

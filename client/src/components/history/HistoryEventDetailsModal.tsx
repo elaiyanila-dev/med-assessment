@@ -45,7 +45,7 @@ export const HistoryEventDetailsModal: React.FC<HistoryEventDetailsModalProps> =
             </div>
             <div>
               <h3 className="font-bold text-base text-slate-800">
-                {event.eventType.replace(/_/g, " ")} Details
+                {(event.eventType || event.type || "Clinical Event").replace(/_/g, " ")} Details
               </h3>
               <p className="text-xs text-slate-500 font-mono font-medium">
                 {patientName} ({patientUHID})

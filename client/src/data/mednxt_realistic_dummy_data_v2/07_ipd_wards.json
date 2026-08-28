@@ -1,0 +1,220 @@
+{
+  "beds": [
+    {
+      "id": "BED-G101",
+      "bedNumber": "G-101",
+      "ward": "General Ward Male",
+      "wardCode": "GWM",
+      "status": "AVAILABLE",
+      "dailyRate": 500,
+      "equipment": [],
+      "patientId": null
+    },
+    {
+      "id": "BED-G102",
+      "bedNumber": "G-102",
+      "ward": "General Ward Male",
+      "wardCode": "GWM",
+      "status": "OCCUPIED",
+      "dailyRate": 500,
+      "equipment": [],
+      "patientId": "PAT-001"
+    },
+    {
+      "id": "BED-G103",
+      "bedNumber": "G-103",
+      "ward": "General Ward Male",
+      "wardCode": "GWM",
+      "status": "CLEANING",
+      "dailyRate": 500,
+      "equipment": [],
+      "patientId": null
+    },
+    {
+      "id": "BED-G104",
+      "bedNumber": "G-104",
+      "ward": "General Ward Male",
+      "wardCode": "GWM",
+      "status": "AVAILABLE",
+      "dailyRate": 500,
+      "equipment": [],
+      "patientId": null
+    },
+    {
+      "id": "BED-G201",
+      "bedNumber": "G-201",
+      "ward": "General Ward Female",
+      "wardCode": "GWF",
+      "status": "AVAILABLE",
+      "dailyRate": 500,
+      "equipment": [],
+      "patientId": null
+    },
+    {
+      "id": "BED-G202",
+      "bedNumber": "G-202",
+      "ward": "General Ward Female",
+      "wardCode": "GWF",
+      "status": "OCCUPIED",
+      "dailyRate": 500,
+      "equipment": [],
+      "patientId": "PAT-006"
+    },
+    {
+      "id": "BED-P301",
+      "bedNumber": "P-301",
+      "ward": "Private Ward",
+      "wardCode": "PW",
+      "status": "OCCUPIED",
+      "dailyRate": 2500,
+      "equipment": [
+        "TV"
+      ],
+      "patientId": "PAT-003"
+    },
+    {
+      "id": "BED-P302",
+      "bedNumber": "P-302",
+      "ward": "Private Ward",
+      "wardCode": "PW",
+      "status": "AVAILABLE",
+      "dailyRate": 2500,
+      "equipment": [
+        "TV"
+      ],
+      "patientId": null
+    },
+    {
+      "id": "BED-ICU1",
+      "bedNumber": "ICU-1",
+      "ward": "ICU",
+      "wardCode": "ICU",
+      "status": "OCCUPIED",
+      "dailyRate": 5000,
+      "equipment": [
+        "VENT",
+        "MONITOR"
+      ],
+      "patientId": "PAT-008"
+    },
+    {
+      "id": "BED-ICU2",
+      "bedNumber": "ICU-2",
+      "ward": "ICU",
+      "wardCode": "ICU",
+      "status": "MAINTENANCE",
+      "dailyRate": 5000,
+      "equipment": [
+        "VENT",
+        "MONITOR"
+      ],
+      "patientId": null
+    }
+  ],
+  "admissions": [
+    {
+      "id": "ADM-001",
+      "patientId": "PAT-001",
+      "bedId": "BED-G102",
+      "doctorId": "USR-DOC-001",
+      "admittedAt": "2026-08-25T10:00:00",
+      "dischargedAt": null,
+      "status": "ACTIVE",
+      "reason": "High fever and dehydration"
+    },
+    {
+      "id": "ADM-002",
+      "patientId": "PAT-003",
+      "bedId": "BED-P301",
+      "doctorId": "USR-DOC-002",
+      "admittedAt": "2026-08-20T10:00:00",
+      "dischargedAt": null,
+      "status": "ACTIVE",
+      "reason": "Chest pain evaluation"
+    },
+    {
+      "id": "ADM-003",
+      "patientId": "PAT-006",
+      "bedId": "BED-G202",
+      "doctorId": "USR-DOC-001",
+      "admittedAt": "2026-08-24T14:00:00",
+      "dischargedAt": null,
+      "status": "ACTIVE",
+      "reason": "Asthma exacerbation"
+    },
+    {
+      "id": "ADM-004",
+      "patientId": "PAT-008",
+      "bedId": "BED-ICU1",
+      "doctorId": "USR-DOC-001",
+      "admittedAt": "2026-08-22T09:00:00",
+      "dischargedAt": null,
+      "status": "ACTIVE",
+      "reason": "Severe infection monitoring"
+    }
+  ],
+  "nurses": [
+    {
+      "id": "NUR-001",
+      "userId": "USR-NUR-001",
+      "name": "Nurse Priya",
+      "shift": "MORNING",
+      "start": "08:00",
+      "end": "16:00",
+      "ward": "General Ward Male",
+      "patientsAssigned": 8,
+      "status": "ON_DUTY"
+    },
+    {
+      "id": "NUR-002",
+      "userId": "USR-NUR-002",
+      "name": "Nurse Kavya",
+      "shift": "NIGHT",
+      "start": "23:00",
+      "end": "08:00",
+      "ward": "ICU",
+      "patientsAssigned": 4,
+      "status": "OFF_DUTY"
+    },
+    {
+      "id": "NUR-003",
+      "userId": "USR-NUR-001",
+      "name": "Nurse Anjali",
+      "shift": "EVENING",
+      "start": "16:00",
+      "end": "23:00",
+      "ward": "General Ward Female",
+      "patientsAssigned": 6,
+      "status": "ON_DUTY"
+    }
+  ],
+  "wardRounds": [
+    {
+      "id": "ROUND-001",
+      "patientId": "PAT-001",
+      "doctorId": "USR-DOC-001",
+      "bedId": "BED-G102",
+      "scheduledAt": "2026-08-27T09:00:00",
+      "status": "PENDING",
+      "notes": null
+    },
+    {
+      "id": "ROUND-002",
+      "patientId": "PAT-003",
+      "doctorId": "USR-DOC-002",
+      "bedId": "BED-P301",
+      "scheduledAt": "2026-08-27T09:30:00",
+      "status": "PENDING",
+      "notes": null
+    },
+    {
+      "id": "ROUND-003",
+      "patientId": "PAT-006",
+      "doctorId": "USR-DOC-001",
+      "bedId": "BED-G202",
+      "scheduledAt": "2026-08-27T10:00:00",
+      "status": "PENDING",
+      "notes": null
+    }
+  ]
+}

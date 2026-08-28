@@ -130,34 +130,13 @@ export const LoginPage: React.FC = () => {
               <KeyRound className="w-3.5 h-3.5 text-purple-600" />
               <span>Development Seed Login Quick-Fill:</span>
             </div>
-            <div className="grid grid-cols-2 gap-2 text-xs">
+            <div>
               <button
                 type="button"
                 onClick={() => setDemoCredentials("dr.rohan.sharma@mednxt.demo")}
-                className="p-2 bg-purple-50 hover:bg-purple-100 text-purple-800 rounded-lg font-medium border border-purple-200 text-left truncate transition-colors"
+                className="w-full p-2.5 bg-purple-50 hover:bg-purple-100 text-purple-800 rounded-xl font-bold border border-purple-200 text-center transition-colors text-xs flex items-center justify-center space-x-2 cursor-pointer"
               >
-                Dr. Rohan (Doctor)
-              </button>
-              <button
-                type="button"
-                onClick={() => setDemoCredentials("priya.nair@mednxt.demo")}
-                className="p-2 bg-slate-50 hover:bg-slate-100 text-slate-700 rounded-lg font-medium border border-slate-200 text-left truncate transition-colors"
-              >
-                Priya Nair (Nurse)
-              </button>
-              <button
-                type="button"
-                onClick={() => setDemoCredentials("arun.kumar@mednxt.demo")}
-                className="p-2 bg-slate-50 hover:bg-slate-100 text-slate-700 rounded-lg font-medium border border-slate-200 text-left truncate transition-colors"
-              >
-                Arun (Pharmacist)
-              </button>
-              <button
-                type="button"
-                onClick={() => setDemoCredentials("anita.rao@mednxt.demo")}
-                className="p-2 bg-slate-50 hover:bg-slate-100 text-slate-700 rounded-lg font-medium border border-slate-200 text-left truncate transition-colors"
-              >
-                Anita (Lab Tech)
+                <span>Dr. Rohan (Doctor)</span>
               </button>
             </div>
           </div>

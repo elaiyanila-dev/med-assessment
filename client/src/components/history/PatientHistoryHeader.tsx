@@ -65,13 +65,13 @@ export const PatientHistoryHeader: React.FC<PatientHistoryHeaderProps> = ({
             <ShieldAlert className="w-3.5 h-3.5 text-rose-500" />
             <span>Allergies</span>
           </div>
-          {patient.allergies.length === 0 ? (
+          {(!patient.allergies || patient.allergies.length === 0) ? (
             <span className="text-xs text-slate-400 italic">No known allergies</span>
           ) : (
             <div className="flex flex-wrap gap-1.5">
               {patient.allergies.map((a) => (
                 <span
-                  key={a.id}
+                  key={a.id || a.allergen}
                   className="px-2 py-0.5 bg-rose-50 text-rose-700 border border-rose-200 rounded-md text-xs font-medium"
                 >
                   {a.allergen} {a.severity ? `(${a.severity})` : ""}
@@ -86,13 +86,13 @@ export const PatientHistoryHeader: React.FC<PatientHistoryHeaderProps> = ({
             <AlertCircle className="w-3.5 h-3.5 text-amber-500" />
             <span>Active Medical Conditions</span>
           </div>
-          {patient.conditions.length === 0 ? (
+          {(!patient.conditions || patient.conditions.length === 0) ? (
             <span className="text-xs text-slate-400 italic">No active conditions</span>
           ) : (
             <div className="flex flex-wrap gap-1.5">
               {patient.conditions.map((c) => (
                 <span
-                  key={c.id}
+                  key={c.id || c.condition}
                   className="px-2 py-0.5 bg-amber-50 text-amber-700 border border-amber-200 rounded-md text-xs font-medium"
                 >
                   {c.condition}

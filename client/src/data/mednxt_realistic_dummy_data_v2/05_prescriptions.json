@@ -1,0 +1,63 @@
+{
+  "prescriptions": [
+    {
+      "id": "RX-001",
+      "patientId": "PAT-002",
+      "doctorId": "USR-DOC-001",
+      "consultationId": null,
+      "status": "SENT_TO_PHARMACY",
+      "prescribedAt": "2026-08-26T20:20:00"
+    },
+    {
+      "id": "RX-002",
+      "patientId": "PAT-001",
+      "doctorId": "USR-DOC-001",
+      "consultationId": "CON-001",
+      "status": "DISPENSED",
+      "prescribedAt": "2026-08-26T18:15:00"
+    },
+    {
+      "id": "RX-003",
+      "patientId": "PAT-003",
+      "doctorId": "USR-DOC-002",
+      "consultationId": "CON-002",
+      "status": "PENDING",
+      "prescribedAt": "2026-08-26T18:05:00"
+    }
+  ],
+  "prescriptionItems": [
+    {
+      "id": "RXI-001",
+      "prescriptionId": "RX-001",
+      "medicineId": "MED-001",
+      "dosage": "1-0-1",
+      "frequency": "After Food",
+      "durationDays": 5,
+      "quantity": 10,
+      "unitPrice": 2.0,
+      "totalPrice": 20.0
+    },
+    {
+      "id": "RXI-002",
+      "prescriptionId": "RX-002",
+      "medicineId": "MED-001",
+      "dosage": "1-0-1",
+      "frequency": "After Food",
+      "durationDays": 5,
+      "quantity": 10,
+      "unitPrice": 2.0,
+      "totalPrice": 20.0
+    },
+    {
+      "id": "RXI-003",
+      "prescriptionId": "RX-003",
+      "medicineId": "MED-006",
+      "dosage": "0-0-1",
+      "frequency": "After Food",
+      "durationDays": 30,
+      "quantity": 30,
+      "unitPrice": 6.0,
+      "totalPrice": 180.0
+    }
+  ]
+}

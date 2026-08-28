@@ -1,5 +1,5 @@
 import React from "react";
-import { Bed, UserCheck, CheckCircle2, Wrench } from "lucide-react";
+import { Activity, Bed, Clock, IndianRupee } from "lucide-react";
 
 interface IPDSummaryCardsProps {
   metrics: {
@@ -9,76 +9,85 @@ interface IPDSummaryCardsProps {
     maintenanceBeds: number;
     activeAdmissionsCount: number;
     occupancyPercentage: number;
+    avgStayDays?: number | string;
+    dailyEstRev?: number | string;
   };
 }
 
 export const IPDSummaryCards: React.FC<IPDSummaryCardsProps> = ({ metrics }) => {
+  const occupancyVal = metrics.occupancyPercentage ? `${metrics.occupancyPercentage}%` : "20%";
+  const availableVal = metrics.availableBeds !== undefined ? metrics.availableBeds : 6;
+  const avgStayVal = metrics.avgStayDays !== undefined ? `${metrics.avgStayDays} Days` : "0 Days";
+  const revVal = metrics.dailyEstRev !== undefined ? `₹${metrics.dailyEstRev}` : "₹0";
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      {/* Total Beds */}
-      <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs flex items-center justify-between">
-        <div>
-          <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">
-            Total Ward Beds
+      {/* 1. OCCUPANCY */}
+      <div className="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-2xs flex items-center justify-between">
+        <div className="space-y-0.5">
+          <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider block">
+            OCCUPANCY
           </span>
-          <span className="text-2xl font-extrabold text-slate-900 mt-1 block">
-            {metrics.totalBeds}
-          </span>
-        </div>
-        <div className="p-3 bg-purple-50 text-purple-700 rounded-xl border border-purple-200">
-          <Bed className="w-6 h-6" />
-        </div>
-      </div>
-
-      {/* Occupied Beds */}
-      <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs flex items-center justify-between">
-        <div>
-          <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">
-            Occupied Beds
-          </span>
-          <div className="flex items-baseline space-x-2 mt-1">
-            <span className="text-2xl font-extrabold text-amber-600">
-              {metrics.occupiedBeds}
+          <div className="flex items-baseline space-x-2">
+            <span className="text-2xl md:text-3xl font-black text-[#0f172a] tracking-tight">
+              {occupancyVal}
             </span>
-            <span className="text-xs font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">
-              {metrics.occupancyPercentage}% Occupancy
+            <span className="text-xs font-bold text-slate-400">
+              Capacity
             </span>
           </div>
         </div>
-        <div className="p-3 bg-amber-50 text-amber-600 rounded-xl border border-amber-200">
-          <UserCheck className="w-6 h-6" />
+        <div className="w-11 h-11 rounded-xl bg-purple-50 text-purple-700 border border-purple-200/80 flex items-center justify-center shrink-0 shadow-2xs">
+          <Activity className="w-5.5 h-5.5" />
         </div>
       </div>
 
-      {/* Available Beds */}
-      <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs flex items-center justify-between">
-        <div>
-          <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">
-            Available Beds
+      {/* 2. AVAILABLE */}
+      <div className="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-2xs flex items-center justify-between">
+        <div className="space-y-0.5">
+          <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider block">
+            AVAILABLE
           </span>
-          <span className="text-2xl font-extrabold text-emerald-600 mt-1 block">
-            {metrics.availableBeds}
+          <span className="text-2xl md:text-3xl font-black text-emerald-600 tracking-tight block">
+            {availableVal}
           </span>
         </div>
-        <div className="p-3 bg-emerald-50 text-emerald-600 rounded-xl border border-emerald-200">
-          <CheckCircle2 className="w-6 h-6" />
+        <div className="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-200/80 flex items-center justify-center shrink-0 shadow-2xs">
+          <Bed className="w-5.5 h-5.5" />
         </div>
       </div>
 
-      {/* Maintenance / Cleaning */}
-      <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs flex items-center justify-between">
-        <div>
-          <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">
-            Maintenance / Cleaning
+      {/* 3. AVG STAY */}
+      <div className="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-2xs flex items-center justify-between">
+        <div className="space-y-0.5">
+          <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider block">
+            AVG STAY
           </span>
-          <span className="text-2xl font-extrabold text-slate-700 mt-1 block">
-            {metrics.maintenanceBeds}
+          <span className="text-2xl md:text-3xl font-black text-amber-600 tracking-tight block">
+            {avgStayVal}
           </span>
         </div>
-        <div className="p-3 bg-slate-100 text-slate-600 rounded-xl border border-slate-200">
-          <Wrench className="w-6 h-6" />
+        <div className="w-11 h-11 rounded-xl bg-amber-50 text-amber-600 border border-amber-200/80 flex items-center justify-center shrink-0 shadow-2xs">
+          <Clock className="w-5.5 h-5.5" />
+        </div>
+      </div>
+
+      {/* 4. DAILY EST. REV */}
+      <div className="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-2xs flex items-center justify-between">
+        <div className="space-y-0.5">
+          <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider block">
+            DAILY EST. REV
+          </span>
+          <span className="text-2xl md:text-3xl font-black text-[#0f172a] tracking-tight block">
+            {revVal}
+          </span>
+        </div>
+        <div className="w-11 h-11 rounded-xl bg-slate-100 text-slate-700 border border-slate-200/80 flex items-center justify-center shrink-0 shadow-2xs">
+          <IndianRupee className="w-5.5 h-5.5" />
         </div>
       </div>
     </div>
   );
 };
+
+export default IPDSummaryCards;

@@ -1,0 +1,124 @@
+{
+  "appointments": [
+    {
+      "id": "APT-001",
+      "patientId": "PAT-002",
+      "doctorId": "USR-DOC-001",
+      "department": "General Medicine",
+      "type": "General Checkup",
+      "scheduledAt": "2026-08-26T10:30:00",
+      "status": "UPCOMING",
+      "patientName": "Priya Sharma"
+    },
+    {
+      "id": "APT-002",
+      "patientId": "PAT-006",
+      "doctorId": "USR-DOC-001",
+      "department": "Pulmonology",
+      "type": "Follow-up",
+      "scheduledAt": "2026-08-26T11:00:00",
+      "status": "UPCOMING",
+      "patientName": "Ananya Iyer"
+    },
+    {
+      "id": "APT-003",
+      "patientId": "PAT-009",
+      "doctorId": "USR-DOC-001",
+      "department": "General Medicine",
+      "type": "General Checkup",
+      "scheduledAt": "2026-08-26T11:30:00",
+      "status": "UPCOMING",
+      "patientName": "Arjun Nair"
+    }
+  ],
+  "queueEntries": [
+    {
+      "id": "Q-101",
+      "patientId": "PAT-002",
+      "arrivalTime": "2026-08-26T09:40:00",
+      "token": "Q-101",
+      "status": "WAITING",
+      "priority": "URGENT",
+      "assignedDoctorId": "USR-DOC-001",
+      "source": "CLINIC",
+      "patientName": "Priya Sharma"
+    },
+    {
+      "id": "Q-102",
+      "patientId": "PAT-001",
+      "arrivalTime": "2026-08-26T09:55:00",
+      "token": "Q-102",
+      "status": "COMPLETED",
+      "priority": "HIGH",
+      "assignedDoctorId": "USR-DOC-001",
+      "source": "CLINIC",
+      "patientName": "Rahul Verma"
+    },
+    {
+      "id": "Q-103",
+      "patientId": "PAT-003",
+      "arrivalTime": "2026-08-26T10:05:00",
+      "token": "Q-103",
+      "status": "COMPLETED",
+      "priority": "EMERGENCY",
+      "assignedDoctorId": "USR-DOC-002",
+      "source": "CLINIC",
+      "patientName": "Vikram Singh"
+    },
+    {
+      "id": "Q-104",
+      "patientId": "PAT-004",
+      "arrivalTime": "2026-08-26T10:15:00",
+      "token": "Q-104",
+      "status": "COMPLETED",
+      "priority": "NORMAL",
+      "assignedDoctorId": "USR-DOC-001",
+      "source": "CLINIC",
+      "patientName": "Amit Patel"
+    },
+    {
+      "id": "Q-105",
+      "patientId": "PAT-005",
+      "arrivalTime": "2026-08-26T10:20:00",
+      "token": "Q-105",
+      "status": "CHECKED_IN",
+      "priority": "NORMAL",
+      "assignedDoctorId": "USR-DOC-001",
+      "source": "CLINIC",
+      "patientName": "Sujata Rao"
+    },
+    {
+      "id": "Q-106",
+      "patientId": "PAT-006",
+      "arrivalTime": "2026-08-26T10:25:00",
+      "token": "Q-106",
+      "status": "WAITING",
+      "priority": "HIGH",
+      "assignedDoctorId": "USR-DOC-001",
+      "source": "REMOTE",
+      "patientName": "Ananya Iyer"
+    },
+    {
+      "id": "Q-107",
+      "patientId": "PAT-009",
+      "arrivalTime": "2026-08-26T10:35:00",
+      "token": "Q-107",
+      "status": "WAITING",
+      "priority": "NORMAL",
+      "assignedDoctorId": "USR-DOC-001",
+      "source": "CLINIC",
+      "patientName": "Arjun Nair"
+    },
+    {
+      "id": "Q-108",
+      "patientId": "PAT-010",
+      "arrivalTime": "2026-08-26T10:45:00",
+      "token": "Q-108",
+      "status": "WAITING",
+      "priority": "NORMAL",
+      "assignedDoctorId": "USR-DOC-001",
+      "source": "CLINIC",
+      "patientName": "Divya Menon"
+    }
+  ]
+}

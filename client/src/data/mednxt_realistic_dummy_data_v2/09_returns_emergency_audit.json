@@ -1,0 +1,114 @@
+{
+  "returnsAndWaste": [
+    {
+      "id": "RET-001",
+      "patientId": "PAT-003",
+      "bedId": "BED-P301",
+      "medicineId": "MED-005",
+      "quantity": 2,
+      "type": "RETURN_TO_PHARMACY",
+      "reason": "Treatment Changed",
+      "status": "PENDING",
+      "createdAt": "2026-08-26T18:00:00"
+    },
+    {
+      "id": "RET-002",
+      "patientId": "PAT-008",
+      "bedId": "BED-ICU1",
+      "medicineId": "MED-005",
+      "quantity": 1,
+      "type": "WASTAGE",
+      "reason": "Damaged Vial",
+      "status": "VERIFIED",
+      "createdAt": "2026-08-26T15:00:00"
+    },
+    {
+      "id": "RET-003",
+      "patientId": "PAT-001",
+      "bedId": "BED-G102",
+      "medicineId": "MED-003",
+      "quantity": 2,
+      "type": "RETURN_TO_PHARMACY",
+      "reason": "Discharge",
+      "status": "PENDING",
+      "createdAt": "2026-08-26T19:00:00"
+    }
+  ],
+  "emergencyOverrides": [
+    {
+      "id": "OVR-001",
+      "userId": "USR-PH-001",
+      "scenario": "Code Blue",
+      "action": "Crash Cart Access",
+      "reason": "Emergency resuscitation",
+      "items": [
+        {
+          "medicineId": "MED-005",
+          "quantity": 1
+        }
+      ],
+      "timestamp": "2026-08-26T14:05:00"
+    },
+    {
+      "id": "OVR-002",
+      "userId": "USR-DOC-002",
+      "scenario": "Severe Trauma Pain",
+      "action": "Narcotic Override",
+      "reason": "Immediate pain control",
+      "items": [
+        {
+          "medicineId": "MED-005",
+          "quantity": 1
+        }
+      ],
+      "timestamp": "2026-08-26T16:20:00"
+    }
+  ],
+  "auditLogs": [
+    {
+      "id": "AUD-001",
+      "actorId": "USR-DOC-001",
+      "action": "CONSULTATION_STARTED",
+      "entityType": "CONSULTATION",
+      "entityId": "CON-001",
+      "timestamp": "2026-08-26T18:11:00",
+      "actorName": "Dr. Rohan Sharma"
+    },
+    {
+      "id": "AUD-002",
+      "actorId": "USR-DOC-001",
+      "action": "LAB_ORDER_CREATED",
+      "entityType": "LAB_ORDER",
+      "entityId": "LAB-001",
+      "timestamp": "2026-08-26T18:15:00",
+      "actorName": "Dr. Rohan Sharma"
+    },
+    {
+      "id": "AUD-003",
+      "actorId": "USR-LAB-001",
+      "action": "SAMPLE_COLLECTED",
+      "entityType": "LAB_ORDER",
+      "entityId": "LAB-001",
+      "timestamp": "2026-08-26T18:30:00",
+      "actorName": "Anita Rao"
+    },
+    {
+      "id": "AUD-004",
+      "actorId": "USR-PH-001",
+      "action": "MEDICINE_DISPENSED",
+      "entityType": "PHARMACY_ORDER",
+      "entityId": "PH-002",
+      "timestamp": "2026-08-26T18:40:00",
+      "actorName": "Arun Kumar"
+    },
+    {
+      "id": "AUD-005",
+      "actorId": "USR-PH-001",
+      "action": "CRASH_CART_ACCESS",
+      "entityType": "EMERGENCY_OVERRIDE",
+      "entityId": "OVR-001",
+      "timestamp": "2026-08-26T14:05:00",
+      "actorName": "Arun Kumar"
+    }
+  ]
+}

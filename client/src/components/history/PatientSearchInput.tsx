@@ -36,10 +36,6 @@ export const PatientSearchInput: React.FC<PatientSearchInputProps> = ({
         });
         if (isMounted && response.data?.success) {
           setResults(response.data.data);
-          // If no patient selected yet and results available, pick first
-          if (!selectedPatientId && response.data.data.length > 0) {
-            onSelectPatient(response.data.data[0]);
-          }
         }
       } catch {
         // Non-blocking search error

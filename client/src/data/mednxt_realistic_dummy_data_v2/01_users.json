@@ -1,0 +1,87 @@
+{
+  "users": [
+    {
+      "id": "USR-DOC-001",
+      "name": "Dr. Rohan Sharma",
+      "role": "DOCTOR",
+      "department": "General Medicine",
+      "specialization": "Internal Medicine",
+      "phone": "9000000001",
+      "email": "dr.sharma@mednxt.demo",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "USR-DOC-002",
+      "name": "Dr. Arvind Mehta",
+      "role": "DOCTOR",
+      "department": "Cardiology",
+      "specialization": "Cardiology",
+      "phone": "9000000002",
+      "email": "dr.mehta@mednxt.demo",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "USR-LAB-001",
+      "name": "Anita Rao",
+      "role": "LAB_TECHNICIAN",
+      "department": "Laboratory",
+      "phone": "9000000011",
+      "email": "anita.lab@mednxt.demo",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "USR-LAB-002",
+      "name": "Kiran Das",
+      "role": "PATHOLOGIST",
+      "department": "Laboratory",
+      "phone": "9000000012",
+      "email": "kiran.path@mednxt.demo",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "USR-PH-001",
+      "name": "Arun Kumar",
+      "role": "PHARMACIST",
+      "department": "Pharmacy",
+      "phone": "9000000021",
+      "email": "arun.pharmacy@mednxt.demo",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "USR-NUR-001",
+      "name": "Priya Nair",
+      "role": "NURSE",
+      "department": "General Ward Male",
+      "phone": "9000000031",
+      "email": "nurse.priya@mednxt.demo",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "USR-NUR-002",
+      "name": "Kavya Menon",
+      "role": "NURSE",
+      "department": "ICU",
+      "phone": "9000000032",
+      "email": "nurse.kavya@mednxt.demo",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "USR-FD-001",
+      "name": "Meera Krishnan",
+      "role": "RECEPTIONIST",
+      "department": "Front Desk",
+      "phone": "9000000041",
+      "email": "frontdesk@mednxt.demo",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "USR-ADM-001",
+      "name": "Rahul Menon",
+      "role": "ADMIN",
+      "department": "Administration",
+      "phone": "9000000051",
+      "email": "admin@mednxt.demo",
+      "status": "ACTIVE"
+    }
+  ]
+}

@@ -1,30 +1,17 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-import { Bell, ChevronDown, LogOut, Menu, User } from "lucide-react";
+import { Bell, ChevronDown, Building2, LogOut, Menu, User } from "lucide-react";
 
 interface AppHeaderProps {
   onMenuClick?: () => void;
 }
 
-const PATH_TITLES: Record<string, string> = {
-  "/dashboard": "Dashboard",
-  "/patient-queue": "Patient Queue",
-  "/doctor-station": "Doctor Station",
-  "/patient-history": "Patient History",
-  "/ipd-wards": "IPD & Wards",
-  "/laboratory": "Laboratory",
-  "/pharmacy": "Pharmacy"
-};
-
 export const AppHeader: React.FC<AppHeaderProps> = ({ onMenuClick }) => {
   const { user, logout } = useAuth();
-  const location = useLocation();
   const navigate = useNavigate();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-
-  const title = PATH_TITLES[location.pathname] || "MedNxt Hospitals";
 
   // Close dropdown on click outside
   useEffect(() => {
@@ -43,66 +30,80 @@ export const AppHeader: React.FC<AppHeaderProps> = ({ onMenuClick }) => {
     navigate("/login", { replace: true });
   };
 
-  const formatRole = (role?: string) => {
-    if (!role) return "Staff";
-    return role
-      .split("_")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-      .join(" ");
-  };
+  const doctorName = user?.name
+    ? user.name.startsWith("Dr.")
+      ? user.name
+      : `Dr. ${user.name}`
+    : "Dr. Rohan Sharma";
+
+  const doctorInitial = user?.name
+    ? user.name.replace(/^Dr\.\s*/i, "").charAt(0).toUpperCase() || "D"
+    : "D";
+
+  const formattedRole = user?.role
+    ? user.role.replace(/_/g, " ")
+    : "DOCTOR";
 
   return (
-    <header className="h-16 bg-white border-b border-slate-200 px-4 md:px-8 flex items-center justify-between sticky top-0 z-30 shadow-sm">
-      {/* Left: Mobile Toggle & Page Title */}
-      <div className="flex items-center space-x-3">
+    <header className="h-[72px] bg-white border-b border-slate-200/80 px-6 md:px-8 flex items-center justify-between sticky top-0 z-30 shadow-2xs">
+      {/* Left: Mobile Menu Toggle & Hospital Selector Pill */}
+      <div className="flex items-center space-x-4">
         <button
           onClick={onMenuClick}
-          className="p-2 rounded-lg text-slate-600 hover:bg-slate-100 lg:hidden focus:outline-none"
+          className="p-2 rounded-xl text-slate-600 hover:bg-slate-100 lg:hidden focus:outline-none transition-colors"
           aria-label="Toggle sidebar menu"
         >
           <Menu className="w-5 h-5" />
         </button>
-        <h2 className="text-xl font-bold text-slate-800 tracking-tight">{title}</h2>
+
+        {/* Rounded Hospital Selector Pill */}
+        <div className="flex items-center space-x-2.5 px-4 py-2 bg-slate-100/90 hover:bg-slate-200/70 border border-slate-200/80 rounded-full text-slate-800 font-bold text-sm transition-colors cursor-pointer shadow-2xs">
+          <Building2 className="w-4 h-4 text-purple-700" />
+          <span>MedNxt Hospitals</span>
+        </div>
       </div>
 
-      {/* Right: Operational Status, Notification Bell, User Profile Dropdown */}
-      <div className="flex items-center space-x-4 md:space-x-6">
+      {/* Right: Operational Status, Notification Bell, Divider, Doctor Info Dropdown */}
+      <div className="flex items-center space-x-4 md:space-x-5">
         {/* System Operational Indicator */}
-        <div className="hidden sm:flex items-center space-x-2 px-3 py-1 bg-emerald-50 border border-emerald-200 rounded-full text-xs font-semibold text-emerald-700">
+        <div className="hidden sm:flex items-center space-x-2 px-3.5 py-1.5 bg-emerald-50 border border-emerald-200/80 rounded-full text-xs font-bold text-emerald-700">
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
           </span>
-          <span>System Operational</span>
+          <span>SYSTEM OPERATIONAL</span>
         </div>
 
-        {/* Visual Notification Bell */}
+        {/* Notification Bell Icon */}
         <div className="relative">
           <button
             type="button"
-            className="p-2 text-slate-500 hover:text-purple-700 hover:bg-purple-50 rounded-xl transition-colors relative"
+            className="p-2 text-slate-600 hover:text-purple-700 hover:bg-purple-50 rounded-xl transition-colors relative focus:outline-none"
             aria-label="Notifications"
           >
             <Bell className="w-5 h-5" />
-            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-purple-600 rounded-full ring-2 ring-white"></span>
+            <span className="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-purple-600 rounded-full ring-2 ring-white"></span>
           </button>
         </div>
 
-        {/* User Profile Dropdown */}
+        {/* Vertical Divider */}
+        <div className="h-6 w-px bg-slate-200"></div>
+
+        {/* Doctor Profile Header Trigger */}
         <div className="relative" ref={dropdownRef}>
           <button
             onClick={() => setDropdownOpen((prev) => !prev)}
-            className="flex items-center space-x-3 p-1.5 rounded-xl hover:bg-slate-100 transition-colors focus:outline-none"
+            className="flex items-center space-x-3 p-1 rounded-xl hover:bg-slate-100/80 transition-colors focus:outline-none cursor-pointer"
           >
             <div className="w-9 h-9 rounded-full bg-purple-100 border border-purple-200 text-purple-700 font-bold text-sm flex items-center justify-center shadow-xs">
-              {user?.name ? user.name.charAt(0).toUpperCase() : <User className="w-4 h-4" />}
+              {doctorInitial}
             </div>
             <div className="hidden md:block text-left">
-              <p className="text-sm font-semibold text-slate-800 leading-tight">
-                {user?.name || "Authenticated User"}
+              <p className="text-sm font-bold text-slate-900 leading-tight">
+                {doctorName}
               </p>
-              <p className="text-xs text-slate-500 leading-tight">
-                {formatRole(user?.role)}
+              <p className="text-[10px] font-bold text-slate-400 leading-tight tracking-wider uppercase mt-0.5">
+                {formattedRole}
               </p>
             </div>
             <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${dropdownOpen ? "rotate-180" : ""}`} />
@@ -112,11 +113,11 @@ export const AppHeader: React.FC<AppHeaderProps> = ({ onMenuClick }) => {
           {dropdownOpen && (
             <div className="absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-slate-200 py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
               <div className="px-4 py-3 border-b border-slate-100">
-                <p className="text-sm font-bold text-slate-900">{user?.name}</p>
-                <p className="text-xs text-slate-500 truncate">{user?.email}</p>
+                <p className="text-sm font-bold text-slate-900">{user?.name || doctorName}</p>
+                <p className="text-xs text-slate-500 truncate">{user?.email || "doctor@mednxt.com"}</p>
                 <div className="mt-2 flex items-center space-x-2">
                   <span className="px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider bg-purple-50 text-purple-700 border border-purple-200 rounded-md">
-                    {formatRole(user?.role)}
+                    {formattedRole}
                   </span>
                   {user?.department && (
                     <span className="text-xs text-slate-400 truncate">

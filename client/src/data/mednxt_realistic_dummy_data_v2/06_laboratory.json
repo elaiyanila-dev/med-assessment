@@ -1,0 +1,331 @@
+{
+  "labTests": [
+    {
+      "id": "TEST-CBC",
+      "code": "CBC",
+      "name": "Complete Blood Count",
+      "department": "Hematology",
+      "specimen": "Whole Blood (EDTA)",
+      "tatMinutes": 120,
+      "price": 250
+    },
+    {
+      "id": "TEST-LFT",
+      "code": "LFT",
+      "name": "Liver Function Test",
+      "department": "Biochemistry",
+      "specimen": "Serum",
+      "tatMinutes": 180,
+      "price": 450
+    },
+    {
+      "id": "TEST-KFT",
+      "code": "KFT",
+      "name": "Kidney Function Test",
+      "department": "Biochemistry",
+      "specimen": "Serum",
+      "tatMinutes": 180,
+      "price": 400
+    },
+    {
+      "id": "TEST-LIPID",
+      "code": "LIPID",
+      "name": "Lipid Profile",
+      "department": "Biochemistry",
+      "specimen": "Serum",
+      "tatMinutes": 180,
+      "price": 350
+    },
+    {
+      "id": "TEST-TSH",
+      "code": "TSH",
+      "name": "Thyroid Stimulating Hormone",
+      "department": "Biochemistry",
+      "specimen": "Serum",
+      "tatMinutes": 120,
+      "price": 300
+    },
+    {
+      "id": "TEST-CRP",
+      "code": "CRP",
+      "name": "C-Reactive Protein",
+      "department": "Biochemistry",
+      "specimen": "Serum",
+      "tatMinutes": 90,
+      "price": 280
+    },
+    {
+      "id": "TEST-DENGUE",
+      "code": "DENGUE",
+      "name": "Dengue NS1",
+      "department": "Microbiology",
+      "specimen": "Serum",
+      "tatMinutes": 120,
+      "price": 500
+    },
+    {
+      "id": "TEST-HBA1C",
+      "code": "HBA1C",
+      "name": "HbA1c",
+      "department": "Biochemistry",
+      "specimen": "Whole Blood",
+      "tatMinutes": 120,
+      "price": 350
+    }
+  ],
+  "labOrders": [
+    {
+      "id": "LAB-001",
+      "patientId": "PAT-001",
+      "doctorId": "USR-DOC-001",
+      "status": "COMPLETED",
+      "priority": "ROUTINE",
+      "orderedAt": "2026-08-26T18:15:00",
+      "collectedAt": "2026-08-26T18:30:00",
+      "processingAt": "2026-08-26T18:40:00",
+      "releasedAt": "2026-08-26T19:30:00",
+      "sampleId": "SMP-800001",
+      "accessionId": "ACC-20260827"
+    },
+    {
+      "id": "LAB-002",
+      "patientId": "PAT-002",
+      "doctorId": "USR-DOC-001",
+      "status": "ORDERED",
+      "priority": "STAT",
+      "orderedAt": "2026-08-26T20:35:00",
+      "collectedAt": null,
+      "processingAt": null,
+      "releasedAt": null,
+      "sampleId": "SMP-800002",
+      "accessionId": "ACC-20260828"
+    },
+    {
+      "id": "LAB-003",
+      "patientId": "PAT-003",
+      "doctorId": "USR-DOC-002",
+      "status": "COLLECTED",
+      "priority": "ROUTINE",
+      "orderedAt": "2026-08-26T19:10:00",
+      "collectedAt": "2026-08-26T19:25:00",
+      "processingAt": null,
+      "releasedAt": null,
+      "sampleId": "SMP-800003",
+      "accessionId": "ACC-20260829"
+    },
+    {
+      "id": "LAB-004",
+      "patientId": "PAT-006",
+      "doctorId": "USR-DOC-001",
+      "status": "PROCESSING",
+      "priority": "STAT",
+      "orderedAt": "2026-08-26T19:45:00",
+      "collectedAt": "2026-08-26T19:55:00",
+      "processingAt": "2026-08-26T20:05:00",
+      "releasedAt": null,
+      "sampleId": "SMP-800004",
+      "accessionId": "ACC-20260830"
+    },
+    {
+      "id": "LAB-005",
+      "patientId": "PAT-009",
+      "doctorId": "USR-DOC-001",
+      "status": "RESULT_READY",
+      "priority": "ROUTINE",
+      "orderedAt": "2026-08-26T17:20:00",
+      "collectedAt": "2026-08-26T17:40:00",
+      "processingAt": "2026-08-26T18:00:00",
+      "releasedAt": null,
+      "sampleId": "SMP-800005",
+      "accessionId": "ACC-20260831"
+    },
+    {
+      "id": "LAB-006",
+      "patientId": "PAT-004",
+      "doctorId": "USR-DOC-001",
+      "status": "CRITICAL",
+      "priority": "STAT",
+      "orderedAt": "2026-08-26T16:30:00",
+      "collectedAt": "2026-08-26T16:45:00",
+      "processingAt": "2026-08-26T17:00:00",
+      "releasedAt": null,
+      "sampleId": "SMP-800006",
+      "accessionId": "ACC-20260832"
+    },
+    {
+      "id": "LAB-007",
+      "patientId": "PAT-005",
+      "doctorId": "USR-DOC-001",
+      "status": "ORDERED",
+      "priority": "ROUTINE",
+      "orderedAt": "2026-08-26T20:40:00",
+      "collectedAt": null,
+      "processingAt": null,
+      "releasedAt": null,
+      "sampleId": "SMP-800007",
+      "accessionId": "ACC-20260833"
+    }
+  ],
+  "labOrderItems": [
+    {
+      "id": "LOI-001",
+      "labOrderId": "LAB-001",
+      "testId": "TEST-CBC",
+      "status": "COMPLETED"
+    },
+    {
+      "id": "LOI-002",
+      "labOrderId": "LAB-001",
+      "testId": "TEST-CRP",
+      "status": "COMPLETED"
+    },
+    {
+      "id": "LOI-003",
+      "labOrderId": "LAB-002",
+      "testId": "TEST-KFT",
+      "status": "ORDERED"
+    },
+    {
+      "id": "LOI-004",
+      "labOrderId": "LAB-002",
+      "testId": "TEST-CRP",
+      "status": "ORDERED"
+    },
+    {
+      "id": "LOI-005",
+      "labOrderId": "LAB-002",
+      "testId": "TEST-DENGUE",
+      "status": "ORDERED"
+    },
+    {
+      "id": "LOI-006",
+      "labOrderId": "LAB-003",
+      "testId": "TEST-LFT",
+      "status": "COLLECTED"
+    },
+    {
+      "id": "LOI-007",
+      "labOrderId": "LAB-004",
+      "testId": "TEST-DENGUE",
+      "status": "PROCESSING"
+    },
+    {
+      "id": "LOI-008",
+      "labOrderId": "LAB-005",
+      "testId": "TEST-TSH",
+      "status": "RESULT_READY"
+    },
+    {
+      "id": "LOI-009",
+      "labOrderId": "LAB-006",
+      "testId": "TEST-CBC",
+      "status": "CRITICAL"
+    },
+    {
+      "id": "LOI-010",
+      "labOrderId": "LAB-007",
+      "testId": "TEST-LIPID",
+      "status": "ORDERED"
+    }
+  ],
+  "labResults": [
+    {
+      "id": "RES-001",
+      "labOrderId": "LAB-001",
+      "testId": "TEST-CBC",
+      "parameters": {
+        "Hemoglobin": "13.8",
+        "WBC": "7200",
+        "Platelets": "245000"
+      },
+      "units": {
+        "Hemoglobin": "g/dL",
+        "WBC": "cells/uL",
+        "Platelets": "cells/uL"
+      },
+      "flag": "NORMAL",
+      "enteredBy": "USR-LAB-001",
+      "releasedBy": "USR-LAB-002",
+      "releasedAt": "2026-08-26T19:30:00",
+      "patientName": "Rahul Verma"
+    },
+    {
+      "id": "RES-002",
+      "labOrderId": "LAB-001",
+      "testId": "TEST-CRP",
+      "parameters": {
+        "CRP": "12.4"
+      },
+      "units": {
+        "CRP": "mg/L"
+      },
+      "flag": "HIGH",
+      "enteredBy": "USR-LAB-001",
+      "releasedBy": "USR-LAB-002",
+      "releasedAt": "2026-08-26T19:30:00",
+      "patientName": "Rahul Verma"
+    },
+    {
+      "id": "RES-003",
+      "labOrderId": "LAB-005",
+      "testId": "TEST-TSH",
+      "parameters": {
+        "TSH": "3.2"
+      },
+      "units": {
+        "TSH": "mIU/L"
+      },
+      "flag": "NORMAL",
+      "enteredBy": "USR-LAB-001",
+      "releasedBy": null,
+      "releasedAt": null,
+      "patientName": "Arjun Nair"
+    },
+    {
+      "id": "RES-004",
+      "labOrderId": "LAB-006",
+      "testId": "TEST-CBC",
+      "parameters": {
+        "Hemoglobin": "9.2",
+        "WBC": "15400",
+        "Platelets": "98000"
+      },
+      "units": {
+        "Hemoglobin": "g/dL",
+        "WBC": "cells/uL",
+        "Platelets": "cells/uL"
+      },
+      "flag": "CRITICAL",
+      "enteredBy": "USR-LAB-001",
+      "releasedBy": null,
+      "releasedAt": null,
+      "patientName": "Amit Patel"
+    }
+  ],
+  "aiAnalyses": [
+    {
+      "id": "AI-LAB-001",
+      "resultId": "RES-002",
+      "engine": "MedNxt AI Pathologist",
+      "summary": "CRP is elevated above the stated reference range. Findings require clinical correlation.",
+      "anomalies": [
+        "Elevated CRP"
+      ],
+      "confidence": 0.94,
+      "reviewStatus": "PENDING_HUMAN_REVIEW"
+    },
+    {
+      "id": "AI-LAB-002",
+      "resultId": "RES-004",
+      "engine": "MedNxt AI Pathologist",
+      "summary": "Low hemoglobin, elevated WBC and thrombocytopenia flagged for urgent review.",
+      "anomalies": [
+        "Low hemoglobin",
+        "Elevated WBC",
+        "Low platelets"
+      ],
+      "confidence": 0.97,
+      "reviewStatus": "PENDING_HUMAN_REVIEW"
+    }
+  ]
+}

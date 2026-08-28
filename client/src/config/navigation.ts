@@ -84,8 +84,6 @@ export const ALL_NAV_ITEMS: Record<string, NavItem> = {
 export const ROLE_NAVIGATION_MAP: Record<string, string[]> = {
   DOCTOR: [
     "dashboard",
-    "patientDirectory",
-    "appointments",
     "patientQueue",
     "doctorStation",
     "patientHistory",

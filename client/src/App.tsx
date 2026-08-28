@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import { ProtectedRoute } from "./components/auth/ProtectedRoute";
+import { RoleGuard } from "./components/auth/RoleGuard";
 import { AppLayout } from "./components/layout/AppLayout";
 import { ErrorBoundary } from "./components/common/ErrorBoundary";
 
@@ -16,6 +17,7 @@ import { LaboratoryPage } from "./pages/LaboratoryPage";
 import { PharmacyPage } from "./pages/PharmacyPage";
 import { AppointmentsPage } from "./pages/AppointmentsPage";
 import { PatientDirectoryPage } from "./pages/PatientDirectoryPage";
+import { AddPatientPage } from "./pages/AddPatientPage";
 import { UserManagementPage } from "./pages/UserManagementPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
 
@@ -40,6 +42,14 @@ export function App() {
               <Route index element={<Navigate to="/dashboard" replace />} />
               <Route path="dashboard" element={<DashboardPage />} />
               <Route path="patients" element={<PatientDirectoryPage />} />
+              <Route
+                path="patients/new"
+                element={
+                  <RoleGuard allowedRoles={["SUPER_ADMIN", "ADMIN", "RECEPTIONIST"]}>
+                    <AddPatientPage />
+                  </RoleGuard>
+                }
+              />
               <Route path="appointments" element={<AppointmentsPage />} />
               <Route path="patient-queue" element={<PatientQueuePage />} />
               <Route path="doctor-station" element={<DoctorStationPage />} />

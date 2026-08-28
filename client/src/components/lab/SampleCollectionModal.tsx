@@ -13,8 +13,8 @@ export const SampleCollectionModal: React.FC<ModalProps> = ({
   onClose,
   onSuccess
 }) => {
-  const defaultSampleId = `SMP-${Math.floor(100000 + Math.random() * 900000)}`;
-  const defaultAccessionId = `ACC-${Math.floor(100000 + Math.random() * 900000)}`;
+  const defaultSampleId = order.sampleId || `SMP-800001`;
+  const defaultAccessionId = order.accessionId || `ACC-20260827`;
 
   const [sampleId, setSampleId] = useState(defaultSampleId);
   const [accessionId, setAccessionId] = useState(defaultAccessionId);

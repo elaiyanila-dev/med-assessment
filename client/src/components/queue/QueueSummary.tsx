@@ -1,5 +1,5 @@
 import React from "react";
-import { Users, Clock, UserCheck, Play, Pause, AlertTriangle } from "lucide-react";
+import { Clock, Activity, CheckCircle2, Users } from "lucide-react";
 
 export interface QueueSummaryData {
   total: number;
@@ -8,6 +8,7 @@ export interface QueueSummaryData {
   inConsultation: number;
   onHold: number;
   highPriority: number;
+  completed?: number;
 }
 
 interface QueueSummaryProps {
@@ -15,61 +16,54 @@ interface QueueSummaryProps {
 }
 
 export const QueueSummary: React.FC<QueueSummaryProps> = ({ summary }) => {
+  const completedCount =
+    typeof summary.completed === "number"
+      ? summary.completed
+      : Math.max(0, summary.total - (summary.waiting + summary.inConsultation + summary.onHold));
+
   const cards = [
     {
-      label: "Total Active",
-      value: summary.total,
-      icon: <Users className="w-4 h-4 text-purple-600" />,
-      bg: "bg-purple-50 border-purple-100"
-    },
-    {
-      label: "Waiting",
+      label: "WAITING",
       value: summary.waiting,
-      icon: <Clock className="w-4 h-4 text-amber-600" />,
-      bg: "bg-amber-50 border-amber-100"
+      icon: <Clock className="w-5 h-5 text-amber-500" />,
+      iconBg: "bg-amber-50 border-amber-100/80"
     },
     {
-      label: "Checked In",
-      value: summary.checkedIn,
-      icon: <UserCheck className="w-4 h-4 text-blue-600" />,
-      bg: "bg-blue-50 border-blue-100"
-    },
-    {
-      label: "In Consultation",
+      label: "IN CONSULT",
       value: summary.inConsultation,
-      icon: <Play className="w-4 h-4 text-emerald-600" />,
-      bg: "bg-emerald-50 border-emerald-100"
+      icon: <Activity className="w-5 h-5 text-emerald-500" />,
+      iconBg: "bg-emerald-50 border-emerald-100/80"
     },
     {
-      label: "On Hold",
-      value: summary.onHold,
-      icon: <Pause className="w-4 h-4 text-orange-600" />,
-      bg: "bg-orange-50 border-orange-100"
+      label: "COMPLETED",
+      value: completedCount,
+      icon: <CheckCircle2 className="w-5 h-5 text-blue-500" />,
+      iconBg: "bg-blue-50 border-blue-100/80"
     },
     {
-      label: "High Priority",
-      value: summary.highPriority,
-      icon: <AlertTriangle className="w-4 h-4 text-rose-600" />,
-      bg: "bg-rose-50 border-rose-100"
+      label: "TOTAL PATIENTS",
+      value: summary.total,
+      icon: <Users className="w-5 h-5 text-purple-600" />,
+      iconBg: "bg-purple-50 border-purple-100/80"
     }
   ];
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
       {cards.map((card, idx) => (
         <div
           key={idx}
-          className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs flex items-center justify-between"
+          className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-2xs flex items-center justify-between relative overflow-hidden"
         >
           <div>
-            <div className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+            <div className="text-xs font-bold text-slate-400 tracking-wider uppercase">
               {card.label}
             </div>
-            <div className="text-2xl font-extrabold text-slate-900 mt-1">
+            <div className="text-4xl md:text-5xl font-black text-[#0f172a] mt-1.5 tracking-tight">
               {card.value}
             </div>
           </div>
-          <div className={`p-2 rounded-lg border ${card.bg}`}>
+          <div className={`p-3.5 rounded-xl border flex items-center justify-center shadow-2xs ${card.iconBg}`}>
             {card.icon}
           </div>
         </div>

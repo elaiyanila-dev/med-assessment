@@ -1,0 +1,225 @@
+{
+  "patients": [
+    {
+      "id": "PAT-001",
+      "name": "Rahul Verma",
+      "uhid": "ABHA-1234",
+      "age": 34,
+      "gender": "Male",
+      "dob": "1992-02-14",
+      "mobile": "9876543210",
+      "email": "rahul.verma@example.demo",
+      "bloodGroup": "B+",
+      "address": "Chennai, Tamil Nadu",
+      "allergies": [
+        "Penicillin"
+      ],
+      "chronicConditions": [
+        "None reported"
+      ],
+      "priority": "HIGH",
+      "queueStatus": "COMPLETED",
+      "registrationType": "IPD",
+      "department": "General Medicine"
+    },
+    {
+      "id": "PAT-002",
+      "name": "Priya Sharma",
+      "uhid": "ABHA-5678",
+      "age": 28,
+      "gender": "Female",
+      "dob": "1998-05-21",
+      "mobile": "9123456780",
+      "email": "priya.sharma@example.demo",
+      "bloodGroup": "O+",
+      "address": "Chennai, Tamil Nadu",
+      "allergies": [
+        "None known"
+      ],
+      "chronicConditions": [
+        "None reported"
+      ],
+      "priority": "URGENT",
+      "queueStatus": "WAITING",
+      "registrationType": "IPD",
+      "department": "General Medicine"
+    },
+    {
+      "id": "PAT-003",
+      "name": "Vikram Singh",
+      "uhid": "ABHA-7890",
+      "age": 50,
+      "gender": "Male",
+      "dob": "1976-01-10",
+      "mobile": "7766554433",
+      "email": "vikram.singh@example.demo",
+      "bloodGroup": "A+",
+      "address": "Chennai, Tamil Nadu",
+      "allergies": [
+        "None known"
+      ],
+      "chronicConditions": [
+        "Hypertension"
+      ],
+      "priority": "EMERGENCY",
+      "queueStatus": "COMPLETED",
+      "registrationType": "IPD",
+      "department": "Cardiology"
+    },
+    {
+      "id": "PAT-004",
+      "name": "Amit Patel",
+      "uhid": "ABHA-2345",
+      "age": 41,
+      "gender": "Male",
+      "dob": "1985-08-03",
+      "mobile": "9988776655",
+      "email": "amit.patel@example.demo",
+      "bloodGroup": "AB+",
+      "address": "Chennai, Tamil Nadu",
+      "allergies": [
+        "Sulfa drugs"
+      ],
+      "chronicConditions": [
+        "Type 2 Diabetes"
+      ],
+      "priority": "NORMAL",
+      "queueStatus": "COMPLETED",
+      "registrationType": "OPD",
+      "department": "General Medicine"
+    },
+    {
+      "id": "PAT-005",
+      "name": "Sujata Rao",
+      "uhid": "ABHA-3456",
+      "age": 62,
+      "gender": "Female",
+      "dob": "1964-04-18",
+      "mobile": "8877665544",
+      "email": "sujata.rao@example.demo",
+      "bloodGroup": "O-",
+      "address": "Chennai, Tamil Nadu",
+      "allergies": [
+        "None known"
+      ],
+      "chronicConditions": [
+        "Osteoarthritis"
+      ],
+      "priority": "NORMAL",
+      "queueStatus": "CHECKED_IN",
+      "registrationType": "OPD",
+      "department": "Orthopedics"
+    },
+    {
+      "id": "PAT-006",
+      "name": "Ananya Iyer",
+      "uhid": "ABHA-4567",
+      "age": 37,
+      "gender": "Female",
+      "dob": "1989-06-12",
+      "mobile": "9001112233",
+      "email": "ananya.iyer@example.demo",
+      "bloodGroup": "A-",
+      "address": "Chennai, Tamil Nadu",
+      "allergies": [
+        "Latex"
+      ],
+      "chronicConditions": [
+        "Asthma"
+      ],
+      "priority": "HIGH",
+      "queueStatus": "WAITING",
+      "registrationType": "OPD",
+      "department": "Pulmonology"
+    },
+    {
+      "id": "PAT-007",
+      "name": "Karthik Raj",
+      "uhid": "ABHA-6789",
+      "age": 46,
+      "gender": "Male",
+      "dob": "1980-11-30",
+      "mobile": "9002223344",
+      "email": "karthik.raj@example.demo",
+      "bloodGroup": "B-",
+      "address": "Chennai, Tamil Nadu",
+      "allergies": [
+        "None known"
+      ],
+      "chronicConditions": [
+        "Hyperlipidemia"
+      ],
+      "priority": "NORMAL",
+      "queueStatus": "DISCHARGED",
+      "registrationType": "IPD",
+      "department": "General Medicine"
+    },
+    {
+      "id": "PAT-008",
+      "name": "Meena Krishnan",
+      "uhid": "ABHA-8901",
+      "age": 55,
+      "gender": "Female",
+      "dob": "1971-03-09",
+      "mobile": "9003334455",
+      "email": "meena.krishnan@example.demo",
+      "bloodGroup": "O+",
+      "address": "Chennai, Tamil Nadu",
+      "allergies": [
+        "Aspirin"
+      ],
+      "chronicConditions": [
+        "Diabetes",
+        "Hypertension"
+      ],
+      "priority": "HIGH",
+      "queueStatus": "DISCHARGED",
+      "registrationType": "IPD",
+      "department": "General Medicine"
+    },
+    {
+      "id": "PAT-009",
+      "name": "Arjun Nair",
+      "uhid": "ABHA-9012",
+      "age": 29,
+      "gender": "Male",
+      "dob": "1997-09-17",
+      "mobile": "9004445566",
+      "email": "arjun.nair@example.demo",
+      "bloodGroup": "A+",
+      "address": "Chennai, Tamil Nadu",
+      "allergies": [
+        "None known"
+      ],
+      "chronicConditions": [
+        "None reported"
+      ],
+      "priority": "NORMAL",
+      "queueStatus": "WAITING",
+      "registrationType": "OPD",
+      "department": "General Medicine"
+    },
+    {
+      "id": "PAT-010",
+      "name": "Divya Menon",
+      "uhid": "ABHA-0123",
+      "age": 31,
+      "gender": "Female",
+      "dob": "1995-12-05",
+      "mobile": "9005556677",
+      "email": "divya.menon@example.demo",
+      "bloodGroup": "B+",
+      "address": "Chennai, Tamil Nadu",
+      "allergies": [
+        "Penicillin"
+      ],
+      "chronicConditions": [
+        "Hypothyroidism"
+      ],
+      "priority": "NORMAL",
+      "queueStatus": "WAITING",
+      "registrationType": "OPD",
+      "department": "General Medicine"
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "dashboard": {
+    "physicianName": "Dr. Sharma",
+    "patientsWaiting": 12,
+    "myQueue": 12,
+    "highPriority": 4,
+    "pendingReports": 5,
+    "ipdRounds": 3,
+    "systemStatus": "OPERATIONAL",
+    "upcomingAppointments": [
+      {
+        "patientId": "PAT-002",
+        "patientName": "Priya Sharma",
+        "type": "General Checkup",
+        "time": "10:30 AM"
+      },
+      {
+        "patientId": "PAT-006",
+        "patientName": "Ananya Iyer",
+        "type": "Follow-up",
+        "time": "11:00 AM"
+      },
+      {
+        "patientId": "PAT-009",
+        "patientName": "Arjun Nair",
+        "type": "General Checkup",
+        "time": "11:30 AM"
+      }
+    ]
+  },
+  "analytics": {
+    "pharmacy": {
+      "inventoryTurnover": 4.8,
+      "stockOutsThisWeek": 7,
+      "expiryLosses": 1250.0,
+      "dispensingTatMinutes": 18,
+      "scriptsProcessed": 86,
+      "inventoryValue": 184500.0,
+      "weeklyStockOutIncidents": [
+        4,
+        2,
+        3,
+        5,
+        1,
+        2,
+        7
+      ],
+      "highRiskDrugUsage": {
+        "antibiotics": 42,
+        "highAlert": 11,
+        "narcotics": 6,
+        "other": 27
+      }
+    },
+    "laboratory": {
+      "samplesReceivedHourly": [
+        8,
+        11,
+        13,
+        15,
+        12,
+        9
+      ],
+      "departmentLoad": {
+        "Hematology": 18,
+        "Biochemistry": 31,
+        "Microbiology": 9,
+        "Serology": 7
+      },
+      "toCollect": 48,
+      "processing": 77,
+      "completedToday": 126,
+      "criticalValues": 4
+    }
+  }
+}
