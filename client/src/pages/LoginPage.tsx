@@ -1,15 +1,54 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation, Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { Activity, Lock, Mail, AlertCircle, Loader2, KeyRound } from "lucide-react";
+import {
+  Activity,
+  AlertCircle,
+  Building2,
+  ChevronRight,
+  ClipboardList,
+  Loader2,
+  Lock,
+  Stethoscope,
+  User,
+  Users
+} from "lucide-react";
+
+const roles = [
+  {
+    key: "doctor",
+    label: "Doctor",
+    description: "OPD & Clinical Notes",
+    username: "doctor",
+    icon: Stethoscope,
+    color: "bg-blue-100 text-blue-700"
+  },
+  {
+    key: "admin",
+    label: "Hospital Admin",
+    description: "Full System Access",
+    username: "admin",
+    icon: Building2,
+    color: "bg-violet-100 text-violet-700"
+  },
+  {
+    key: "receptionist",
+    label: "Receptionist",
+    description: "Registration & Billing",
+    username: "receptionist",
+    icon: ClipboardList,
+    color: "bg-amber-100 text-amber-700"
+  }
+];
 
 export const LoginPage: React.FC = () => {
   const { isAuthenticated, login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [email, setEmail] = useState("dr.rohan.sharma@mednxt.demo");
-  const [password, setPassword] = useState("MedNxt@123");
+  const [selectedRole, setSelectedRole] = useState(roles[0]);
+  const [username, setUsername] = useState(roles[0].username);
+  const [password, setPassword] = useState("password");
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -25,7 +64,7 @@ export const LoginPage: React.FC = () => {
     setLoading(true);
 
     try {
-      await login(email, password);
+      await login(username, password);
       const from = (location.state as any)?.from?.pathname || "/dashboard";
       navigate(from, { replace: true });
     } catch (err: any) {
@@ -39,107 +78,142 @@ export const LoginPage: React.FC = () => {
     }
   };
 
-  const setDemoCredentials = (demoEmail: string) => {
-    setEmail(demoEmail);
-    setPassword("MedNxt@123");
+  const selectRole = (role: typeof roles[number]) => {
+    setSelectedRole(role);
+    setUsername(role.username);
+    setPassword("password");
     setErrorMessage(null);
   };
 
   return (
-    <div className="min-h-screen bg-slate-100 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 font-sans text-slate-800">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md text-center space-y-3">
-        {/* Brand Icon */}
-        <div className="w-14 h-14 bg-[#2b1055] rounded-2xl flex items-center justify-center text-purple-300 mx-auto shadow-lg border border-purple-800/50">
-          <Activity className="w-8 h-8" />
-        </div>
-        <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">
-          MedNxt Hospitals
-        </h2>
-        <p className="text-sm font-medium text-slate-500">
-          Enterprise Hospital Management System Shell
-        </p>
-      </div>
+    <div className="min-h-screen bg-[#0c1428] text-slate-900 font-sans relative overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_10%,rgba(78,45,170,0.55),transparent_30%),radial-gradient(circle_at_85%_90%,rgba(0,149,181,0.36),transparent_34%)]" />
+      <div className="relative min-h-screen flex items-center justify-center px-4 py-8">
+        <div className="w-full max-w-6xl grid overflow-hidden bg-white rounded-2xl shadow-2xl md:grid-cols-[1fr_1fr]">
+          <section className="bg-slate-50 px-6 py-8 sm:px-9 md:px-10">
+            <h1 className="text-sm font-bold uppercase tracking-[0.18em] text-slate-500">
+              Select a role to login
+            </h1>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white py-8 px-6 shadow-xl rounded-2xl border border-slate-200 sm:px-10 space-y-6">
-          <form className="space-y-5" onSubmit={handleSubmit}>
-            {errorMessage && (
-              <div className="p-3.5 bg-rose-50 border border-rose-200 rounded-xl flex items-start space-x-3 text-rose-700 text-sm">
-                <AlertCircle className="w-5 h-5 shrink-0 text-rose-500 mt-0.5" />
-                <span className="font-medium">{errorMessage}</span>
-              </div>
-            )}
+            <div className="mt-7 grid gap-4 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
+              {roles.map((role) => {
+                const Icon = role.icon;
+                const isSelected = selectedRole.key === role.key;
 
-            <div>
-              <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
-                Email Address
-              </label>
-              <div className="relative rounded-xl shadow-xs">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                  <Mail className="h-4 h-4" />
+                return (
+                  <button
+                    type="button"
+                    key={role.key}
+                    onClick={() => selectRole(role)}
+                    className={`min-h-[124px] text-left rounded-xl border bg-white p-4 transition-all ${
+                      isSelected
+                        ? "border-violet-600 shadow-md ring-1 ring-violet-600"
+                        : "border-slate-200 hover:border-slate-300 hover:shadow-sm"
+                    }`}
+                  >
+                    <div className="flex items-center gap-4">
+                      <span className={`flex h-10 w-10 items-center justify-center rounded-lg ${role.color}`}>
+                        <Icon className="h-5 w-5" />
+                      </span>
+                      <span>
+                        <span className="block text-base font-extrabold text-slate-900">
+                          {role.label}
+                        </span>
+                        <span className="mt-3 block text-xs font-medium text-slate-500">
+                          {role.description}
+                        </span>
+                      </span>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </section>
+
+          <section className="px-6 py-9 sm:px-9 md:px-10 lg:px-12 flex items-center">
+            <div className="w-full max-w-lg mx-auto">
+              <div className="text-center">
+                <div className="mx-auto flex h-16 w-16 rotate-3 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-600 to-cyan-500 text-white shadow-lg">
+                  <Activity className="h-8 w-8" />
                 </div>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  placeholder="doctor@mednxt.demo"
-                  className="w-full pl-10 pr-3 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-purple-600 focus:bg-white transition-all"
-                />
+                <h2 className="mt-6 text-3xl font-extrabold text-slate-950">
+                  MedNxt <span className="text-violet-600">AI</span>
+                </h2>
+                <p className="mt-2 text-sm font-medium text-slate-500">
+                  Secure Hospital Management System
+                </p>
               </div>
-            </div>
 
-            <div>
-              <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
-                Password
-              </label>
-              <div className="relative rounded-xl shadow-xs">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                  <Lock className="h-4 h-4" />
+              <form className="mt-9 space-y-5" onSubmit={handleSubmit}>
+                {errorMessage && (
+                  <div className="rounded-xl border border-rose-200 bg-rose-50 p-3.5 flex items-start gap-3 text-sm text-rose-700">
+                    <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-rose-500" />
+                    <span className="font-medium">{errorMessage}</span>
+                  </div>
+                )}
+
+                <div>
+                  <label className="mb-1.5 block text-xs font-bold uppercase text-slate-500">
+                    Username
+                  </label>
+                  <div className="relative">
+                    <User className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
+                    <input
+                      type="text"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                      required
+                      autoComplete="username"
+                      className="w-full rounded-xl border border-slate-200 bg-slate-100 py-3.5 pl-12 pr-4 text-sm font-medium text-slate-950 outline-none transition focus:border-violet-500 focus:bg-white focus:ring-2 focus:ring-violet-100"
+                    />
+                  </div>
                 </div>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  placeholder="••••••••"
-                  className="w-full pl-10 pr-3 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-purple-600 focus:bg-white transition-all"
-                />
+
+                <div>
+                  <div className="mb-1.5 flex items-center justify-between">
+                    <label className="block text-xs font-bold uppercase text-slate-500">
+                      Password
+                    </label>
+                    <span className="text-xs font-bold text-violet-600">Forgot Password?</span>
+                  </div>
+                  <div className="relative">
+                    <Lock className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
+                    <input
+                      type="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                      autoComplete="current-password"
+                      className="w-full rounded-xl border border-slate-200 bg-slate-100 py-3.5 pl-12 pr-4 text-sm font-medium text-slate-950 outline-none transition focus:border-violet-500 focus:bg-white focus:ring-2 focus:ring-violet-100"
+                    />
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="flex w-full items-center justify-center gap-3 rounded-xl bg-violet-600 px-4 py-3.5 text-sm font-extrabold text-white shadow-lg shadow-violet-600/25 transition hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-violet-300 disabled:opacity-60"
+                >
+                  {loading ? (
+                    <>
+                      <Loader2 className="h-5 w-5 animate-spin" />
+                      <span>Signing In...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>Secure Login</span>
+                      <ChevronRight className="h-5 w-5" />
+                    </>
+                  )}
+                </button>
+              </form>
+
+              <div className="mt-8 flex items-center justify-center gap-2 text-xs font-semibold text-slate-400">
+                <Users className="h-3.5 w-3.5" />
+                <span>Restricted Access - Authorized Personnel Only</span>
               </div>
             </div>
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full flex justify-center items-center space-x-2 py-3 px-4 border border-transparent rounded-xl shadow-md text-sm font-semibold text-white bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-600 transition-all disabled:opacity-50"
-            >
-              {loading ? (
-                <>
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                  <span>Signing In...</span>
-                </>
-              ) : (
-                <span>Sign In</span>
-              )}
-            </button>
-          </form>
-
-          {/* Quick Development Demo Credentials Selector */}
-          <div className="border-t border-slate-100 pt-5 space-y-2.5">
-            <div className="flex items-center space-x-1.5 text-xs font-semibold text-slate-500 uppercase tracking-wider">
-              <KeyRound className="w-3.5 h-3.5 text-purple-600" />
-              <span>Development Seed Login Quick-Fill:</span>
-            </div>
-            <div>
-              <button
-                type="button"
-                onClick={() => setDemoCredentials("dr.rohan.sharma@mednxt.demo")}
-                className="w-full p-2.5 bg-purple-50 hover:bg-purple-100 text-purple-800 rounded-xl font-bold border border-purple-200 text-center transition-colors text-xs flex items-center justify-center space-x-2 cursor-pointer"
-              >
-                <span>Dr. Rohan (Doctor)</span>
-              </button>
-            </div>
-          </div>
+          </section>
         </div>
       </div>
     </div>

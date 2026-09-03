@@ -1,8 +1,9 @@
 import dotenv from "dotenv";
 import path from "path";
 
-// Load environment variables from project root .env
+// Prefer the repo root .env, but also support running backend with server/.env.
 dotenv.config({ path: path.resolve(__dirname, "../../../.env") });
+dotenv.config({ path: path.resolve(__dirname, "../../.env") });
 
 export const config = {
   port: parseInt(process.env.PORT || "5000", 10),

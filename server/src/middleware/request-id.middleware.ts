@@ -2,6 +2,8 @@ import { Request, Response, NextFunction } from "express";
 import crypto from "crypto";
 
 declare global {
+  // Express request augmentation requires declaration merging.
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Express {
     interface Request {
       id?: string;

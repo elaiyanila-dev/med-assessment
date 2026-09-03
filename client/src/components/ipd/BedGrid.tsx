@@ -1,5 +1,5 @@
 import React from "react";
-import { Bed as BedIcon, User, Sparkles, Wrench, MoreVertical, Stethoscope, ArrowRightLeft, UserMinus, Plus } from "lucide-react";
+import { Bed as BedIcon, Sparkles, Wrench, MoreVertical, Stethoscope, ArrowRightLeft, UserMinus, Plus } from "lucide-react";
 
 export interface BedItem {
   id: string;

@@ -19,7 +19,7 @@ interface PatientSearchInputProps {
 
 export const PatientSearchInput: React.FC<PatientSearchInputProps> = ({
   onSelectPatient,
-  selectedPatientId
+  selectedPatientId: _selectedPatientId
 }) => {
   const [query, setQuery] = useState<string>("");
   const [results, setResults] = useState<PatientSearchResult[]>([]);
@@ -49,7 +49,6 @@ export const PatientSearchInput: React.FC<PatientSearchInputProps> = ({
       isMounted = false;
       clearTimeout(timer);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query]);
 
   return (

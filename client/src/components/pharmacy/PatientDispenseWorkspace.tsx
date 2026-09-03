@@ -11,7 +11,7 @@ interface PatientDispenseWorkspaceProps {
 
 export const PatientDispenseWorkspace: React.FC<PatientDispenseWorkspaceProps> = ({
   prescriptionId,
-  userRole,
+  userRole: _userRole,
   onClose,
   onSuccess
 }) => {

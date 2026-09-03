@@ -298,6 +298,7 @@ export const updateUserDemographics = async (
   payload: {
     name?: string;
     phone?: string;
+    role?: UserRole;
     department?: string;
     specialization?: string;
   }
@@ -316,6 +317,7 @@ export const updateUserDemographics = async (
       data: {
         name: payload.name ?? user.name,
         phone: payload.phone !== undefined ? payload.phone : user.phone,
+        role: payload.role !== undefined ? payload.role : user.role,
         department: payload.department !== undefined ? payload.department : user.department,
         specialization: payload.specialization !== undefined ? payload.specialization : user.specialization
       }

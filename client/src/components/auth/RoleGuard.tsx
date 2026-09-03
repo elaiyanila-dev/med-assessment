@@ -33,7 +33,7 @@ export const RoleGuard: React.FC<RoleGuardProps> = ({ allowedRoles, children }) 
           <div className="pt-2">
             <Link
               to="/patient-queue"
-              className="inline-flex items-center space-x-2 px-4.5 py-2.5 bg-purple-700 hover:bg-purple-800 text-white font-bold text-xs rounded-xl transition-colors shadow-xs"
+              className="inline-flex items-center gap-2 px-5 py-3 bg-purple-700 hover:bg-purple-800 text-white font-bold text-xs rounded-xl transition-colors shadow-xs"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Return to Patient Queue</span>

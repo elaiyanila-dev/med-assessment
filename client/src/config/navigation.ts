@@ -3,11 +3,14 @@ import {
   Users,
   Stethoscope,
   FileText,
+  Activity,
   Bed,
   FlaskConical,
   Pill,
+  Package,
   Calendar,
   UserCheck,
+  ClipboardPlus,
   LucideIcon
 } from "lucide-react";
 
@@ -36,6 +39,12 @@ export const ALL_NAV_ITEMS: Record<string, NavItem> = {
     label: "Appointments",
     path: "/appointments",
     icon: Calendar
+  },
+  registration: {
+    id: "registration",
+    label: "Registration",
+    path: "/registration",
+    icon: ClipboardPlus
   },
   patientQueue: {
     id: "patient-queue",
@@ -73,10 +82,28 @@ export const ALL_NAV_ITEMS: Record<string, NavItem> = {
     path: "/pharmacy",
     icon: Pill
   },
+  inventoryAssets: {
+    id: "inventory-assets",
+    label: "Inventory & Assets",
+    path: "/inventory",
+    icon: Package
+  },
+  billingClaims: {
+    id: "billing-claims",
+    label: "Billing & Claims",
+    path: "/billing",
+    icon: FileText
+  },
+  analytics: {
+    id: "analytics",
+    label: "Analytics",
+    path: "/analytics",
+    icon: Activity
+  },
   userManagement: {
     id: "users",
-    label: "User Management",
-    path: "/users",
+    label: "Admin Panel",
+    path: "/admin",
     icon: UserCheck
   }
 };
@@ -111,34 +138,37 @@ export const ROLE_NAVIGATION_MAP: Record<string, string[]> = {
   ],
   RECEPTIONIST: [
     "dashboard",
-    "patientDirectory",
-    "appointments",
+    "registration",
     "patientQueue",
-    "patientHistory"
+    "billingClaims"
   ],
   ADMIN: [
     "dashboard",
-    "patientDirectory",
-    "appointments",
+    "userManagement",
+    "registration",
     "patientQueue",
     "doctorStation",
     "patientHistory",
     "ipdWards",
     "laboratory",
     "pharmacy",
-    "userManagement"
+    "inventoryAssets",
+    "billingClaims",
+    "analytics"
   ],
   SUPER_ADMIN: [
     "dashboard",
-    "patientDirectory",
-    "appointments",
+    "userManagement",
+    "registration",
     "patientQueue",
     "doctorStation",
     "patientHistory",
     "ipdWards",
     "laboratory",
     "pharmacy",
-    "userManagement"
+    "inventoryAssets",
+    "billingClaims",
+    "analytics"
   ]
 };
 

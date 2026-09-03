@@ -6,8 +6,6 @@ import { LabSkeleton } from "../components/lab/LabSkeleton";
 import { LabKpiCards } from "../components/lab/LabKpiCards";
 import { LabAnalyticsSection } from "../components/lab/LabAnalyticsSection";
 import { CriticalResultsTable } from "../components/lab/CriticalResultsTable";
-import { LabFilterBar } from "../components/lab/LabFilterBar";
-import { LabOrderTable } from "../components/lab/LabOrderTable";
 import { LabOrdersSection } from "../components/lab/LabOrdersSection";
 import { LabCollectionSection } from "../components/lab/LabCollectionSection";
 import { LabResultsSection } from "../components/lab/LabResultsSection";
@@ -35,6 +33,7 @@ export const LaboratoryPage: React.FC = () => {
   const [activeCollectOrder, setActiveCollectOrder] = useState<any | null>(null);
   const [activeResultEntryOrder, setActiveResultEntryOrder] = useState<any | null>(null);
   const [activeViewOrder, setActiveViewOrder] = useState<any | null>(null);
+  const isAdminPortal = user?.role === "ADMIN" || user?.role === "SUPER_ADMIN";
 
   const fetchDashboardData = useCallback(async () => {
     setIsLoading(true);
@@ -70,45 +69,6 @@ export const LaboratoryPage: React.FC = () => {
     fetchDashboardData();
   }, [fetchDashboardData]);
 
-  const handleFilterChange = (newFilter: string) => {
-    const nextParams = new URLSearchParams(searchParams);
-    if (newFilter === "ALL") {
-      nextParams.delete("status");
-    } else {
-      nextParams.set("status", newFilter);
-    }
-    setSearchParams(nextParams);
-  };
-
-  const handleSearchChange = (newSearch: string) => {
-    const nextParams = new URLSearchParams(searchParams);
-    if (!newSearch.trim()) {
-      nextParams.delete("search");
-    } else {
-      nextParams.set("search", newSearch);
-    }
-    setSearchParams(nextParams);
-  };
-
-  const handleCollectSample = (order: any) => {
-    setActiveCollectOrder(order);
-  };
-
-  const handleProcessOrder = async (order: any) => {
-    try {
-      const response = await api.post(`/laboratory/orders/${order.id}/process`);
-      if (response.data?.success) {
-        fetchDashboardData();
-      }
-    } catch (err: any) {
-      alert(err.response?.data?.error?.message || "Failed to start processing");
-    }
-  };
-
-  const handleEnterResults = (order: any) => {
-    setActiveResultEntryOrder(order);
-  };
-
   const handleViewDetails = (order: any) => {
     const nextParams = new URLSearchParams(searchParams);
     nextParams.set("orderId", order.id);
@@ -121,7 +81,8 @@ export const LaboratoryPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto pb-12 px-4 md:px-6 py-6">
+    <div className="h-full overflow-y-auto bg-[#f8fafc]">
+      <div className="mx-auto w-full max-w-[1368px] space-y-6 px-4 py-6 pb-12 sm:px-6 lg:px-7">
       {/* MAIN LABORATORY HEADER CARD MATCHING REFERENCE SCREENSHOT #1 */}
       <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5 md:p-6 space-y-5">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -135,7 +96,10 @@ export const LaboratoryPage: React.FC = () => {
                 Laboratory Command Center
               </h1>
               <p className="text-xs font-semibold text-slate-500 mt-0.5">
-                78 Samples In-Process • <span className="text-rose-600 font-extrabold">21 STAT Pending</span>
+                {isAdminPortal ? "72" : "78"} Samples In-Process •{" "}
+                <span className="text-rose-600 font-extrabold">
+                  {isAdminPortal ? "15" : "21"} STAT Pending
+                </span>
               </p>
             </div>
           </div>
@@ -188,10 +152,10 @@ export const LaboratoryPage: React.FC = () => {
               <LabKpiCards
                 data={
                   dashboardData?.metrics || {
-                    toCollect: 47,
-                    processing: 78,
-                    completedToday: 29,
-                    criticalValues: 7
+                    toCollect: isAdminPortal ? 36 : 47,
+                    processing: isAdminPortal ? 72 : 78,
+                    completedToday: isAdminPortal ? 42 : 29,
+                    criticalValues: isAdminPortal ? 13 : 7
                   }
                 }
               />
@@ -200,6 +164,7 @@ export const LaboratoryPage: React.FC = () => {
               <LabAnalyticsSection
                 samplesData={dashboardData?.samplesReceivedChart}
                 departmentLoad={dashboardData?.departmentLoad}
+                variant={isAdminPortal ? "admin" : "default"}
               />
 
               {/* 3. Critical Results Section (Action Required Table) */}
@@ -269,6 +234,7 @@ export const LaboratoryPage: React.FC = () => {
           onSuccess={fetchDashboardData}
         />
       )}
+      </div>
     </div>
   );
 };

@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import {
   Bot,
-  Sparkles,
   X,
   Maximize2,
   Minimize2,

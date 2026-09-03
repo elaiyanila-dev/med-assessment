@@ -27,6 +27,7 @@ const createUserSchema = z.object({
 const updateUserSchema = z.object({
   name: z.string().min(1, "Name cannot be empty").optional(),
   phone: z.string().optional(),
+  role: z.nativeEnum(UserRole, { errorMap: () => ({ message: "Valid UserRole is required" }) }).optional(),
   department: z.string().optional(),
   specialization: z.string().optional()
 });

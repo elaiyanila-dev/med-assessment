@@ -35,10 +35,10 @@ interface PharmacyAnalyticsProps {
 }
 
 export const PharmacyAnalyticsTab: React.FC<PharmacyAnalyticsProps> = ({
-  metrics = {},
+  metrics: _metrics = {},
   medicines = [],
   prescriptions = [],
-  returns = []
+  returns: _returns = []
 }) => {
   const [period, setPeriod] = useState<"Today" | "7 Days" | "30 Days">("7 Days");
 

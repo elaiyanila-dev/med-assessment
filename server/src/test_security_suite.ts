@@ -51,7 +51,9 @@ function request(
           let parsed: any = rawData;
           try {
             parsed = JSON.parse(rawData);
-          } catch (e) {}
+          } catch {
+            // Keep raw response body when JSON parsing fails.
+          }
           resolve({ statusCode: res.statusCode || 500, body: parsed });
         });
       }
@@ -74,7 +76,7 @@ async function runTestSuite() {
   const adminUser = await prisma.user.findFirst({ where: { role: UserRole.ADMIN, status: "ACTIVE", deletedAt: null } });
   const superAdminUser = (await prisma.user.findFirst({ where: { role: UserRole.SUPER_ADMIN, status: "ACTIVE", deletedAt: null } })) || adminUser;
   
-  let doctorA = await prisma.user.findFirst({ where: { role: UserRole.DOCTOR, status: "ACTIVE", deletedAt: null } });
+  const doctorA = await prisma.user.findFirst({ where: { role: UserRole.DOCTOR, status: "ACTIVE", deletedAt: null } });
   let doctorB = await prisma.user.findFirst({ where: { role: UserRole.DOCTOR, status: "ACTIVE", deletedAt: null, id: { not: doctorA?.id } } });
 
   if (!doctorB && doctorA) {

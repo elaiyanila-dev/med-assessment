@@ -4,6 +4,12 @@ import { mednxtDummyData } from "../data/mednxtDummyData";
 const API_URL = import.meta.env.VITE_API_URL || "/api";
 export const USE_DUMMY_DATA = import.meta.env.VITE_USE_DUMMY_DATA !== "false";
 
+const demoLoginAliases: Record<string, string> = {
+  doctor: "dr.rohan.sharma@mednxt.demo",
+  admin: "admin@mednxt.demo",
+  receptionist: "frontdesk@mednxt.demo"
+};
+
 export const api = axios.create({
   baseURL: API_URL,
   timeout: 15000,
@@ -43,7 +49,9 @@ if (USE_DUMMY_DATA) {
           let body: any = {};
           try {
             body = typeof config.data === "string" ? JSON.parse(config.data) : config.data || {};
-          } catch {}
+          } catch {
+            // Ignore malformed mock payloads and use defaults.
+          }
 
           const { email, password } = body;
           if (!email || !password) {
@@ -55,8 +63,9 @@ if (USE_DUMMY_DATA) {
             throw errorRes;
           }
 
-          const user = mednxtDummyData.getUserByEmail(email);
-          if (user && password) {
+          const identifier = String(email).trim().toLowerCase();
+          const user = mednxtDummyData.getUserByEmail(demoLoginAliases[identifier] || identifier);
+          if (user && password === "password") {
             return {
               data: {
                 success: true,
@@ -164,7 +173,9 @@ if (USE_DUMMY_DATA) {
         let body: any = {};
         try {
           body = typeof config.data === "string" ? JSON.parse(config.data) : config.data || {};
-        } catch {}
+        } catch {
+          // Ignore malformed mock payloads and use defaults.
+        }
         const queueId = url.split("/queue/")[1]?.split("/")[0] || url.split("/doctor-station/queue/")[1]?.split("/")[0];
         if (queueId && body.status) {
           mednxtDummyData.updateQueueEntryStatus(queueId, body.status);
@@ -249,7 +260,9 @@ if (USE_DUMMY_DATA) {
       let bodyData: any = {};
       try {
         bodyData = typeof config.data === "string" ? JSON.parse(config.data) : config.data || {};
-      } catch {}
+      } catch {
+        // Ignore malformed mock payloads and use defaults.
+      }
       const pid = bodyData.patientId || "PAT-001";
       const consultation = mednxtDummyData.getConsultationByPatientId(pid) || {
         id: "CON-001",
@@ -303,7 +316,9 @@ if (USE_DUMMY_DATA) {
       let bodyData: any = {};
       try {
         bodyData = typeof config.data === "string" ? JSON.parse(config.data) : config.data || {};
-      } catch {}
+      } catch {
+        // Ignore malformed mock payloads and use defaults.
+      }
       const nowIso = new Date().toISOString();
       const newOrder = {
         id: `LAB-${Date.now().toString().slice(-6)}`,
@@ -360,7 +375,9 @@ if (USE_DUMMY_DATA) {
       let bodyData: any = {};
       try {
         bodyData = typeof config.data === "string" ? JSON.parse(config.data) : config.data || {};
-      } catch {}
+      } catch {
+        // Ignore malformed mock payloads and use defaults.
+      }
       const newRx = {
         id: `RX-${Date.now().toString().slice(-6)}`,
         status: "SENT_TO_PHARMACY",
@@ -408,7 +425,9 @@ if (USE_DUMMY_DATA) {
           let bodyData: any = {};
           try {
             bodyData = typeof config.data === "string" ? JSON.parse(config.data) : config.data || {};
-          } catch {}
+          } catch {
+            // Ignore malformed mock payloads and use defaults.
+          }
 
           const res = mednxtDummyData.updateMedicine(medId, bodyData);
           return {
@@ -424,7 +443,9 @@ if (USE_DUMMY_DATA) {
           let bodyData: any = {};
           try {
             bodyData = typeof config.data === "string" ? JSON.parse(config.data) : config.data || {};
-          } catch {}
+          } catch {
+            // Ignore malformed mock payloads and use defaults.
+          }
 
           const res = mednxtDummyData.addMedicine(bodyData);
           return {
@@ -443,7 +464,9 @@ if (USE_DUMMY_DATA) {
         let bodyData: any = {};
         try {
           bodyData = typeof config.data === "string" ? JSON.parse(config.data) : config.data || {};
-        } catch {}
+        } catch {
+          // Ignore malformed mock payloads and use defaults.
+        }
         const action = bodyData.action || "restock";
 
         const res = mednxtDummyData.processReturnRequest(returnId, action);
@@ -521,7 +544,9 @@ if (USE_DUMMY_DATA) {
         let bodyData: any = {};
         try {
           bodyData = typeof config.data === "string" ? JSON.parse(config.data) : config.data || {};
-        } catch {}
+        } catch {
+          // Ignore malformed mock payloads and use defaults.
+        }
 
         const res = mednxtDummyData.addLabResults(orderId, bodyData);
         return {
@@ -544,7 +569,9 @@ if (USE_DUMMY_DATA) {
         let bodyData: any = {};
         try {
           bodyData = typeof config.data === "string" ? JSON.parse(config.data) : config.data || {};
-        } catch {}
+        } catch {
+          // Ignore malformed mock payloads and use defaults.
+        }
 
         const targetId = orderId || bodyData.orderId || bodyData.sampleId || "";
         const res = mednxtDummyData.collectLabOrder(targetId);
@@ -570,6 +597,179 @@ if (USE_DUMMY_DATA) {
         data: {
           success: true,
           data: mednxtDummyData.getLaboratoryDashboardData()
+        },
+        status: 200,
+        statusText: "OK",
+        headers: {},
+        config
+      };
+    }
+
+    // 7. Admin: users and audit logs
+    if (url.includes("/users")) {
+      const method = (config.method || "get").toLowerCase();
+      const users = mednxtDummyData.raw.users as any[];
+      const userId = url.split("/users/")[1]?.split("/")[0];
+      const target = users.find((u) => u.id === userId);
+
+      if (method === "get") {
+        if (target) {
+          return {
+            data: {
+              success: true,
+              data: {
+                ...target,
+                createdAt: target.createdAt || "2026-08-26T09:00:00.000Z",
+                updatedAt: target.updatedAt || "2026-08-26T09:00:00.000Z",
+                operationalMetrics: {
+                  assignedQueueEntriesCount: 0,
+                  activeConsultationsCount: 0,
+                  activeAdmissionsCount: 0,
+                  labOrdersCount: 0,
+                  scheduledAppointmentsCount: 0
+                }
+              }
+            },
+            status: 200,
+            statusText: "OK",
+            headers: {},
+            config
+          };
+        }
+
+        const params = (config.params || {}) as Record<string, any>;
+        const page = Number(params.page || 1);
+        const limit = Number(params.limit || 15);
+        const search = String(params.search || "").toLowerCase().trim();
+        const role = params.role;
+        const department = params.department;
+        const status = params.status;
+
+        let filtered = users.filter((u) => !u.deletedAt);
+        if (search) {
+          filtered = filtered.filter((u) =>
+            [u.name, u.email, u.phone, u.role, u.department, u.specialization]
+              .filter(Boolean)
+              .some((value) => String(value).toLowerCase().includes(search))
+          );
+        }
+        if (role) filtered = filtered.filter((u) => u.role === role);
+        if (department) filtered = filtered.filter((u) => u.department === department);
+        if (status) filtered = filtered.filter((u) => u.status === status);
+
+        const activeUsers = users.filter((u) => !u.deletedAt);
+        const start = (page - 1) * limit;
+        return {
+          data: {
+            success: true,
+            data: {
+              metrics: {
+                totalStaff: activeUsers.length,
+                activeStaff: activeUsers.filter((u) => u.status === "ACTIVE").length,
+                doctorsCount: activeUsers.filter((u) => u.role === "DOCTOR").length,
+                nursesCount: activeUsers.filter((u) => u.role === "NURSE").length,
+                inactiveOrSuspendedCount: activeUsers.filter((u) => u.status !== "ACTIVE").length
+              },
+              pagination: {
+                total: filtered.length,
+                page,
+                limit,
+                totalPages: Math.max(1, Math.ceil(filtered.length / limit))
+              },
+              users: filtered.slice(start, start + limit).map((u) => ({
+                ...u,
+                createdAt: u.createdAt || "2026-08-26T09:00:00.000Z",
+                updatedAt: u.updatedAt || "2026-08-26T09:00:00.000Z"
+              }))
+            }
+          },
+          status: 200,
+          statusText: "OK",
+          headers: {},
+          config
+        };
+      }
+
+      if (method === "post" && !url.includes("/reset-password")) {
+        let bodyData: any = {};
+        try {
+          bodyData = typeof config.data === "string" ? JSON.parse(config.data) : config.data || {};
+        } catch {
+          // Ignore malformed mock payloads and use defaults.
+        }
+        const newUser = {
+          id: `USR-${Date.now().toString().slice(-6)}`,
+          name: bodyData.name,
+          email: bodyData.email,
+          phone: bodyData.phone || "",
+          role: bodyData.role,
+          department: bodyData.department || "Administration",
+          specialization: bodyData.specialization || "",
+          status: "ACTIVE",
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        };
+        users.unshift(newUser);
+        return { data: { success: true, data: newUser }, status: 200, statusText: "OK", headers: {}, config };
+      }
+
+      if (target && method === "patch" && url.includes("/status")) {
+        let bodyData: any = {};
+        try {
+          bodyData = typeof config.data === "string" ? JSON.parse(config.data) : config.data || {};
+        } catch {
+          // Ignore malformed mock payloads and use defaults.
+        }
+        target.status = bodyData.status || target.status;
+        target.updatedAt = new Date().toISOString();
+        return { data: { success: true, data: target }, status: 200, statusText: "OK", headers: {}, config };
+      }
+      if (target && method === "patch") {
+        let bodyData: any = {};
+        try {
+          bodyData = typeof config.data === "string" ? JSON.parse(config.data) : config.data || {};
+        } catch {
+          // Ignore malformed mock payloads and use defaults.
+        }
+        Object.assign(target, bodyData, { updatedAt: new Date().toISOString() });
+        return { data: { success: true, data: target }, status: 200, statusText: "OK", headers: {}, config };
+      }
+      if (target && method === "post" && url.includes("/reset-password")) {
+        return {
+          data: { success: true, data: { success: true, message: "User password reset successfully" } },
+          status: 200,
+          statusText: "OK",
+          headers: {},
+          config
+        };
+      }
+      if (target && method === "delete") {
+        target.deletedAt = new Date().toISOString();
+        target.status = "INACTIVE";
+        return {
+          data: { success: true, data: { success: true, message: "User deleted", deletedUserId: target.id } },
+          status: 200,
+          statusText: "OK",
+          headers: {},
+          config
+        };
+      }
+    }
+
+    if (url.includes("/audit")) {
+      const logs = mednxtDummyData.getAuditLogs();
+      return {
+        data: {
+          success: true,
+          data: {
+            pagination: {
+              total: logs.length,
+              page: 1,
+              limit: logs.length,
+              totalPages: 1
+            },
+            logs
+          }
         },
         status: 200,
         statusText: "OK",

@@ -117,7 +117,7 @@ export const PatientHistoryTimeline: React.FC<PatientHistoryTimelineProps> = ({
   patientId,
   patientName = "Patient",
   patientUHID = "ABHA-1234",
-  timeline = [],
+  timeline: _timeline = [],
   existingLabOrders = [],
   existingPrescriptions = []
 }) => {

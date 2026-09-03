@@ -7,9 +7,15 @@ import { sendSuccess, sendError } from "../utils/response.js";
 import { AuthenticatedRequest } from "../middleware/auth.middleware.js";
 
 const loginSchema = z.object({
-  email: z.string().email("Valid email address required"),
+  email: z.string().min(1, "Username is required"),
   password: z.string().min(1, "Password is required")
 });
+
+const loginIdentifierMap: Record<string, string> = {
+  doctor: "dr.rohan.sharma@mednxt.demo",
+  admin: "admin@mednxt.demo",
+  receptionist: "frontdesk@mednxt.demo"
+};
 
 export const login = async (
   req: Request,
@@ -18,9 +24,11 @@ export const login = async (
 ) => {
   try {
     const { email, password } = loginSchema.parse(req.body);
+    const identifier = email.trim().toLowerCase();
+    const loginEmail = loginIdentifierMap[identifier] || identifier;
 
     const user = await prisma.user.findUnique({
-      where: { email }
+      where: { email: loginEmail }
     });
 
     if (!user) {

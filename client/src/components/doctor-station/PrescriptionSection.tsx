@@ -116,7 +116,7 @@ export const PrescriptionSection: React.FC<PrescriptionSectionProps> = ({
     return () => {
       isMounted = false;
     };
-  }, [searchQuery]);
+  }, [searchQuery, selectedMedicine]);
 
   // Auto-calculate suggested quantity based on frequency & duration
   const updateSuggestedQty = (freq: string, days: number) => {

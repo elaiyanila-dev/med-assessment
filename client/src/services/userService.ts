@@ -88,6 +88,7 @@ export const updateUser = async (
   payload: {
     name?: string;
     phone?: string;
+    role?: string;
     department?: string;
     specialization?: string;
   }

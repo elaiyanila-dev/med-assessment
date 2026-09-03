@@ -40,7 +40,7 @@ async function main() {
   console.log("Dataset structure validated successfully.");
 
   // Hash default password for all seed users
-  const defaultPasswordHash = await bcrypt.hash("MedNxt@123", 10);
+  const defaultPasswordHash = await bcrypt.hash("password", 10);
 
   // Email alias mapping to ensure both prompt demo emails & dataset emails work seamlessly
   const emailAliasMap: Record<string, string> = {
@@ -95,6 +95,7 @@ async function main() {
           name: u.name,
           email: primaryEmail,
           phone: u.phone,
+          passwordHash: defaultPasswordHash,
           role: u.role as UserRole,
           department: u.department,
           specialization: u.specialization,
@@ -122,6 +123,7 @@ async function main() {
           where: { email: u.email },
           update: {
             name: u.name,
+            passwordHash: defaultPasswordHash,
             role: u.role as UserRole,
             department: u.department,
             specialization: u.specialization,

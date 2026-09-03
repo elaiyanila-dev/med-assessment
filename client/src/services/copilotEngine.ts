@@ -9,7 +9,7 @@ export interface CopilotMessage {
 
 export const executeQuickAction = async (
   actionType: "patient_summary" | "low_stock" | "pending_labs" | "bed_occupancy" | "medical_news",
-  currentRoute: string = "/dashboard"
+  _currentRoute: string = "/dashboard"
 ): Promise<string> => {
   // Artificial slight delay for realistic processing feel
   await new Promise((resolve) => setTimeout(resolve, 500));

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { X, Edit, UserCheck, AlertTriangle } from "lucide-react";
+import { X, Edit, AlertTriangle } from "lucide-react";
 import { api } from "../../services/api";
 
 interface PatientData {

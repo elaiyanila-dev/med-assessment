@@ -27,11 +27,10 @@ export const LabResultEntryModal: React.FC<ModalProps> = ({
   onClose,
   onSuccess
 }) => {
-  if (!order) return null;
-
-  const sampleId = order.sampleId || `SMP-${order.id.slice(-6).toUpperCase()}`;
-  const patientName = order.patientName || order.patient?.name || "Patient";
-  const items = order.items && order.items.length > 0 ? order.items : [{ testName: "CBC", testId: "TEST-CBC" }];
+  const safeOrder = order || { id: "ORDER", items: [] };
+  const sampleId = safeOrder.sampleId || `SMP-${safeOrder.id.slice(-6).toUpperCase()}`;
+  const patientName = safeOrder.patientName || safeOrder.patient?.name || "Patient";
+  const items = safeOrder.items && safeOrder.items.length > 0 ? safeOrder.items : [{ testName: "CBC", testId: "TEST-CBC" }];
   const testNamesStr = items.map((i: any) => i.testName || i.test?.name || "Test").join(", ");
 
   // Initialize test groups and parameter forms dynamically
@@ -80,6 +79,8 @@ export const LabResultEntryModal: React.FC<ModalProps> = ({
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [successToast, setSuccessToast] = useState<string | null>(null);
 
+  if (!order) return null;
+
   const handleParamValueChange = (groupIdx: number, paramIdx: number, val: string) => {
     const nextGroups = [...testGroups];
     nextGroups[groupIdx].parameters[paramIdx].resultValue = val;
@@ -93,7 +94,6 @@ export const LabResultEntryModal: React.FC<ModalProps> = ({
 
     setTimeout(() => {
       const nextGroups = testGroups.map((group) => {
-        const tName = group.testName.toUpperCase();
         const updatedParams = group.parameters.map((p) => {
           let val = p.resultValue;
           const pName = p.parameterName.toUpperCase();

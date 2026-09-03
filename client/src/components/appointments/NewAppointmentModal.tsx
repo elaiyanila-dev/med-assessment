@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { X, Calendar, UserPlus, Search, UserCheck, AlertTriangle } from "lucide-react";
+import { X, Calendar, UserPlus, AlertTriangle } from "lucide-react";
 import { api } from "../../services/api";
 
 interface PatientOption {

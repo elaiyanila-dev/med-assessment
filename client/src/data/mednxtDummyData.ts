@@ -151,17 +151,36 @@ export interface IPDIndentItem {
 
 // Deep clone helper for session state resetting
 const cloneData = (data: any) => JSON.parse(JSON.stringify(data));
+const PROCESSED_RETURNS_STORAGE_KEY = "mednxt_processed_return_requests";
+const FULFILLED_INDENTS_STORAGE_KEY = "mednxt_fulfilled_ipd_indents";
+
+type ProcessedReturnRecord = {
+  status: string;
+  action: "restock" | "dispose" | "reject";
+  processedAt: string;
+};
+
+type FulfilledIndentRecord = {
+  status: "FULFILLED";
+  fulfilledAt: string;
+};
+
+const canUseLocalStorage = () => typeof window !== "undefined" && !!window.localStorage;
 
 class MedNxtDummyDataRepository {
   private data: typeof rawDummyData;
 
   constructor() {
     this.data = cloneData(rawDummyData);
+    this.applyPersistedIndentFulfillment();
+    this.applyPersistedReturnProcessing();
     this.validateRelationships();
   }
 
   public reset() {
     this.data = cloneData(rawDummyData);
+    this.applyPersistedIndentFulfillment();
+    this.applyPersistedReturnProcessing();
   }
 
   public get raw() {
@@ -711,6 +730,8 @@ class MedNxtDummyDataRepository {
         { id: "ITEM-004", indentId: "IND-002", medicineId: "MED-004", medicineName: "Azithromycin 500mg", quantity: 1, dosage: "1-0-0", location: "Loc: R3-S1" },
         { id: "ITEM-005", indentId: "IND-003", medicineId: "MED-005", medicineName: "Pantocid 40", quantity: 2, dosage: "1-0-0", location: "Loc: R1-S5" }
       ];
+
+      this.applyPersistedIndentFulfillment();
     }
 
     return (this.data.ipdIndents || [])
@@ -738,6 +759,64 @@ class MedNxtDummyDataRepository {
           items
         };
       });
+  }
+
+  private getPersistedIndentFulfillments(): Record<string, FulfilledIndentRecord> {
+    if (!canUseLocalStorage()) {
+      return {};
+    }
+
+    try {
+      const raw = window.localStorage.getItem(FULFILLED_INDENTS_STORAGE_KEY);
+      return raw ? JSON.parse(raw) : {};
+    } catch {
+      return {};
+    }
+  }
+
+  private savePersistedIndentFulfillment(indentId: string, record: FulfilledIndentRecord) {
+    if (!canUseLocalStorage()) {
+      return;
+    }
+
+    const persisted = this.getPersistedIndentFulfillments();
+    persisted[indentId] = record;
+    window.localStorage.setItem(FULFILLED_INDENTS_STORAGE_KEY, JSON.stringify(persisted));
+  }
+
+  private applyPersistedIndentFulfillment() {
+    const persisted = this.getPersistedIndentFulfillments();
+    const entries = Object.entries(persisted);
+    if (entries.length === 0) {
+      return;
+    }
+
+    const rawIndents = (this.data as any).ipdIndents || [];
+    const medicines = this.getMedicines();
+
+    entries.forEach(([indentId, record]) => {
+      const target = rawIndents.find((i: any) => i.id === indentId);
+      if (!target || target.status === "FULFILLED") {
+        return;
+      }
+
+      const rawItems = ((this.data as any).ipdIndentItems || []).filter((item: any) => item.indentId === target.id);
+      rawItems.forEach((item: any) => {
+        const med = medicines.find(
+          (m: any) => m.id === item.medicineId || (m.name || "").toLowerCase() === (item.medicineName || "").toLowerCase()
+        );
+        if (med) {
+          const curStock = med.stock ?? (med as any).stockQuantity ?? 0;
+          med.stock = Math.max(0, curStock - (item.quantity || 1));
+          if ((med as any).stockQuantity !== undefined) {
+            (med as any).stockQuantity = med.stock;
+          }
+        }
+      });
+
+      target.status = record.status;
+      target.fulfilledAt = record.fulfilledAt;
+    });
   }
 
   public fulfillIPDIndent(indentId: string): { success: boolean; message?: string } {
@@ -784,6 +863,10 @@ class MedNxtDummyDataRepository {
 
     target.status = "FULFILLED";
     target.fulfilledAt = new Date().toISOString();
+    this.savePersistedIndentFulfillment(indentId, {
+      status: "FULFILLED",
+      fulfilledAt: target.fulfilledAt
+    });
 
     return { success: true, message: `Indent ${target.id} fulfilled successfully.` };
   }
@@ -968,6 +1051,63 @@ class MedNxtDummyDataRepository {
     });
   }
 
+  private getPersistedReturnProcessing(): Record<string, ProcessedReturnRecord> {
+    if (!canUseLocalStorage()) {
+      return {};
+    }
+
+    try {
+      const raw = window.localStorage.getItem(PROCESSED_RETURNS_STORAGE_KEY);
+      return raw ? JSON.parse(raw) : {};
+    } catch {
+      return {};
+    }
+  }
+
+  private savePersistedReturnProcessing(returnId: string, record: ProcessedReturnRecord) {
+    if (!canUseLocalStorage()) {
+      return;
+    }
+
+    const persisted = this.getPersistedReturnProcessing();
+    persisted[returnId] = record;
+    window.localStorage.setItem(PROCESSED_RETURNS_STORAGE_KEY, JSON.stringify(persisted));
+  }
+
+  private applyPersistedReturnProcessing() {
+    const persisted = this.getPersistedReturnProcessing();
+    const entries = Object.entries(persisted);
+    if (entries.length === 0) {
+      return;
+    }
+
+    const rawReturns = (this.data as any).returnsAndWaste || [];
+    const medicines = this.getMedicines();
+
+    entries.forEach(([returnId, record]) => {
+      const target = rawReturns.find((r: any) => r.id === returnId);
+      if (!target) {
+        return;
+      }
+
+      target.status = record.status;
+      target.processedAt = record.processedAt;
+
+      if (record.action === "restock") {
+        const med = medicines.find(
+          (m: any) => m.id === target.medicineId || (m.name || "").toLowerCase() === (target.medicineName || "").toLowerCase()
+        );
+        if (med) {
+          const curStock = med.stock ?? (med as any).stockQuantity ?? 0;
+          med.stock = curStock + (target.quantity || 1);
+          if ((med as any).stockQuantity !== undefined) {
+            (med as any).stockQuantity = med.stock;
+          }
+        }
+      }
+    });
+  }
+
   public processReturnRequest(returnId: string, action: "restock" | "dispose" | "reject"): { success: boolean; message?: string } {
     const rawReturns = (this.data as any).returnsAndWaste || [];
     const target = rawReturns.find((r: any) => r.id === returnId);
@@ -975,7 +1115,8 @@ class MedNxtDummyDataRepository {
       return { success: false, message: "Return request not found" };
     }
 
-    if (target.status !== "PENDING") {
+    const currentStatus = (target.status || "").toUpperCase();
+    if (currentStatus !== "PENDING" && currentStatus !== "PENDING_VERIFICATION") {
       return { success: false, message: "Return request has already been processed" };
     }
 
@@ -996,18 +1137,33 @@ class MedNxtDummyDataRepository {
       }
       target.status = "VERIFIED_RESTOCKED";
       target.processedAt = new Date().toISOString();
+      this.savePersistedReturnProcessing(returnId, {
+        status: target.status,
+        action,
+        processedAt: target.processedAt
+      });
       return { success: true, message: `${target.medicineName || "Item"} (Qty: ${target.quantity || 1}) restocked successfully.` };
     }
 
     if (action === "dispose") {
       target.status = "VERIFIED_DISPOSED";
       target.processedAt = new Date().toISOString();
+      this.savePersistedReturnProcessing(returnId, {
+        status: target.status,
+        action,
+        processedAt: target.processedAt
+      });
       return { success: true, message: `${target.medicineName || "Item"} verified & disposed.` };
     }
 
     if (action === "reject") {
       target.status = "REJECTED";
       target.processedAt = new Date().toISOString();
+      this.savePersistedReturnProcessing(returnId, {
+        status: target.status,
+        action,
+        processedAt: target.processedAt
+      });
       return { success: true, message: `Return request ${target.id} rejected.` };
     }
 

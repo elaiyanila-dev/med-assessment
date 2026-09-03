@@ -1,5 +1,5 @@
 import React from "react";
-import { User, Clock, ArrowRight, Play, Pause, UserCheck, History, MoreVertical } from "lucide-react";
+import { User, Clock, PlayCircle, Pause, UserCheck, History, MoreVertical, Thermometer } from "lucide-react";
 
 export interface QueueEntryItem {
   id: string;
@@ -50,34 +50,34 @@ export const PatientQueueList: React.FC<PatientQueueListProps> = ({
   const getStatusBadge = (status: string) => {
     switch (status) {
       case "COMPLETED":
-        return (
-          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-extrabold bg-emerald-50 text-emerald-700 border border-emerald-200/80">
-            COMPLETED
-          </span>
-        );
       case "CANCELLED":
         return (
-          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-extrabold bg-slate-100 text-slate-600 border border-slate-200/80">
+          <span className="inline-flex items-center rounded-full border border-slate-200 bg-slate-100 px-3 py-1 text-xs font-black text-slate-700">
             DISCHARGED
           </span>
         );
       case "IN_CONSULTATION":
         return (
-          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-extrabold bg-indigo-50 text-indigo-700 border border-indigo-200/80">
-            IN CONSULTATION
+          <span className="inline-flex items-center rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-black text-blue-700">
+            VITALS DONE
           </span>
         );
       case "ON_HOLD":
         return (
-          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-extrabold bg-orange-50 text-orange-700 border border-orange-200/80">
+          <span className="inline-flex items-center rounded-full border border-orange-200 bg-orange-50 px-3 py-1 text-xs font-black text-orange-700">
             ON HOLD
           </span>
         );
-      case "WAITING":
       case "CHECKED_IN":
+        return (
+          <span className="inline-flex items-center rounded-full border border-slate-200 bg-slate-100 px-3 py-1 text-xs font-black text-slate-700">
+            CHECKED IN
+          </span>
+        );
+      case "WAITING":
       default:
         return (
-          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-extrabold bg-amber-50 text-amber-700 border border-amber-200/80">
+          <span className="inline-flex items-center rounded-full border border-orange-200 bg-orange-50 px-3 py-1 text-xs font-black text-orange-700">
             WAITING
           </span>
         );
@@ -100,15 +100,15 @@ export const PatientQueueList: React.FC<PatientQueueListProps> = ({
 
   return (
     <div className="overflow-x-auto">
-      <table className="w-full text-left border-collapse">
+      <table className="w-full border-collapse text-left">
         <thead>
-          <tr className="bg-slate-50/80 text-slate-400 text-[11px] font-extrabold uppercase tracking-wider border-b border-slate-100">
-            <th className="py-4 px-6">PROFILE</th>
-            <th className="py-4 px-6">PATIENT DETAILS</th>
-            <th className="py-4 px-6">REASON & DEPT</th>
-            <th className="py-4 px-6">STATUS</th>
-            <th className="py-4 px-6">ARRIVAL</th>
-            <th className="py-4 px-6 text-right">ACTIONS</th>
+          <tr className="border-b border-slate-100 bg-slate-50 text-sm font-black uppercase tracking-wide text-slate-500">
+            <th className="px-6 py-4">Profile</th>
+            <th className="px-6 py-4">Patient Details</th>
+            <th className="px-6 py-4">Reason & Dept</th>
+            <th className="px-6 py-4">Status</th>
+            <th className="px-6 py-4">Arrival</th>
+            <th className="px-6 py-4 text-right">Actions</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-slate-100 text-sm">
@@ -126,39 +126,40 @@ export const PatientQueueList: React.FC<PatientQueueListProps> = ({
             return (
               <tr
                 key={entry.id || index}
-                className="hover:bg-slate-50/70 transition-colors"
+                className="transition-colors hover:bg-slate-50/70"
               >
                 {/* PROFILE COLUMN */}
-                <td className="py-5 px-6">
+                <td className="px-6 py-5">
                   <div className="relative w-12 h-12">
-                    <div className="w-12 h-12 rounded-full bg-purple-100 border border-purple-200 text-purple-700 font-extrabold text-base flex items-center justify-center shadow-2xs">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-white bg-slate-200 text-base font-black text-slate-700 shadow-sm">
                       {patientInitial}
                     </div>
-                    <span className="absolute -bottom-1 -right-1 px-1.5 py-0.5 bg-[#4b16a8] text-white text-[9px] font-black rounded-md shadow-2xs">
+                    <span className={`absolute -bottom-1 -right-1 rounded-lg px-1.5 py-0.5 text-[9px] font-black text-white shadow-sm ${deptBadge === "IPD" ? "bg-orange-500" : "bg-sky-500"}`}>
                       {deptBadge}
                     </span>
                   </div>
                 </td>
 
                 {/* PATIENT DETAILS COLUMN */}
-                <td className="py-5 px-6">
+                <td className="px-6 py-5">
                   <div>
-                    <p className="text-base font-bold text-[#0f172a] leading-tight">
+                    <p className="flex items-center gap-2 text-base font-black leading-tight text-slate-950">
                       {entry.patientName}
+                      {entry.priority === "EMERGENCY" && <span className="text-base text-red-500">!</span>}
                     </p>
-                    <p className="text-xs font-semibold text-slate-500 mt-1">
-                      {genderDisplay}, {ageDisplay} • <span className="font-mono text-slate-600">{entry.patientUHID}</span>
+                    <p className="mt-1 text-sm font-medium text-slate-500">
+                      {genderDisplay}, {ageDisplay} <span className="text-slate-300">•</span> <span>{entry.patientUHID}</span>
                     </p>
                   </div>
                 </td>
 
                 {/* REASON & DEPT COLUMN */}
-                <td className="py-5 px-6">
+                <td className="px-6 py-5">
                   <div>
-                    <p className="text-sm font-bold text-slate-800 leading-tight">
+                    <p className="text-base font-black leading-tight text-slate-900">
                       {reasonText}
                     </p>
-                    <div className="flex items-center space-x-1 text-xs font-medium text-slate-500 mt-1">
+                    <div className="mt-1 flex items-center space-x-1 text-sm font-medium text-slate-500">
                       <UserCheck className="w-3.5 h-3.5 text-slate-400" />
                       <span>{doctorText}</span>
                     </div>
@@ -166,32 +167,31 @@ export const PatientQueueList: React.FC<PatientQueueListProps> = ({
                 </td>
 
                 {/* STATUS COLUMN */}
-                <td className="py-5 px-6">
+                <td className="px-6 py-5">
                   {getStatusBadge(entry.status)}
                 </td>
 
                 {/* ARRIVAL COLUMN */}
-                <td className="py-5 px-6">
-                  <div className="flex items-center space-x-1.5 text-xs font-bold text-slate-700">
-                    <Clock className="w-3.5 h-3.5 text-slate-400" />
+                <td className="px-6 py-5">
+                  <div className="flex items-center space-x-2 text-sm font-medium text-slate-600">
+                    <Clock className="h-4 w-4 text-slate-400" />
                     <span>{formatTime(entry.arrivalTime)}</span>
                   </div>
                 </td>
 
                 {/* ACTIONS COLUMN */}
-                <td className="py-5 px-6 text-right">
-                  <div className="flex items-center justify-end space-x-2">
+                <td className="px-6 py-5 text-right">
+                  <div className="flex items-center justify-end gap-3">
                     {/* Consult Button */}
                     {entry.status !== "IN_CONSULTATION" && entry.status !== "COMPLETED" && (
                       <button
                         type="button"
                         disabled={isUpdating}
                         onClick={() => onStartConsultation(entry)}
-                        className="px-3 py-1.5 text-xs font-bold bg-[#6336d3] hover:bg-[#5228be] text-white rounded-xl transition-all shadow-2xs inline-flex items-center space-x-1 cursor-pointer disabled:opacity-50"
+                        className="text-slate-500 transition hover:text-sky-700 disabled:opacity-50"
                         title="Start Consultation"
                       >
-                        <Play className="w-3.5 h-3.5 fill-current" />
-                        <span>Consult</span>
+                        <PlayCircle className="h-4 w-4" />
                       </button>
                     )}
 
@@ -201,13 +201,13 @@ export const PatientQueueList: React.FC<PatientQueueListProps> = ({
                         type="button"
                         disabled={isUpdating}
                         onClick={() => onToggleHold(entry)}
-                        className={`p-2 text-xs font-medium rounded-xl border transition-all cursor-pointer disabled:opacity-50 ${entry.status === "ON_HOLD"
-                            ? "bg-amber-50 text-amber-700 border-amber-200 hover:bg-amber-100"
-                            : "bg-slate-100/90 text-slate-600 border-slate-200/80 hover:bg-slate-200/80"
+                        className={`transition disabled:opacity-50 ${entry.status === "ON_HOLD"
+                            ? "text-amber-700 hover:text-amber-800"
+                            : "text-slate-400 hover:text-slate-700"
                           }`}
                         title={entry.status === "ON_HOLD" ? "Resume patient" : "Put patient on hold"}
                       >
-                        <Pause className="w-4 h-4" />
+                        <Pause className="h-4 w-4" />
                       </button>
                     )}
 
@@ -216,19 +216,28 @@ export const PatientQueueList: React.FC<PatientQueueListProps> = ({
                       type="button"
                       disabled={isUpdating}
                       onClick={() => onGoToStation(entry)}
-                      className="p-2 text-slate-600 bg-slate-100/90 hover:bg-purple-50 hover:text-purple-700 border border-slate-200/80 rounded-xl transition-all cursor-pointer disabled:opacity-50"
+                      className="text-slate-400 transition hover:text-blue-700 disabled:opacity-50"
                       title="Go to Doctor Station"
                     >
-                      <ArrowRight className="w-4 h-4" />
+                      <History className="h-4 w-4" />
                     </button>
 
                     {/* Additional History / Menu Icon */}
+                    {entry.status === "CHECKED_IN" && (
+                      <button
+                        type="button"
+                        className="text-slate-500 transition hover:text-orange-600"
+                        title="Record Vitals"
+                      >
+                        <Thermometer className="h-4 w-4" />
+                      </button>
+                    )}
                     <button
                       type="button"
-                      className="p-2 text-slate-400 hover:text-slate-600 rounded-xl transition-colors"
+                      className="text-slate-400 transition hover:text-slate-600"
                       title="Patient Options"
                     >
-                      <History className="w-4 h-4" />
+                      <MoreVertical className="h-4 w-4" />
                     </button>
                   </div>
                 </td>

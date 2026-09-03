@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search, AlertTriangle, RefreshCw, Plus, ArrowUpDown, ChevronDown, Check } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
 import { api } from "../services/api";
 import { QueueSummary, QueueSummaryData } from "../components/queue/QueueSummary";
 import { PatientQueueList, QueueEntryItem } from "../components/queue/PatientQueueList";
@@ -24,8 +25,97 @@ const SORT_OPTIONS: SortOption[] = [
   { key: "NAME", label: "Name (A-Z)" }
 ];
 
+const OPS_QUEUE_ENTRIES: QueueEntryItem[] = [
+  {
+    id: "ops-q-001",
+    patientId: "ops-p-001",
+    patientName: "Vikram Singh",
+    patientUHID: "ABHA-7890",
+    patientAge: 50,
+    patientGender: "Male",
+    patientMobile: "9876543210",
+    token: "Q-101",
+    arrivalTime: "2026-09-01T10:05:00+05:30",
+    status: "WAITING",
+    priority: "EMERGENCY",
+    source: "IPD",
+    reason: "Chest Pain",
+    department: "General Medicine",
+    doctorName: "Dr. Sharma"
+  },
+  {
+    id: "ops-q-002",
+    patientId: "ops-p-002",
+    patientName: "Priya Sharma",
+    patientUHID: "ABHA-5678",
+    patientAge: 28,
+    patientGender: "Female",
+    patientMobile: "9876543211",
+    token: "Q-102",
+    arrivalTime: "2026-09-01T09:30:00+05:30",
+    status: "CANCELLED",
+    priority: "URGENT",
+    source: "IPD",
+    reason: "Severe Abdominal Pain",
+    department: "Emergency",
+    doctorName: "Dr. Sharma"
+  },
+  {
+    id: "ops-q-003",
+    patientId: "ops-p-003",
+    patientName: "Rahul Verma",
+    patientUHID: "ABHA-1234",
+    patientAge: 34,
+    patientGender: "Male",
+    patientMobile: "9876543212",
+    token: "Q-103",
+    arrivalTime: "2026-09-01T09:15:00+05:30",
+    status: "CANCELLED",
+    priority: "HIGH",
+    source: "IPD",
+    reason: "High Fever & Chills",
+    department: "General Medicine",
+    doctorName: "Dr. Sharma"
+  },
+  {
+    id: "ops-q-004",
+    patientId: "ops-p-004",
+    patientName: "Amit Patel",
+    patientUHID: "ABHA-9012",
+    patientAge: 65,
+    patientGender: "Male",
+    patientMobile: "9876543213",
+    token: "Q-104",
+    arrivalTime: "2026-09-01T09:45:00+05:30",
+    status: "CHECKED_IN",
+    priority: "NORMAL",
+    source: "CLINIC",
+    reason: "Diabetes Follow-up",
+    department: "General Medicine",
+    doctorName: "Dr. Sharma"
+  },
+  {
+    id: "ops-q-005",
+    patientId: "ops-p-005",
+    patientName: "Sujata Rao",
+    patientUHID: "ABHA-3456",
+    patientAge: 62,
+    patientGender: "Female",
+    patientMobile: "9876543214",
+    token: "Q-105",
+    arrivalTime: "2026-09-01T10:00:00+05:30",
+    status: "CHECKED_IN",
+    priority: "NORMAL",
+    source: "CLINIC",
+    reason: "Joint Pain",
+    department: "Orthopedics",
+    doctorName: "Dr. Gupta"
+  }
+];
+
 export const PatientQueuePage: React.FC = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   const [queueData, setQueueData] = useState<QueueApiResponse | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -74,6 +164,11 @@ export const PatientQueuePage: React.FC = () => {
 
   // Status Mutation Handler: Start Consultation
   const handleStartConsultation = async (entry: QueueEntryItem) => {
+    if (entry.id.startsWith("ops-q-")) {
+      navigate(`/doctor-station?patientId=${entry.patientId}&queueId=${entry.id}`);
+      return;
+    }
+
     setIsUpdatingId(entry.id);
     try {
       if (entry.status !== "IN_CONSULTATION") {
@@ -94,6 +189,10 @@ export const PatientQueuePage: React.FC = () => {
 
   // Status Mutation Handler: Toggle On Hold
   const handleToggleHold = async (entry: QueueEntryItem) => {
+    if (entry.id.startsWith("ops-q-")) {
+      return;
+    }
+
     setIsUpdatingId(entry.id);
     const targetStatus = entry.status === "ON_HOLD" ? "WAITING" : "ON_HOLD";
     try {
@@ -116,7 +215,7 @@ export const PatientQueuePage: React.FC = () => {
 
   // Add Patient Handler
   const handleAddPatient = () => {
-    navigate("/patients/new");
+    navigate("/registration");
   };
 
   if (isLoading && !queueData) {
@@ -148,7 +247,9 @@ export const PatientQueuePage: React.FC = () => {
     );
   }
 
-  const allEntries = queueData?.entries || [];
+  const fetchedEntries = queueData?.entries || [];
+  const canUseOpsPreview = ["ADMIN", "SUPER_ADMIN", "RECEPTIONIST"].includes(user?.role || "");
+  const allEntries = fetchedEntries.length > 0 || !canUseOpsPreview ? fetchedEntries : OPS_QUEUE_ENTRIES;
 
   // Calculate dynamic counts from unified single-source patient dataset
   const totalCount = allEntries.length;
@@ -156,7 +257,7 @@ export const PatientQueuePage: React.FC = () => {
     (e) => e.status === "WAITING" || e.status === "CHECKED_IN"
   ).length;
   const inConsultationCount = allEntries.filter(
-    (e) => (e.status as string) === "IN_CONSULTATION" || (e.status as string) === "IN_PROGRESS"
+    (e) => e.status === "IN_CONSULTATION" || (e.status as string) === "IN_PROGRESS"
   ).length;
 
   const queueTabs = [
@@ -173,7 +274,7 @@ export const PatientQueuePage: React.FC = () => {
     );
   } else if (selectedStatus === "IN_CONSULTATION") {
     tabFilteredEntries = allEntries.filter(
-      (e) => (e.status as string) === "IN_CONSULTATION" || (e.status as string) === "IN_PROGRESS"
+      (e) => e.status === "IN_CONSULTATION" || (e.status as string) === "IN_PROGRESS"
     );
   }
 
@@ -252,7 +353,7 @@ export const PatientQueuePage: React.FC = () => {
     checkedIn: allEntries.filter((e) => e.status === "CHECKED_IN").length,
     inConsultation: inConsultationCount,
     onHold: allEntries.filter((e) => e.status === "ON_HOLD").length,
-    completed: allEntries.filter((e) => e.status === "COMPLETED").length,
+    completed: allEntries.filter((e) => e.status === "COMPLETED" || e.status === "CANCELLED").length,
     highPriority: allEntries.filter(
       (e) =>
         (e.status === "WAITING" || e.status === "CHECKED_IN") &&
@@ -264,31 +365,32 @@ export const PatientQueuePage: React.FC = () => {
     SORT_OPTIONS.find((opt) => opt.key === selectedSort) || SORT_OPTIONS[0];
 
   return (
-    <div className="px-6 md:px-9 py-8 max-w-7xl mx-auto space-y-8">
+    <div className="min-h-full bg-slate-50 px-5 py-6 md:px-8">
+      <div className="mx-auto max-w-[1580px] space-y-6">
       {/* 4 Summary Cards */}
       <QueueSummary summary={summaryData} />
 
       {/* Patient Queue Main Card */}
-      <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden">
+      <div className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
         {/* Card Header with Controls */}
-        <div className="p-6 border-b border-slate-100 flex flex-col xl:flex-row xl:items-center justify-between gap-4">
+        <div className="flex flex-col gap-4 border-b border-slate-100 p-4 xl:flex-row xl:items-center xl:justify-between">
           {/* Left Title & Tabs */}
           <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-            <h1 className="text-2xl font-extrabold text-[#0f172a] tracking-tight shrink-0">
+            <h1 className="shrink-0 text-xl font-black tracking-tight text-slate-950">
               Patient Queue
             </h1>
 
             {/* Tabs */}
-            <div className="flex items-center space-x-1.5 p-1 bg-slate-100/80 rounded-2xl border border-slate-200/60 overflow-x-auto">
+            <div className="flex items-center space-x-1.5 overflow-x-auto rounded-lg border border-slate-200/60 bg-slate-100/80 p-1">
               {queueTabs.map((tab) => {
                 const isActive = selectedStatus === tab.key;
                 return (
                   <button
                     key={tab.key}
                     onClick={() => setSelectedStatus(tab.key)}
-                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer ${
+                    className={`whitespace-nowrap rounded-md px-4 py-2 text-xs font-black transition-all ${
                       isActive
-                        ? "bg-white text-[#0f172a] border border-slate-200 shadow-2xs"
+                        ? "border border-slate-200 bg-white text-slate-950 shadow-sm"
                         : "text-slate-500 hover:text-slate-700 hover:bg-slate-200/60"
                     }`}
                   >
@@ -306,7 +408,7 @@ export const PatientQueuePage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setIsSortDropdownOpen((prev) => !prev)}
-                className="px-3.5 py-2 bg-slate-100/90 hover:bg-slate-200/70 border border-slate-200/80 rounded-xl text-xs font-bold text-slate-700 flex items-center space-x-2 transition-colors cursor-pointer shadow-2xs"
+                className="flex h-11 items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3.5 text-xs font-black text-slate-700 transition-colors hover:bg-slate-100"
                 title="Select Sorting Method"
               >
                 <ArrowUpDown className="w-3.5 h-3.5 text-slate-500" />
@@ -325,7 +427,7 @@ export const PatientQueuePage: React.FC = () => {
                     className="fixed inset-0 z-20"
                     onClick={() => setIsSortDropdownOpen(false)}
                   />
-                  <div className="absolute right-0 mt-1.5 w-52 bg-white rounded-2xl border border-slate-200 shadow-lg py-1.5 z-30 space-y-0.5">
+                  <div className="absolute right-0 z-30 mt-1.5 w-52 space-y-0.5 rounded-lg border border-slate-200 bg-white py-1.5 shadow-lg">
                     {SORT_OPTIONS.map((option) => {
                       const isSelected = selectedSort === option.key;
                       return (
@@ -353,21 +455,22 @@ export const PatientQueuePage: React.FC = () => {
             </div>
 
             {/* Search Input */}
-            <div className="relative w-full sm:w-64">
+            <div className="relative w-full sm:w-72">
               <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Search name or UHID..."
-                className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200/80 rounded-xl text-xs font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:bg-white transition-all"
+                className="h-11 w-full rounded-lg border border-slate-200 bg-slate-50 pl-9 pr-4 text-sm font-medium text-slate-800 placeholder-slate-400 transition-all focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-100"
               />
             </div>
 
             {/* Add Patient Button */}
             <button
+              type="button"
               onClick={handleAddPatient}
-              className="px-4 py-2 text-xs font-extrabold text-white bg-blue-600 hover:bg-blue-700 active:bg-blue-800 rounded-xl transition-all shadow-2xs flex items-center space-x-1.5 cursor-pointer shrink-0"
+              className="flex h-11 shrink-0 items-center gap-2 rounded-lg bg-sky-600 px-4 text-sm font-black text-white transition-all hover:bg-sky-700"
             >
               <Plus className="w-4 h-4 stroke-[3]" />
               <span>Add Patient</span>
@@ -383,6 +486,7 @@ export const PatientQueuePage: React.FC = () => {
           onGoToStation={handleGoToStation}
           isUpdatingId={isUpdatingId}
         />
+      </div>
       </div>
     </div>
   );

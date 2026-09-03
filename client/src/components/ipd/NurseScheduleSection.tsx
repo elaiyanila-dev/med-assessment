@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Clock, Sun, Sunset, Moon, Eye, Phone, Plus, UserCheck, ShieldCheck, CheckCircle2, X } from "lucide-react";
+import { Clock, Sun, Sunset, Moon, Eye, Phone, Plus, UserCheck, ShieldCheck, X } from "lucide-react";
 
 export interface NurseRosterItem {
   id: string;
@@ -54,7 +54,7 @@ const INITIAL_ROSTER: NurseRosterItem[] = [
   }
 ];
 
-export const NurseScheduleSection: React.FC<NurseScheduleSectionProps> = ({ onAssignStaffClick }) => {
+export const NurseScheduleSection: React.FC<NurseScheduleSectionProps> = ({ onAssignStaffClick: _onAssignStaffClick }) => {
   const [selectedShift, setSelectedShift] = useState<"morning" | "evening" | "night">("evening");
   const [currentTime, setCurrentTime] = useState<string>(new Date().toLocaleTimeString());
   const [roster, setRoster] = useState<NurseRosterItem[]>(INITIAL_ROSTER);

@@ -10,7 +10,7 @@ interface LabResultsSectionProps {
 
 export const LabResultsSection: React.FC<LabResultsSectionProps> = ({
   orders = [],
-  userRole,
+  userRole: _userRole,
   onSuccess
 }) => {
   const [activeCategory, setActiveCategory] = useState("All");

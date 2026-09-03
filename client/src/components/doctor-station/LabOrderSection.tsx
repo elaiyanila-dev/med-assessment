@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Search, Plus, Trash2, Check, Loader2, AlertCircle } from "lucide-react";
+import { Search, Trash2, Check, Loader2, AlertCircle } from "lucide-react";
 import { api } from "../../services/api";
 
 interface LabTestItem {
