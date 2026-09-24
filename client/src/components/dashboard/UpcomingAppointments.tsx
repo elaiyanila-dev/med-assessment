@@ -31,7 +31,7 @@ export const UpcomingAppointments: React.FC<UpcomingAppointmentsProps> = ({
   };
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-6 md:p-7 space-y-6">
+    <div className="clinical-card rounded-2xl p-6 md:p-7 space-y-6">
       {/* Top Left Title inside Card */}
       <div>
         <h2 className="text-xl md:text-2xl font-extrabold text-[#0f172a] tracking-tight">

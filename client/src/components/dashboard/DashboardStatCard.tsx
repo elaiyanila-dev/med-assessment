@@ -25,7 +25,7 @@ export const DashboardStatCard: React.FC<DashboardStatCardProps> = ({
   return (
     <div
       onClick={onClick}
-      className={`bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs h-[228px] flex flex-col justify-between relative overflow-hidden transition-all duration-200 ${
+      className={`clinical-card p-6 rounded-2xl h-[228px] flex flex-col justify-between relative overflow-hidden ${
         isClickable
           ? "cursor-pointer hover:border-purple-300 hover:shadow-md group"
           : "cursor-default"

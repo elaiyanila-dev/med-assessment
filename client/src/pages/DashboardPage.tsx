@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import {
   Activity,
@@ -22,72 +23,9 @@ import {
 import { useAuth } from "../context/AuthContext";
 import { api } from "../services/api";
 import { DashboardStatCard } from "../components/dashboard/DashboardStatCard";
-import { UpcomingAppointments, AppointmentItem } from "../components/dashboard/UpcomingAppointments";
+import { UpcomingAppointments } from "../components/dashboard/UpcomingAppointments";
 import { DashboardSkeleton } from "../components/dashboard/DashboardSkeleton";
-
-interface DashboardResponseData {
-  type?: "DOCTOR" | "ADMIN";
-  greeting: string;
-  stats: {
-    myQueue: {
-      count: number;
-      highPriority: number;
-    };
-    pendingReports: {
-      count: number;
-      ready: number;
-    };
-    ipdRounds: {
-      count: number;
-      pending: number;
-    };
-  };
-  upcomingAppointments: AppointmentItem[];
-  commandCenter?: {
-    totalWalkIns: number;
-    activeInFacility: number;
-    avgWaitMinutes: number;
-    estimatedRevenue: number;
-    highVolume: boolean;
-  };
-  flowPipeline?: Array<{
-    label: string;
-    count: number;
-    capacity: number;
-    status?: "busy" | "normal";
-  }>;
-  arrivalTrend?: Array<{
-    hour: string;
-    count: number;
-  }>;
-  departmentLoad?: Array<{
-    department: string;
-    count: number;
-    load: "Critical Load" | "High Load" | "Normal Load";
-  }>;
-  resourceStatus?: {
-    doctors: {
-      active: number;
-      total: number;
-    };
-    beds: {
-      occupied: number;
-      total: number;
-      percent: number;
-    };
-  };
-  revenueClassification?: Array<{
-    label: string;
-    amount: number;
-  }>;
-  patientClassification?: {
-    total: number;
-    new: number;
-    returning: number;
-    newPercent: number;
-    returningPercent: number;
-  };
-}
+import type { ApiResponse, DashboardResponseData } from "../../../shared/types";
 
 type CommandCenterMetricKey = {
   [Key in keyof NonNullable<DashboardResponseData["commandCenter"]>]:
@@ -112,56 +50,41 @@ const formatINR = (value: number) => {
   return `Rs.${value.toLocaleString("en-IN")}`;
 };
 
+const fetchDashboard = async (): Promise<DashboardResponseData> => {
+  const response = await api.get<ApiResponse<DashboardResponseData>>("/dashboard");
+  if (response.data?.success && response.data.data) {
+    return response.data.data;
+  }
+
+  throw new Error(response.data?.error?.message || "Failed to load dashboard data");
+};
+
 export const DashboardPage: React.FC = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const isReceptionist = user?.role === "RECEPTIONIST";
 
-  const [data, setData] = useState<DashboardResponseData | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-
-  const fetchDashboardData = useCallback(async () => {
-    if (isReceptionist) {
-      setData(null);
-      setError(null);
-      setIsLoading(false);
-      return;
-    }
-
-    setIsLoading(true);
-    setError(null);
-    try {
-      const response = await api.get("/dashboard");
-      if (response.data?.success && response.data?.data) {
-        setData(response.data.data);
-      } else {
-        throw new Error(response.data?.error?.message || "Failed to load dashboard data");
-      }
-    } catch (err: any) {
-      const errorMessage =
-        err.response?.data?.error?.message ||
-        err.message ||
-        "Unable to fetch dashboard statistics. Please try again.";
-      setError(errorMessage);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [isReceptionist]);
-
-  useEffect(() => {
-    fetchDashboardData();
-  }, [fetchDashboardData]);
+  const { data, isPending, isError, error, refetch, isFetching } = useQuery({
+    queryKey: ["dashboard", user?.id, user?.role],
+    queryFn: fetchDashboard,
+    enabled: !isReceptionist,
+    refetchInterval: 60_000
+  });
 
   if (isReceptionist) {
     return <ReceptionistDashboardPlaceholder />;
   }
 
-  if (isLoading) {
+  if (isPending) {
     return <DashboardSkeleton />;
   }
 
-  if (error || !data) {
+  if (isError || !data) {
+    const errorMessage =
+      (error as { response?: { data?: { error?: { message?: string } } } })?.response?.data?.error?.message ||
+      error?.message ||
+      "Unable to fetch dashboard statistics. Please try again.";
+
     return (
       <div className="p-6 md:p-9 max-w-7xl mx-auto">
         <div className="bg-red-50 border border-red-200 rounded-2xl p-6 text-red-700 flex flex-col md:flex-row items-center justify-between gap-4">
@@ -171,15 +94,16 @@ export const DashboardPage: React.FC = () => {
             </div>
             <div>
               <h3 className="font-bold text-base">Dashboard Loading Failed</h3>
-              <p className="text-sm text-red-600 mt-0.5">{error || "Could not load data from backend"}</p>
+              <p className="text-sm text-red-600 mt-0.5">{errorMessage}</p>
             </div>
           </div>
           <button
-            onClick={fetchDashboardData}
-            className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-medium text-sm rounded-xl transition-colors flex items-center space-x-2 cursor-pointer shadow-xs"
+            onClick={() => refetch()}
+            disabled={isFetching}
+            className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-medium text-sm rounded-xl transition-colors flex items-center space-x-2 cursor-pointer shadow-xs disabled:cursor-wait disabled:opacity-70"
           >
-            <RefreshCw className="w-4 h-4" />
-            <span>Retry</span>
+            <RefreshCw className={`w-4 h-4 ${isFetching ? "animate-spin" : ""}`} />
+            <span>{isFetching ? "Retrying" : "Retry"}</span>
           </button>
         </div>
       </div>
@@ -510,7 +434,7 @@ const AdminCommandCenter: React.FC<{ data: DashboardResponseData }> = ({ data })
           return (
             <div
               key={card.key}
-              className={`relative overflow-hidden rounded-2xl border bg-white p-6 shadow-sm ${
+              className={`clinical-card relative overflow-hidden rounded-2xl p-6 ${
                 card.alert && command.avgWaitMinutes > 45 ? "border-red-200 ring-1 ring-red-100" : "border-slate-200"
               }`}
             >
@@ -528,7 +452,7 @@ const AdminCommandCenter: React.FC<{ data: DashboardResponseData }> = ({ data })
         })}
       </div>
 
-      <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+      <section className="clinical-card rounded-2xl p-6">
         <div className="flex items-center justify-between">
           <h2 className="flex items-center gap-2 text-base font-extrabold text-slate-950">
             <TrendingUp className="h-5 w-5 text-violet-600" />
@@ -566,13 +490,13 @@ const AdminCommandCenter: React.FC<{ data: DashboardResponseData }> = ({ data })
       </section>
 
       <div className="grid grid-cols-1 xl:grid-cols-[2fr_1fr] gap-6">
-        <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <section className="clinical-card rounded-2xl p-6">
           <h2 className="text-base font-extrabold text-slate-950">Patient Arrival Trend</h2>
           <p className="mt-2 text-sm font-medium text-slate-500">Hourly footfall analysis for today. Peak identified at 10:00 AM.</p>
           <SimpleArrivalTrendChart trend={trend} />
         </section>
 
-        <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <section className="clinical-card rounded-2xl p-6">
           <h2 className="text-base font-extrabold text-slate-950">Department Load</h2>
           <div className="mt-5 space-y-5">
             {departments.map((item) => {
@@ -613,7 +537,7 @@ const AdminCommandCenter: React.FC<{ data: DashboardResponseData }> = ({ data })
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-[2fr_1fr] gap-6">
-        <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <section className="clinical-card rounded-2xl p-6">
           <div className="flex items-start justify-between gap-4">
             <div>
               <h2 className="flex items-center gap-2 text-base font-extrabold text-slate-950">
@@ -643,7 +567,7 @@ const AdminCommandCenter: React.FC<{ data: DashboardResponseData }> = ({ data })
           </div>
         </section>
 
-        <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <section className="clinical-card rounded-2xl p-6">
           <h2 className="flex items-center gap-2 text-base font-extrabold text-slate-950">
             <RefreshCw className="h-5 w-5 text-violet-600" />
             Patient Classification

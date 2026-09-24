@@ -1,16 +1,14 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { api } from "../services/api";
+import type {
+  ApiResponse,
+  AuthenticatedUser,
+  CurrentUserResponse,
+  LoginRequest,
+  LoginResponse
+} from "../../../shared/types";
 
-export interface UserProfile {
-  id: string;
-  name: string;
-  email: string;
-  phone?: string | null;
-  role: string;
-  department?: string | null;
-  specialization?: string | null;
-  status?: string;
-}
+export type UserProfile = AuthenticatedUser;
 
 interface AuthContextType {
   user: UserProfile | null;
@@ -32,7 +30,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const fetchCurrentUser = async (currentToken: string) => {
     try {
-      const response = await api.get("/auth/me");
+      const response = await api.get<ApiResponse<CurrentUserResponse>>("/auth/me");
       if (response.data?.success && response.data?.data?.user) {
         setUser(response.data.data.user);
         setToken(currentToken);
@@ -61,7 +59,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const login = async (email: string, password: string) => {
     setIsLoading(true);
     try {
-      const response = await api.post("/auth/login", { email, password });
+      const payload: LoginRequest = { email, password };
+      const response = await api.post<ApiResponse<LoginResponse>>("/auth/login", payload);
       if (response.data?.success && response.data?.data) {
         const { token: newToken, user: userData } = response.data.data;
         localStorage.setItem(AUTH_TOKEN_KEY, newToken);

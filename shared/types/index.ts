@@ -121,11 +121,86 @@ export interface UserPayload {
   department?: string | null;
 }
 
-export interface ApiResponse<T = any> {
+export interface ApiError {
+  code: string;
+  message: string;
+  requestId?: string;
+}
+
+export interface ApiResponse<T = unknown> {
   success: boolean;
   data?: T;
-  error?: {
-    code: string;
-    message: string;
+  error?: ApiError;
+}
+
+export interface AuthenticatedUser extends UserPayload {
+  phone?: string | null;
+  specialization?: string | null;
+  status?: string;
+}
+
+export interface LoginRequest {
+  email: string;
+  password: string;
+}
+
+export interface LoginResponse {
+  token: string;
+  user: AuthenticatedUser;
+}
+
+export interface CurrentUserResponse {
+  user: AuthenticatedUser;
+}
+
+export interface DashboardAppointment {
+  id: string;
+  patientId: string;
+  patientName: string;
+  patientUHID: string;
+  scheduledAt: string;
+  status: string;
+  type: string;
+}
+
+export interface DashboardResponseData {
+  type?: "DOCTOR" | "ADMIN";
+  greeting: string;
+  stats: {
+    myQueue: { count: number; highPriority: number };
+    pendingReports: { count: number; ready: number };
+    ipdRounds: { count: number; pending: number };
+  };
+  upcomingAppointments: DashboardAppointment[];
+  commandCenter?: {
+    totalWalkIns: number;
+    activeInFacility: number;
+    avgWaitMinutes: number;
+    estimatedRevenue: number;
+    highVolume: boolean;
+  };
+  flowPipeline?: Array<{
+    label: string;
+    count: number;
+    capacity: number;
+    status?: "busy" | "normal";
+  }>;
+  arrivalTrend?: Array<{ hour: string; count: number }>;
+  departmentLoad?: Array<{
+    department: string;
+    count: number;
+    load: "Critical Load" | "High Load" | "Normal Load";
+  }>;
+  resourceStatus?: {
+    doctors: { active: number; total: number };
+    beds: { occupied: number; total: number; percent: number };
+  };
+  revenueClassification?: Array<{ label: string; amount: number }>;
+  patientClassification?: {
+    total: number;
+    new: number;
+    returning: number;
+    newPercent: number;
+    returningPercent: number;
   };
 }
